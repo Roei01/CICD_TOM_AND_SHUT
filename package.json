@@ -2,9 +2,12 @@
   "name": "cicd_tom_and_shut",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.mjs",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "test": "mocha tests/*.spec.js",
+    "lint": "eslint src/*"
   },
   "author": "Roei Nagar",
   "license": "ISC",
@@ -12,6 +15,12 @@
     "express": "^4.19.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.3.16",
+    "@types/mocha": "^10.0.7",
+    "chai": "^5.1.1",
+    "eslint": "^9.5.0",
+    "globals": "^15.6.0",
+    "mocha": "^10.5.2",
     "nodemon": "^3.1.4"
   }
 }
