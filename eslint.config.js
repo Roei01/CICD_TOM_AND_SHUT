@@ -8,6 +8,6 @@ export default [
       quotes: ['error', 'single'],
       semi: ['error', 'always'],
     },
-    ignorePatterns: ['public/**'], // הוספת השורה הזו כדי להתעלם מתיקיית public
+    ignorePatterns: ['src/public/**'], // התעלמות מהתיקייה src/public
   },
 ];
