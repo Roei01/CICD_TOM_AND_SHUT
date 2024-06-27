@@ -20,7 +20,7 @@ jobs:
           command: npm run test
       - run:
           name: run lint
-          command: npx eslint src --ignore-pattern src/public/** --ext .js
+          command: npm run lint
       - run:
           name: deploy app
           command: curl https://api.render.com/deploy/srv-cpuudclds78s739gspt0?key=XhZumxstBUk
