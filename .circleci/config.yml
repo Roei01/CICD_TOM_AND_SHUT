@@ -11,7 +11,8 @@ workflows:
 
 jobs:
   build-test-lint:
-    executor: node/default
+    executor: 
+    name: node/default
     steps:
       - checkout
       - run:
