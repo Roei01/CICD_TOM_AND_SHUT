@@ -2,6 +2,8 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import nodemailer from 'nodemailer';
+import bodyParser from 'body-parser';
 
 const app = express();
 const port = 3000;
@@ -10,8 +12,18 @@ const port = 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Middleware to serve static files
+// Middleware to serve static files and parse request body
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Nodemailer setup
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'royinagar2@gmail.com', // Replace with your email
+        pass: '0548147957' // Replace with your email password or app-specific password
+    }
+});
 
 const generatePage = (title, content) => `
 <!DOCTYPE html>
@@ -254,19 +266,38 @@ app.get('/contact', (req, res) => {
     const content = `
     <h2>Contact Us</h2>
     <p>Get in touch with us for any inquiries or feedback.</p>
-    <form>
+    <form action="/send-message" method="post">
         <label for="name">Name:</label>
-        <input type="text" id="name" name="name">
+        <input type="text" id="name" name="name" required>
         <label for="email">Email:</label>
-        <input type="email" id="email" name="email">
+        <input type="email" id="email" name="email" required>
         <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" cols="50"></textarea>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea>
         <input type="submit" value="Submit">
     </form>
     <p>Email: contact@sushistore.com</p>
     <p>Phone: 123-456-7890</p>
     `;
     res.send(generatePage('Sushi Store - Contact', content));
+});
+
+// Handle form submission
+app.post('/send-message', (req, res) => {
+    const { name, email, message } = req.body;
+
+    const mailOptions = {
+        from: 'royinagar2@gmail.com', // Replace with your email
+        to: 'royinagar2@gmail.com', // Replace with your email
+        subject: `New contact form submission from ${name}`,
+        text: `You have received a new message from ${name} (${email}):\n\n${message}`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            return res.status(500).send('Error sending message.');
+        }
+        res.send(generatePage('Sushi Store - Contact', '<h2>Thank you for your message!</h2><p>We will get back to you soon.</p>'));
+    });
 });
 
 app.listen(port, () => {
