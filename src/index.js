@@ -44,7 +44,9 @@ const generatePage = (title, content) => `
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            transition: all 0.3s ease;
         }
+
         .header {
             background-color: #222;
             color: #fff;
@@ -56,10 +58,12 @@ const generatePage = (title, content) => `
             z-index: 1000;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+
         .header h1 {
             margin: 0;
             font-size: 2em;
         }
+
         .navbar {
             background-color: #333;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -69,19 +73,27 @@ const generatePage = (title, content) => `
             width: 100%;
             top: 60px;
             z-index: 1000;
+            display: flex;
+            justify-content: center;
         }
+
         .navbar a {
             color: #ffda79;
             text-align: center;
             padding: 14px 20px;
             text-decoration: none;
             display: inline-block;
+            margin: 0 10px;
+            border: 1px solid #ffda79;
+            border-radius: 25px;
             transition: background-color 0.3s, color 0.3s;
         }
+
         .navbar a:hover {
             background-color: #ffda79;
             color: #121212;
         }
+
         .content {
             flex: 1;
             padding: 120px 20px 20px;
@@ -89,6 +101,7 @@ const generatePage = (title, content) => `
             flex-direction: column;
             align-items: center;
         }
+
         .footer {
             background-color: #222;
             color: #fff;
@@ -98,6 +111,7 @@ const generatePage = (title, content) => `
             width: 100%;
             bottom: 0;
         }
+
         .menu-item {
             background-color: #333;
             border: 1px solid #444;
@@ -110,22 +124,27 @@ const generatePage = (title, content) => `
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
         }
+
         .menu-item:hover {
             transform: translateY(-10px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
+
         .menu-item img {
             width: 100%;
             border-radius: 8px;
             object-fit: cover;
             height: 200px;
         }
+
         .menu-item h3 {
             margin: 10px 0;
         }
+
         .menu-item p {
             color: #ccc;
         }
+
         form {
             display: flex;
             flex-direction: column;
@@ -136,9 +155,11 @@ const generatePage = (title, content) => `
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
+
         form label {
             margin-top: 10px;
         }
+
         form input, form textarea {
             padding: 10px;
             margin-top: 5px;
@@ -148,6 +169,7 @@ const generatePage = (title, content) => `
             color: #fff;
             font-family: 'Poppins', sans-serif;
         }
+
         form input[type="submit"] {
             background-color: #ffda79;
             color: #121212;
@@ -157,9 +179,11 @@ const generatePage = (title, content) => `
             padding: 15px;
             transition: background-color 0.3s;
         }
+
         form input[type="submit"]:hover {
             background-color: #ffcd00;
         }
+
         .home-image {
             width: 100%;
             height: auto;
@@ -168,16 +192,19 @@ const generatePage = (title, content) => `
             max-height: 500px;
             object-fit: cover;
         }
+
         .home-text {
             font-size: 1.2em;
             margin: 20px 0;
             color: #ffda79;
         }
+
         @media (max-width: 768px) {
             .menu-item {
                 width: calc(50% - 40px);
             }
         }
+
         @media (max-width: 480px) {
             .menu-item {
                 width: calc(100% - 40px);
@@ -204,7 +231,6 @@ const generatePage = (title, content) => `
 </body>
 </html>
 `;
-
 // Home page
 app.get('/', (req, res) => {
     const content = `
@@ -280,6 +306,7 @@ app.get('/contact', (req, res) => {
     `;
     res.send(generatePage('Sushi Store - Contact', content));
 });
+
 
 // Handle form submission
 app.post('/send-message', (req, res) => {
