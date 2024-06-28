@@ -60,7 +60,7 @@ const generatePage = (title, content) => `
         }
         .header h1 {
             margin: 0;
-            font-size: 2em;
+            font-size: 2.5em;
             font-family: 'Caveat', cursive;
         }
         .navbar {
@@ -70,7 +70,7 @@ const generatePage = (title, content) => `
             text-align: center;
             position: fixed;
             width: 100%;
-            top: 60px;
+            top: 80px;
             z-index: 1000;
         }
         .navbar a {
@@ -87,7 +87,7 @@ const generatePage = (title, content) => `
         }
         .content {
             flex: 1;
-            padding: 120px 20px 20px;
+            padding: 160px 20px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
