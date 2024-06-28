@@ -173,6 +173,27 @@ const generatePage = (title, content) => `
             margin: 20px 0;
             color: #ffda79;
         }
+        .contact-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .contact-form, .map {
+            width: 48%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .map iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-radius: 8px;
+        }
         @media (max-width: 768px) {
             .menu-item {
                 width: calc(50% - 40px);
@@ -202,10 +223,10 @@ const generatePage = (title, content) => `
         <h1>${title}</h1>
     </div>
     <div class="navbar">
-        <a href="/" onclick="loadPage(event, 'home')">Home</a>
-        <a href="/hours" onclick="loadPage(event, 'hours')">Opening Hours</a>
-        <a href="/menu" onclick="loadPage(event, 'menu')">Menu</a>
-        <a href="/contact" onclick="loadPage(event, 'contact')">Contact</a>
+        <a href="/" onclick="loadPage(event, '/')">Home</a>
+        <a href="/hours" onclick="loadPage(event, '/hours')">Opening Hours</a>
+        <a href="/menu" onclick="loadPage(event, '/menu')">Menu</a>
+        <a href="/contact" onclick="loadPage(event, '/contact')">Contact</a>
     </div>
     <div class="content" id="content">
         ${content}
@@ -213,20 +234,11 @@ const generatePage = (title, content) => `
     <div class="footer">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
-    <script>
-        function loadPage(event, page) {
-            event.preventDefault();
-            fetch(page)
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('content').innerHTML = html;
-                })
-                .catch(error => console.error('Error loading page:', error));
-        }
-    </script>
+    <script src="/public/script.js"></script>
 </body>
 </html>
 `;
+
 
 // Home page
 app.get('/', (req, res) => {

@@ -1,38 +1,24 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Add smooth scrolling to all links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.navbar a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            loadPage(this.getAttribute('href'));
         });
     });
 
-    // Add scroll animation for elements
-    const scrollElements = document.querySelectorAll('.js-scroll');
-
-    const elementInView = (el, dividend = 1) => {
-        const elementTop = el.getBoundingClientRect().top;
-
-        return (
-            elementTop <= (window.innerHeight || document.documentElement.clientHeight) / dividend
-        );
-    };
-
-    const displayScrollElement = (element) => {
-        element.classList.add('scrolled');
-    };
-
-    const handleScrollAnimation = () => {
-        scrollElements.forEach((el) => {
-            if (elementInView(el, 1.25)) {
-                displayScrollElement(el);
-            }
-        })
+    function loadPage(url) {
+        fetch(url)
+            .then(response => response.text())
+            .then(html => {
+                document.querySelector('.content').innerHTML = html;
+                window.history.pushState({ path: url }, '', url);
+            })
+            .catch(error => console.error('Error loading page:', error));
     }
 
-    window.addEventListener('scroll', () => {
-        handleScrollAnimation();
+    window.addEventListener('popstate', function(event) {
+        if (event.state && event.state.path) {
+            loadPage(event.state.path);
+        }
     });
 });
