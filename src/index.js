@@ -234,11 +234,10 @@ const generatePage = (title, content) => `
     <div class="footer">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
-    <script src="/public/script.js"></script>
+    <script src="/script.js"></script>
 </body>
 </html>
 `;
-
 
 // Home page
 app.get('/', (req, res) => {
