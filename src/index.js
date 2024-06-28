@@ -53,6 +53,10 @@ const generatePage = (title, content) => `
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             padding: 10px 0;
             text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 60px;
+            z-index: 1000;
         }
         .navbar a {
             color: #ffda79;
@@ -68,7 +72,7 @@ const generatePage = (title, content) => `
         }
         .content {
             flex: 1;
-            padding: 60px 20px 20px;
+            padding: 120px 20px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
