@@ -32,198 +32,208 @@ const generatePage = (title, content) => `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
-   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-    
-    body {
-        font-family: 'Poppins', sans-serif;
-        background-color: #121212;
-        color: #fff;
-        margin: 0;
-        padding: 0;
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-    }
-    .header {
-        background-color: #222;
-        color: #fff;
-        padding: 20px;
-        text-align: center;
-        position: fixed;
-        width: 100%;
-        top: 0;
-        z-index: 1000;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .header h1 {
-        margin: 0;
-        font-size: 2em;
-    }
-    .navbar {
-        background-color: #333;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        padding: 10px 0;
-        text-align: center;
-        position: fixed;
-        width: 100%;
-        top: 60px;
-        z-index: 1000;
-    }
-    .navbar a {
-        color: #ffda79;
-        text-align: center;
-        padding: 14px 20px;
-        text-decoration: none;
-        display: inline-block;
-        transition: background-color 0.3s, color 0.3s;
-    }
-    .navbar a:hover {
-        background-color: #ffda79;
-        color: #121212;
-    }
-    .content {
-        flex: 1;
-        padding: 120px 20px 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
-    .footer {
-        background-color: #222;
-        color: #fff;
-        text-align: center;
-        padding: 10px;
-        position: fixed;
-        width: 100%;
-        bottom: 0;
-    }
-    .menu-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-    .menu-item {
-        background-color: #333;
-        border: 1px solid #444;
-        border-radius: 8px;
-        padding: 20px;
-        margin: 10px;
-        display: inline-block;
-        width: calc(25% - 40px);
-        box-sizing: border-box;
-        text-align: center;
-        transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .menu-item:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    }
-    .menu-item img {
-        width: 100%;
-        border-radius: 8px;
-        object-fit: cover;
-        height: 200px;
-    }
-    .menu-item h3 {
-        margin: 10px 0;
-    }
-    .menu-item p {
-        color: #ccc;
-    }
-    form {
-        display: flex;
-        flex-direction: column;
-        max-width: 600px;
-        margin: 0 auto;
-        background: #333;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    form label {
-        margin-top: 10px;
-    }
-    form input, form textarea {
-        padding: 10px;
-        margin-top: 5px;
-        border: 1px solid #444;
-        border-radius: 4px;
-        background: #222;
-        color: #fff;
-        font-family: 'Poppins', sans-serif;
-    }
-    form input[type="submit"] {
-        background-color: #ffda79;
-        color: #121212;
-        border: none;
-        cursor: pointer;
-        margin-top: 20px;
-        padding: 15px;
-        transition: background-color 0.3s;
-    }
-    form input[type="submit"]:hover {
-        background-color: #ffcd00;
-    }
-    .home-image {
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        margin-top: 20px;
-        max-height: 500px;
-        object-fit: cover;
-    }
-    .home-text {
-        font-size: 1.2em;
-        margin: 20px 0;
-        color: #ffda79;
-    }
-    .contact-container {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        max-width: 1000px;
-        margin: 0 auto;
-        padding: 20px;
-    }
-    .contact-form, .map {
-        width: 48%;
-        padding: 20px;
-        box-sizing: border-box;
-        background: #333;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        margin-bottom: 20px;
-    }
-    .map iframe {
-        width: 100%;
-        border-radius: 8px;
-    }
-    @media (max-width: 768px) {
+    <style>
+        /* CSS existing code */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #121212;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        .header {
+            background-color: #222;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+        .navbar {
+            background-color: #333;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 60px;
+            z-index: 1000;
+        }
+        .navbar a {
+            color: #ffda79;
+            text-align: center;
+            padding: 14px 20px;
+            text-decoration: none;
+            display: inline-block;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .navbar a:hover {
+            background-color: #ffda79;
+            color: #121212;
+        }
+        .content {
+            flex: 1;
+            padding: 120px 20px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .footer {
+            background-color: #222;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
         .menu-item {
-            width: calc(50% - 40px);
+            background-color: #333;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 10px;
+            display: inline-block;
+            width: calc(25% - 40px);
+            box-sizing: border-box;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .menu-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .menu-item img {
+            width: 100%;
+            border-radius: 8px;
+            object-fit: cover;
+            height: 200px;
+        }
+        .menu-item h3 {
+            margin: 10px 0;
+        }
+        .menu-item p {
+            color: #ccc;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        form label {
+            margin-top: 10px;
+        }
+        form input, form textarea {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #444;
+            border-radius: 4px;
+            background: #222;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+        }
+        form input[type="submit"] {
+            background-color: #ffda79;
+            color: #121212;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            padding: 15px;
+            transition: background-color 0.3s;
+        }
+        form input[type="submit"]:hover {
+            background-color: #ffcd00;
+        }
+        .home-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-height: 500px;
+            object-fit: cover;
+        }
+        .home-text {
+            font-size: 1.2em;
+            margin: 20px 0;
+            color: #ffda79;
         }
         .contact-container {
-            flex-direction: column;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
         }
         .contact-form, .map {
-            width: 100%;
-            padding: 10px;
+            width: 48%;
+            padding: 20px;
             box-sizing: border-box;
+            background: #333;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
         }
         .map iframe {
             width: 100%;
-            height: 300px;
+            border-radius: 8px;
         }
-    }
+        .js-scroll {
+            opacity: 0;
+            transition: opacity 1s ease-out, transform 1s ease-out;
+            transform: translateY(20px);
+        }
+        .js-scroll.scrolled {
+            opacity: 1;
+            transform: none;
+        }
+        @media (max-width: 768px) {
+            .menu-item {
+                width: calc(50% - 40px);
+            }
+            .contact-container {
+                flex-direction: column;
+            }
+            .contact-form, .map {
+                width: 100%;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+            .map iframe {
+                width: 100%;
+                height: 300px;
+            }
+        }
 
-    @media (max-width: 480px) {
-        .menu-item {
-            width: calc(100% - 40px);
+        @media (max-width: 480px) {
+            .menu-item {
+                width: calc(100% - 40px);
+            }
         }
-    }
     </style>
-
+    <script defer src="/scripts.js"></script>
 </head>
 <body>
     <div class="header">
@@ -243,17 +253,18 @@ const generatePage = (title, content) => `
     </div>
 </body>
 </html>
-`;
 
+`;
 // Home page
 app.get('/', (req, res) => {
     const content = `
-    <h2>Welcome to Sushi Store</h2>
-    <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image" src="/images/pexels-isabella-mendes-107313-858501.jpg" alt="Sushi">
+    <h2 class="js-scroll">Welcome to Sushi Store</h2>
+    <p class="home-text js-scroll">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
+    <img class="home-image js-scroll" src="/images/pexels-isabella-mendes-107313-858501.jpg" alt="Sushi">
     `;
-    res.send(generatePage('דף אלינוי', content));
+    res.send(generatePage('Sushi Store - Home', content));
 });
+
 
 // Opening Hours page
 app.get('/hours', (req, res) => {
@@ -306,10 +317,9 @@ app.get('/menu', (req, res) => {
 // Contact page
 app.get('/contact', (req, res) => {
     const content = `
-    <div class="contact-container">
+    <h2 class="js-scroll">Contact Us</h2>
+    <div class="contact-container js-scroll">
         <div class="contact-form">
-            <h2>Contact Us</h2>
-            <p>Get in touch with us for any inquiries or feedback.</p>
             <form action="/send-message" method="post">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
@@ -323,9 +333,8 @@ app.get('/contact', (req, res) => {
             <p>Phone: 123-456-7890</p>
         </div>
         <div class="map">
-            <h2>Find Us Here</h2>
             <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3381.251506734932!2d34.88828481519639!3d32.08334862789601!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4b85f16a28d7%3A0x7a96f0c82c2b7e7e!2s3%20Jabotinsky%20St%2C%20Petah%20Tikva!5e0!3m2!1sen!2sil!4v1623323004667!5m2!1sen!2sil"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3381.050497929073!2d34.9065511155949!3d32.08703702717644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d27b34dcb29fb%3A0x4ba8a1c6f3ae3306!2s3%20Jabotinsky%20St%2C%20Petah%20Tikva!5e0!3m2!1sen!2sil!4v1622961146808!5m2!1sen!2sil"
                 width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
