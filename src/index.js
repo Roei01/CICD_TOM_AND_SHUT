@@ -24,6 +24,8 @@ const transporter = nodemailer.createTransport({
         pass: 'pryk uqde apyp kuwl' // Replace with your app password
     }
 });
+
+
 const generatePage = (title, content) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -31,8 +33,9 @@ const generatePage = (title, content) => `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Caveat:wght@700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Caveat:wght@700&display=swap');
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -45,7 +48,6 @@ const generatePage = (title, content) => `
             min-height: 100vh;
             transition: all 0.3s ease;
         }
-
         .header {
             background-color: #222;
             color: #fff;
@@ -57,12 +59,11 @@ const generatePage = (title, content) => `
             z-index: 1000;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-
         .header h1 {
             margin: 0;
             font-size: 2em;
+            font-family: 'Caveat', cursive;
         }
-
         .navbar {
             background-color: #333;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
@@ -72,27 +73,19 @@ const generatePage = (title, content) => `
             width: 100%;
             top: 60px;
             z-index: 1000;
-            display: flex;
-            justify-content: center;
         }
-
         .navbar a {
             color: #ffda79;
             text-align: center;
             padding: 14px 20px;
             text-decoration: none;
             display: inline-block;
-            margin: 0 10px;
-            border: 1px solid #ffda79;
-            border-radius: 25px;
             transition: background-color 0.3s, color 0.3s;
         }
-
         .navbar a:hover {
             background-color: #ffda79;
             color: #121212;
         }
-
         .content {
             flex: 1;
             padding: 120px 20px 20px;
@@ -100,7 +93,6 @@ const generatePage = (title, content) => `
             flex-direction: column;
             align-items: center;
         }
-
         .footer {
             background-color: #222;
             color: #fff;
@@ -110,7 +102,6 @@ const generatePage = (title, content) => `
             width: 100%;
             bottom: 0;
         }
-
         .menu-item {
             background-color: #333;
             border: 1px solid #444;
@@ -123,27 +114,22 @@ const generatePage = (title, content) => `
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
         .menu-item:hover {
             transform: translateY(-10px);
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-
         .menu-item img {
             width: 100%;
             border-radius: 8px;
             object-fit: cover;
             height: 200px;
         }
-
         .menu-item h3 {
             margin: 10px 0;
         }
-
         .menu-item p {
             color: #ccc;
         }
-
         form {
             display: flex;
             flex-direction: column;
@@ -154,11 +140,9 @@ const generatePage = (title, content) => `
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
-
         form label {
             margin-top: 10px;
         }
-
         form input, form textarea {
             padding: 10px;
             margin-top: 5px;
@@ -168,7 +152,6 @@ const generatePage = (title, content) => `
             color: #fff;
             font-family: 'Poppins', sans-serif;
         }
-
         form input[type="submit"] {
             background-color: #ffda79;
             color: #121212;
@@ -178,11 +161,9 @@ const generatePage = (title, content) => `
             padding: 15px;
             transition: background-color 0.3s;
         }
-
         form input[type="submit"]:hover {
             background-color: #ffcd00;
         }
-
         .home-image {
             width: 100%;
             height: auto;
@@ -191,19 +172,16 @@ const generatePage = (title, content) => `
             max-height: 500px;
             object-fit: cover;
         }
-
         .home-text {
             font-size: 1.2em;
             margin: 20px 0;
             color: #ffda79;
         }
-
         @media (max-width: 768px) {
             .menu-item {
                 width: calc(50% - 40px);
             }
         }
-
         @media (max-width: 480px) {
             .menu-item {
                 width: calc(100% - 40px);
@@ -304,6 +282,9 @@ app.get('/contact', (req, res) => {
     </form>
     <p>Email: contact@sushistore.com</p>
     <p>Phone: 123-456-7890</p>
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3381.3564956170255!2d34.87622621545719!3d32.08736062667657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4b8bf15efb71%3A0x656d2c511d1bca3e!2sZabotinski%20St%203%2C%20Petah%20Tikva!5e0!3m2!1sen!2sil!4v1626331772641!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
     `;
     res.send(generatePage('Sushi Store - Contact', content));
 });
