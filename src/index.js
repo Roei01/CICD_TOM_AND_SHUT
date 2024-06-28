@@ -25,56 +25,66 @@ const generatePage = (title, content) => `
         
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f8f8f8;
+            background-color: #121212;
+            color: #fff;
             margin: 0;
             padding: 0;
             display: flex;
             flex-direction: column;
             min-height: 100vh;
-            color: #333;
         }
         .header {
-            background-color: #ff4757;
+            background-color: #222;
             color: #fff;
             padding: 20px;
             text-align: center;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2em;
         }
         .navbar {
-            overflow: hidden;
-            background-color: #ff6b81;
+            background-color: #333;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 10px 0;
+            text-align: center;
         }
         .navbar a {
-            float: left;
-            display: block;
-            color: #f2f2f2;
+            color: #ffda79;
             text-align: center;
-            padding: 14px 16px;
+            padding: 14px 20px;
             text-decoration: none;
+            display: inline-block;
             transition: background-color 0.3s, color 0.3s;
         }
         .navbar a:hover {
-            background-color: #fff;
-            color: #ff4757;
+            background-color: #ffda79;
+            color: #121212;
         }
         .content {
             flex: 1;
-            padding: 20px;
+            padding: 60px 20px 20px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
-            text-align: center;
         }
         .footer {
-            background-color: #ff6b81;
+            background-color: #222;
             color: #fff;
             text-align: center;
             padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
         }
         .menu-item {
-            background-color: #fff;
-            border: 1px solid #ddd;
+            background-color: #333;
+            border: 1px solid #444;
             border-radius: 8px;
             padding: 20px;
             margin: 10px;
@@ -92,20 +102,20 @@ const generatePage = (title, content) => `
             width: 100%;
             border-radius: 8px;
             object-fit: cover;
-            height: 200px; /* Set a fixed height for the images */
+            height: 200px;
         }
         .menu-item h3 {
             margin: 10px 0;
         }
         .menu-item p {
-            color: #555;
+            color: #ccc;
         }
         form {
             display: flex;
             flex-direction: column;
             max-width: 600px;
             margin: 0 auto;
-            background: #fff;
+            background: #333;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
@@ -116,13 +126,15 @@ const generatePage = (title, content) => `
         form input, form textarea {
             padding: 10px;
             margin-top: 5px;
-            border: 1px solid #ddd;
+            border: 1px solid #444;
             border-radius: 4px;
+            background: #222;
+            color: #fff;
             font-family: 'Poppins', sans-serif;
         }
         form input[type="submit"] {
-            background-color: #ff4757;
-            color: #fff;
+            background-color: #ffda79;
+            color: #121212;
             border: none;
             cursor: pointer;
             margin-top: 20px;
@@ -130,7 +142,7 @@ const generatePage = (title, content) => `
             transition: background-color 0.3s;
         }
         form input[type="submit"]:hover {
-            background-color: #ff6b81;
+            background-color: #ffcd00;
         }
         .home-image {
             width: 100%;
@@ -143,6 +155,7 @@ const generatePage = (title, content) => `
         .home-text {
             font-size: 1.2em;
             margin: 20px 0;
+            color: #ffda79;
         }
         @media (max-width: 768px) {
             .menu-item {
