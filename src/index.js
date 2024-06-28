@@ -21,7 +21,7 @@ const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'royinagar2@gmail.com', // Replace with your email
-        pass: '0548147957' // Replace with your email password or app-specific password
+        pass: 'your-app-password' // Replace with your app password
     }
 });
 
@@ -294,7 +294,8 @@ app.post('/send-message', (req, res) => {
 
     transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            return res.status(500).send('Error sending message.');
+            console.error(error); // Print detailed error to console
+            return res.status(500).send(`Error sending message: ${error.message}`);
         }
         res.send(generatePage('Sushi Store - Contact', '<h2>Thank you for your message!</h2><p>We will get back to you soon.</p>'));
     });
