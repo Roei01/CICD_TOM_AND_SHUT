@@ -32,187 +32,198 @@ const generatePage = (title, content) => `
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #121212;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .header {
-            background-color: #222;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .header h1 {
-            margin: 0;
-            font-size: 2em;
-        }
-        .navbar {
-            background-color: #333;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 10px 0;
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            top: 60px;
-            z-index: 1000;
-        }
-        .navbar a {
-            color: #ffda79;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .navbar a:hover {
-            background-color: #ffda79;
-            color: #121212;
-        }
-        .content {
-            flex: 1;
-            padding: 120px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        .footer {
-            background-color: #222;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-        .menu-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+    
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #121212;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
+    .header {
+        background-color: #222;
+        color: #fff;
+        padding: 20px;
+        text-align: center;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .header h1 {
+        margin: 0;
+        font-size: 2em;
+    }
+    .navbar {
+        background-color: #333;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        padding: 10px 0;
+        text-align: center;
+        position: fixed;
+        width: 100%;
+        top: 60px;
+        z-index: 1000;
+    }
+    .navbar a {
+        color: #ffda79;
+        text-align: center;
+        padding: 14px 20px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.3s, color 0.3s;
+    }
+    .navbar a:hover {
+        background-color: #ffda79;
+        color: #121212;
+    }
+    .content {
+        flex: 1;
+        padding: 120px 20px 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .footer {
+        background-color: #222;
+        color: #fff;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+    }
+    .menu-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .menu-item {
+        background-color: #333;
+        border: 1px solid #444;
+        border-radius: 8px;
+        padding: 20px;
+        margin: 10px;
+        display: inline-block;
+        width: calc(25% - 40px);
+        box-sizing: border-box;
+        text-align: center;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .menu-item:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    .menu-item img {
+        width: 100%;
+        border-radius: 8px;
+        object-fit: cover;
+        height: 200px;
+    }
+    .menu-item h3 {
+        margin: 10px 0;
+    }
+    .menu-item p {
+        color: #ccc;
+    }
+    form {
+        display: flex;
+        flex-direction: column;
+        max-width: 600px;
+        margin: 0 auto;
+        background: #333;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    form label {
+        margin-top: 10px;
+    }
+    form input, form textarea {
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #444;
+        border-radius: 4px;
+        background: #222;
+        color: #fff;
+        font-family: 'Poppins', sans-serif;
+    }
+    form input[type="submit"] {
+        background-color: #ffda79;
+        color: #121212;
+        border: none;
+        cursor: pointer;
+        margin-top: 20px;
+        padding: 15px;
+        transition: background-color 0.3s;
+    }
+    form input[type="submit"]:hover {
+        background-color: #ffcd00;
+    }
+    .home-image {
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin-top: 20px;
+        max-height: 500px;
+        object-fit: cover;
+    }
+    .home-text {
+        font-size: 1.2em;
+        margin: 20px 0;
+        color: #ffda79;
+    }
+    .contact-container {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+    .contact-form, .map {
+        width: 48%;
+        padding: 20px;
+        box-sizing: border-box;
+        background: #333;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        margin-bottom: 20px;
+    }
+    .map iframe {
+        width: 100%;
+        border-radius: 8px;
+    }
+    @media (max-width: 768px) {
         .menu-item {
-            background-color: #333;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 10px;
-            display: inline-block;
-            width: calc(25% - 40px);
-            box-sizing: border-box;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .menu-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .menu-item img {
-            width: 100%;
-            border-radius: 8px;
-            object-fit: cover;
-            height: 200px;
-        }
-        .menu-item h3 {
-            margin: 10px 0;
-        }
-        .menu-item p {
-            color: #ccc;
+            width: calc(50% - 40px);
         }
         .contact-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-            align-items: flex-start;
-            padding: 20px;
+            flex-direction: column;
         }
         .contact-form, .map {
-            flex: 1;
-            min-width: 300px;
-            margin: 10px;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: 0 auto;
-            background: #333;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        form label {
-            margin-top: 10px;
-        }
-        form input, form textarea {
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #444;
-            border-radius: 4px;
-            background: #222;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-        }
-        form input[type="submit"] {
-            background-color: #ffda79;
-            color: #121212;
-            border: none;
-            cursor: pointer;
-            margin-top: 20px;
-            padding: 15px;
-            transition: background-color 0.3s;
-        }
-        form input[type="submit"]:hover {
-            background-color: #ffcd00;
-        }
-        .home-image {
             width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-top: 20px;
-            max-height: 500px;
-            object-fit: cover;
+            padding: 10px;
+            box-sizing: border-box;
         }
-        .home-text {
-            font-size: 1.2em;
-            margin: 20px 0;
-            color: #ffda79;
+        .map iframe {
+            width: 100%;
+            height: 300px;
         }
-        @media (max-width: 768px) {
-            .menu-item {
-                width: calc(50% - 40px);
-            }
-            .contact-container {
-                flex-direction: column;
-            }
-            .contact-form, .map {
-                width: 100%;
-                padding: 10px;
-                box-sizing: border-box;
-            }
-            .map iframe {
-                width: 100%;
-                height: 300px;
-            }
+    }
+
+    @media (max-width: 480px) {
+        .menu-item {
+            width: calc(100% - 40px);
         }
-        @media (max-width: 480px) {
-            .menu-item {
-                width: calc(100% - 40px);
-            }
-        }
+    }
     </style>
+
 </head>
 <body>
     <div class="header">
@@ -241,7 +252,7 @@ app.get('/', (req, res) => {
     <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
     <img class="home-image" src="/images/pexels-isabella-mendes-107313-858501.jpg" alt="Sushi">
     `;
-    res.send(generatePage('Sushi Store - Home', content));
+    res.send(generatePage('דף אלינוי', content));
 });
 
 // Opening Hours page
