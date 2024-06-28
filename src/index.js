@@ -33,7 +33,6 @@ const generatePage = (title, content) => `
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>${title}</title>
     <style>
-        /* CSS existing code */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
         
         body {
@@ -98,11 +97,6 @@ const generatePage = (title, content) => `
             position: fixed;
             width: 100%;
             bottom: 0;
-        }
-        .menu-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
         }
         .menu-item {
             background-color: #333;
@@ -179,36 +173,6 @@ const generatePage = (title, content) => `
             margin: 20px 0;
             color: #ffda79;
         }
-        .contact-container {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .contact-form, .map {
-            width: 48%;
-            padding: 20px;
-            box-sizing: border-box;
-            background: #333;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-        .map iframe {
-            width: 100%;
-            border-radius: 8px;
-        }
-        .js-scroll {
-            opacity: 0;
-            transition: opacity 1s ease-out, transform 1s ease-out;
-            transform: translateY(20px);
-        }
-        .js-scroll.scrolled {
-            opacity: 1;
-            transform: none;
-        }
         @media (max-width: 768px) {
             .menu-item {
                 width: calc(50% - 40px);
@@ -226,45 +190,53 @@ const generatePage = (title, content) => `
                 height: 300px;
             }
         }
-
         @media (max-width: 480px) {
             .menu-item {
                 width: calc(100% - 40px);
             }
         }
     </style>
-    <script defer src="/scripts.js"></script>
 </head>
 <body>
     <div class="header">
         <h1>${title}</h1>
     </div>
     <div class="navbar">
-        <a href="/">Home</a>
-        <a href="/hours">Opening Hours</a>
-        <a href="/menu">Menu</a>
-        <a href="/contact">Contact</a>
+        <a href="/" onclick="loadPage(event, 'home')">Home</a>
+        <a href="/hours" onclick="loadPage(event, 'hours')">Opening Hours</a>
+        <a href="/menu" onclick="loadPage(event, 'menu')">Menu</a>
+        <a href="/contact" onclick="loadPage(event, 'contact')">Contact</a>
     </div>
-    <div class="content">
+    <div class="content" id="content">
         ${content}
     </div>
     <div class="footer">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
+    <script>
+        function loadPage(event, page) {
+            event.preventDefault();
+            fetch(page)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('content').innerHTML = html;
+                })
+                .catch(error => console.error('Error loading page:', error));
+        }
+    </script>
 </body>
 </html>
-
 `;
+
 // Home page
 app.get('/', (req, res) => {
     const content = `
-    <h2 class="js-scroll">Welcome to Sushi Store</h2>
-    <p class="home-text js-scroll">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image js-scroll" src="/images/pexels-isabella-mendes-107313-858501.jpg" alt="Sushi">
+    <h2>Welcome to Sushi Store</h2>
+    <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
+    <img class="home-image" src="/images/pexels-isabella-mendes-107313-858501.jpg" alt="Sushi">
     `;
     res.send(generatePage('Sushi Store - Home', content));
 });
-
 
 // Opening Hours page
 app.get('/hours', (req, res) => {
@@ -284,31 +256,29 @@ app.get('/hours', (req, res) => {
 app.get('/menu', (req, res) => {
     const content = `
     <h2>Our Menu</h2>
-    <div class="menu-container">
-        <div class="menu-item">
-            <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi 1">
-            <h3>Sushi Set 1</h3>
-            <p>Delicious sushi set with fresh ingredients.</p>
-            <p>Price: $12.99</p>
-        </div>
-        <div class="menu-item">
-            <img src="/images/pexels-rajesh-tp-749235-2098085.jpg" alt="Sushi 2">
-            <h3>Sushi Set 2</h3>
-            <p>Try our special sushi set with exclusive flavors.</p>
-            <p>Price: $14.99</p>
-        </div>
-        <div class="menu-item">
-            <img src="/images/pexels-valeriya-1028426.jpg" alt="Sushi 3">
-            <h3>Sushi Set 3</h3>
-            <p>A perfect combination of taste and freshness.</p>
-            <p>Price: $16.99</p>
-        </div>
-        <div class="menu-item">
-            <img src="/images/pexels-valeriya-1148087.jpg" alt="Sushi 4">
-            <h3>Sushi Set 4</h3>
-            <p>Experience the authentic taste of our sushi.</p>
-            <p>Price: $18.99</p>
-        </div>
+    <div class="menu-item">
+        <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi 1">
+        <h3>Sushi Set 1</h3>
+        <p>Delicious sushi set with fresh ingredients.</p>
+        <p>Price: $12.99</p>
+    </div>
+    <div class="menu-item">
+        <img src="/images/pexels-rajesh-tp-749235-2098085.jpg" alt="Sushi 2">
+        <h3>Sushi Set 2</h3>
+        <p>Try our special sushi set with exclusive flavors.</p>
+        <p>Price: $14.99</p>
+    </div>
+    <div class="menu-item">
+        <img src="/images/pexels-valeriya-1028426.jpg" alt="Sushi 3">
+        <h3>Sushi Set 3</h3>
+        <p>A perfect combination of taste and freshness.</p>
+        <p>Price: $16.99</p>
+    </div>
+    <div class="menu-item">
+        <img src="/images/pexels-valeriya-1148087.jpg" alt="Sushi 4">
+        <h3>Sushi Set 4</h3>
+        <p>Experience the authentic taste of our sushi.</p>
+        <p>Price: $18.99</p>
     </div>
     `;
     res.send(generatePage('Sushi Store - Menu', content));
@@ -317,9 +287,10 @@ app.get('/menu', (req, res) => {
 // Contact page
 app.get('/contact', (req, res) => {
     const content = `
-    <h2 class="js-scroll">Contact Us</h2>
-    <div class="contact-container js-scroll">
+    <div class="contact-container">
         <div class="contact-form">
+            <h2>Contact Us</h2>
+            <p>Get in touch with us for any inquiries or feedback.</p>
             <form action="/send-message" method="post">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
@@ -333,9 +304,7 @@ app.get('/contact', (req, res) => {
             <p>Phone: 123-456-7890</p>
         </div>
         <div class="map">
-            <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3381.050497929073!2d34.9065511155949!3d32.08703702717644!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d27b34dcb29fb%3A0x4ba8a1c6f3ae3306!2s3%20Jabotinsky%20St%2C%20Petah%20Tikva!5e0!3m2!1sen!2sil!4v1622961146808!5m2!1sen!2sil"
-                width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.768280268636!2d34.7925014758049!3d32.08485072526314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4cdd4a67d3b7%3A0x6f6e88c8f16d8402!2zMCDXqNee15XXldeuLCDXqNeQ15jXldeo15kgMTI1NCDXqdeR15XXqiBcdTAwMDQg2LPZhNmF2LHZitivINmE2YXYsdmG2Lkg15HXmdec15ogNCAxNyDYp9mE2KzZhdmF2IwgMTY1NzEg0L_RgNC10L_QvtGA0L7QtNGB0YLQsNGC!5e0!3m2!1sen!2sil!4v1688146201798!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
     `;
