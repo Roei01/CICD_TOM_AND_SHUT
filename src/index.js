@@ -25,7 +25,6 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-
 const generatePage = (title, content) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -177,9 +176,38 @@ const generatePage = (title, content) => `
             margin: 20px 0;
             color: #ffda79;
         }
+        .map {
+            width: 100%;
+            height: 450px;
+            margin-top: 20px;
+        }
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            max-width: 600px;
+            margin: 0 auto;
+            background: #333;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .contact-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .contact-container .contact-form,
+        .contact-container .map {
+            flex: 1;
+            margin: 10px;
+        }
         @media (max-width: 768px) {
             .menu-item {
                 width: calc(50% - 40px);
+            }
+            .contact-container {
+                flex-direction: column;
             }
         }
         @media (max-width: 480px) {
@@ -208,7 +236,6 @@ const generatePage = (title, content) => `
 </body>
 </html>
 `;
-
 
 // Home page
 app.get('/', (req, res) => {
@@ -269,26 +296,29 @@ app.get('/menu', (req, res) => {
 // Contact page
 app.get('/contact', (req, res) => {
     const content = `
-    <h2>Contact Us</h2>
-    <p>Get in touch with us for any inquiries or feedback.</p>
-    <form action="/send-message" method="post">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="message">Message:</label>
-        <textarea id="message" name="message" rows="4" cols="50" required></textarea>
-        <input type="submit" value="Submit">
-    </form>
-    <p>Email: contact@sushistore.com</p>
-    <p>Phone: 123-456-7890</p>
-    <div class="map">
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3381.3564956170255!2d34.87622621545719!3d32.08736062667657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4b8bf15efb71%3A0x656d2c511d1bca3e!2sZabotinski%20St%203%2C%20Petah%20Tikva!5e0!3m2!1sen!2sil!4v1626331772641!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    <div class="contact-container">
+        <div class="contact-form">
+            <h2>Contact Us</h2>
+            <p>Get in touch with us for any inquiries or feedback.</p>
+            <form action="/send-message" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" cols="50" required></textarea>
+                <input type="submit" value="Submit">
+            </form>
+            <p>Email: contact@sushistore.com</p>
+            <p>Phone: 123-456-7890</p>
+        </div>
+        <div class="map">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3381.3564956170255!2d34.87622621545719!3d32.08736062667657!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4b8bf15efb71%3A0x656d2c511d1bca3e!2sZabotinski%20St%203%2C%20Petah%20Tikva!5e0!3m2!1sen!2sil!4v1626331772641!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
     </div>
     `;
     res.send(generatePage('Sushi Store - Contact', content));
 });
-
 
 // Handle form submission
 app.post('/send-message', (req, res) => {
