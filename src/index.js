@@ -223,10 +223,10 @@ const generatePage = (title, content) => `
         <h1>${title}</h1>
     </div>
     <div class="navbar">
-        <a href="/" onclick="loadPage(event, '/')">Home</a>
-        <a href="/hours" onclick="loadPage(event, '/hours')">Opening Hours</a>
-        <a href="/menu" onclick="loadPage(event, '/menu')">Menu</a>
-        <a href="/contact" onclick="loadPage(event, '/contact')">Contact</a>
+        <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
+        <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
+        <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
+        <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
     </div>
     <div class="content" id="content">
         ${content}
@@ -244,7 +244,7 @@ app.get('/', (req, res) => {
     const content = `
     <h2>Welcome to Sushi Store</h2>
     <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image" src="/images/pexels-isabella-mendes-107313-858501.jpg" alt="Sushi">
+    <img class="home-image" src="/images/sushi.jpg" alt="Sushi">
     `;
     res.send(generatePage('Sushi Store - Home', content));
 });
