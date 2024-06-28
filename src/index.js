@@ -230,6 +230,8 @@ const generatePage = (title, content) => `
 </body>
 </html>
 `;
+
+
 // Home page
 app.get('/', (req, res) => {
     const content = `
@@ -305,7 +307,6 @@ app.get('/contact', (req, res) => {
     `;
     res.send(generatePage('Sushi Store - Contact', content));
 });
-
 
 
 // Handle form submission
