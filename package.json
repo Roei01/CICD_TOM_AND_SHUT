@@ -8,7 +8,7 @@
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
     "test": "mocha tests/*.spec.js",
-    "lint": "eslint src"
+    "lint": "npx eslint src"
   },
   "author": "Roei Nagar",
   "license": "ISC",
