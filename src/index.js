@@ -24,7 +24,6 @@ const transporter = nodemailer.createTransport({
         pass: 'pryk uqde apyp kuwl' // Replace with your app password
     }
 });
-
 const generatePage = (title, content) => `
 <!DOCTYPE html>
 <html lang="en">
@@ -306,6 +305,7 @@ app.get('/contact', (req, res) => {
     `;
     res.send(generatePage('Sushi Store - Contact', content));
 });
+
 
 
 // Handle form submission
