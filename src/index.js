@@ -101,13 +101,17 @@ const generatePage = (title, content) => `
             width: 100%;
             bottom: 0;
         }
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
         .menu-item {
             background-color: #333;
             border: 1px solid #444;
             border-radius: 8px;
             padding: 20px;
             margin: 10px;
-            display: inline-block;
             width: calc(25% - 40px);
             box-sizing: border-box;
             text-align: center;
@@ -265,29 +269,31 @@ app.get('/hours', (req, res) => {
 app.get('/menu', (req, res) => {
     const content = `
     <h2>Our Menu</h2>
-    <div class="menu-item">
-        <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi 1">
-        <h3>Sushi Set 1</h3>
-        <p>Delicious sushi set with fresh ingredients.</p>
-        <p>Price: $12.99</p>
-    </div>
-    <div class="menu-item">
-        <img src="/images/pexels-rajesh-tp-749235-2098085.jpg" alt="Sushi 2">
-        <h3>Sushi Set 2</h3>
-        <p>Try our special sushi set with exclusive flavors.</p>
-        <p>Price: $14.99</p>
-    </div>
-    <div class="menu-item">
-        <img src="/images/pexels-valeriya-1028426.jpg" alt="Sushi 3">
-        <h3>Sushi Set 3</h3>
-        <p>A perfect combination of taste and freshness.</p>
-        <p>Price: $16.99</p>
-    </div>
-    <div class="menu-item">
-        <img src="/images/pexels-valeriya-1148087.jpg" alt="Sushi 4">
-        <h3>Sushi Set 4</h3>
-        <p>Experience the authentic taste of our sushi.</p>
-        <p>Price: $18.99</p>
+    <div class="menu-container">
+        <div class="menu-item">
+            <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi 1">
+            <h3>Sushi Set 1</h3>
+            <p>Delicious sushi set with fresh ingredients.</p>
+            <p>Price: $12.99</p>
+        </div>
+        <div class="menu-item">
+            <img src="/images/pexels-rajesh-tp-749235-2098085.jpg" alt="Sushi 2">
+            <h3>Sushi Set 2</h3>
+            <p>Try our special sushi set with exclusive flavors.</p>
+            <p>Price: $14.99</p>
+        </div>
+        <div class="menu-item">
+            <img src="/images/pexels-valeriya-1028426.jpg" alt="Sushi 3">
+            <h3>Sushi Set 3</h3>
+            <p>A perfect combination of taste and freshness.</p>
+            <p>Price: $16.99</p>
+        </div>
+        <div class="menu-item">
+            <img src="/images/pexels-valeriya-1148087.jpg" alt="Sushi 4">
+            <h3>Sushi Set 4</h3>
+            <p>Experience the authentic taste of our sushi.</p>
+            <p>Price: $18.99</p>
+        </div>
     </div>
     `;
     res.send(generatePage('Sushi Store - Menu', content));
