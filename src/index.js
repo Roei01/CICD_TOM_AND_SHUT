@@ -293,17 +293,13 @@ const generatePage = (title, content) => `
 </html>
 `;
 
-
-
-
-
-
 // Home page
 app.get('/', (req, res) => {
     const content = `
     <h2>Welcome to Sushi Store</h2>
     <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image" src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi">
+    <img class="home-image" src="/images/sushi.jpg" alt="Sushi">
+    <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');" class="btn">Explore Menu</a>
     `;
     res.send(generatePage('Sushi Store - Home', content));
 });
@@ -322,7 +318,7 @@ app.get('/hours', (req, res) => {
     res.send(generatePage('Sushi Store - Opening Hours', content));
 });
 
-
+// Menu page
 app.get('/menu', (req, res) => {
     const content = `
     <h2>Our Menu</h2>
@@ -332,24 +328,28 @@ app.get('/menu', (req, res) => {
             <h3>Sushi Set 1</h3>
             <p>Delicious sushi set with fresh ingredients.</p>
             <p>Price: $12.99</p>
+            <button onclick="addToCart('Sushi Set 1', 12.99)">Add to Cart</button>
         </div>
         <div class="menu-item">
             <img src="/images/pexels-rajesh-tp-749235-2098085.jpg" alt="Sushi 2">
             <h3>Sushi Set 2</h3>
             <p>Try our special sushi set with exclusive flavors.</p>
             <p>Price: $14.99</p>
+            <button onclick="addToCart('Sushi Set 2', 14.99)">Add to Cart</button>
         </div>
         <div class="menu-item">
             <img src="/images/pexels-valeriya-1028426.jpg" alt="Sushi 3">
             <h3>Sushi Set 3</h3>
             <p>A perfect combination of taste and freshness.</p>
             <p>Price: $16.99</p>
+            <button onclick="addToCart('Sushi Set 3', 16.99)">Add to Cart</button>
         </div>
         <div class="menu-item">
             <img src="/images/pexels-valeriya-1148087.jpg" alt="Sushi 4">
             <h3>Sushi Set 4</h3>
             <p>Experience the authentic taste of our sushi.</p>
             <p>Price: $18.99</p>
+            <button onclick="addToCart('Sushi Set 4', 18.99)">Add to Cart</button>
         </div>
     </div>
     `;
@@ -381,6 +381,17 @@ app.get('/contact', (req, res) => {
     </div>
     `;
     res.send(generatePage('Sushi Store - Contact', content));
+});
+
+// Cart page
+app.get('/cart', (req, res) => {
+    const content = `
+    <h2>Your Cart</h2>
+    <div id="cart-items"></div>
+    <p>Total: $<span id="cart-total">0.00</span></p>
+    <button onclick="checkout()">Checkout</button>
+    `;
+    res.send(generatePage('Sushi Store - Cart', content));
 });
 
 // Handle form submission
