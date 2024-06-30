@@ -188,6 +188,7 @@ function addToCart(event) {
 
     saveCart(cart);
     updateCartDisplay();
+    showCartDropdown();
 }
 
 function getCart() {
@@ -202,7 +203,8 @@ function updateCartDisplay() {
     const cart = getCart();
     const cartItemsContainer = document.getElementById('cart-items');
     const cartTotalElement = document.getElementById('cart-total');
-    if (!cartItemsContainer || !cartTotalElement) return;
+    const cartTotalPriceElement = document.getElementById('cart-total-price');
+    if (!cartItemsContainer || !cartTotalElement || !cartTotalPriceElement) return;
 
     cartItemsContainer.innerHTML = '';
     let total = 0;
@@ -214,10 +216,28 @@ function updateCartDisplay() {
     });
 
     cartTotalElement.innerText = total.toFixed(2);
+    cartTotalPriceElement.innerText = total.toFixed(2);
 }
 
 function checkout() {
     alert('Thank you for your purchase!');
     localStorage.removeItem('cart');
     updateCartDisplay();
+}
+
+function toggleCart() {
+    const cartDropdown = document.getElementById('cart-dropdown');
+    if (cartDropdown.style.display === 'block') {
+        cartDropdown.style.display = 'none';
+    } else {
+        cartDropdown.style.display = 'block';
+    }
+}
+
+function showCartDropdown() {
+    const cartDropdown = document.getElementById('cart-dropdown');
+    cartDropdown.style.display = 'block';
+    setTimeout(() => {
+        cartDropdown.style.display = 'none';
+    }, 3000);
 }

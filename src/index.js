@@ -262,11 +262,48 @@ const generatePage = (title, content) => `
             background-color: #ffda79;
             z-index: 1000;
         }
+        .cart-icon {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        .cart-icon img {
+            width: 40px;
+            height: 40px;
+        }
+        .cart-total {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: #ff4444;
+            color: #fff;
+            border-radius: 50%;
+            padding: 5px 10px;
+            font-size: 12px;
+        }
+        .cart-dropdown {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            display: none;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>${title}</h1>
+        <div class="cart-icon" onclick="toggleCart()">
+            <img src="/images/cart.png" alt="Cart">
+            <div class="cart-total" id="cart-total">0</div>
+        </div>
     </div>
     <div class="navbar">
         <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
@@ -274,6 +311,11 @@ const generatePage = (title, content) => `
         <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
         <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
         <a href="/cart" onclick="event.preventDefault(); loadPage('/cart');">Cart</a>
+    </div>
+    <div class="cart-dropdown" id="cart-dropdown">
+        <div id="cart-items"></div>
+        <p>Total: $<span id="cart-total-price">0.00</span></p>
+        <button onclick="checkout()">Checkout</button>
     </div>
     <div class="content fade-in" id="content">
         ${content}
@@ -292,6 +334,7 @@ const generatePage = (title, content) => `
 </body>
 </html>
 `;
+
 
 // Home page
 app.get('/', (req, res) => {
