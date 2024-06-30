@@ -200,7 +200,7 @@ const generatePage = (title, content) => `
             border: none;
             border-radius: 8px;
         }
-        @media (min-width: 800px) {
+        @media (min-width: 769px) {
             .contact-container {
                 flex-direction: row;
                 justify-content: space-between;
@@ -208,6 +208,36 @@ const generatePage = (title, content) => `
             .contact-form, .map {
                 width: 48%;
                 padding: 20px;
+            }
+        }
+        .error-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ff4444;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            animation: fadeIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
             }
         }
     </style>
@@ -219,7 +249,7 @@ const generatePage = (title, content) => `
     <div class="navbar">
         <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
         <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
-        <a href="/menu" onclick="event.preventPreventDefault(); loadPage('/menu');">Menu</a>
+        <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
         <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
     </div>
     <div class="content fade-in" id="content">
@@ -232,6 +262,7 @@ const generatePage = (title, content) => `
 </body>
 </html>
 `;
+
 
 
 // Home page
