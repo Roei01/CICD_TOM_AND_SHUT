@@ -274,10 +274,12 @@ const generatePage = (title, content) => `
             applyPageEffects();
             adjustContentHeight();
         });
+        window.addEventListener('resize', adjustContentHeight);
     </script>
 </body>
 </html>
 `;
+
 
 
 

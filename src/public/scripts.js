@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     applyPageEffects();
+    adjustContentHeight();
 });
 
 function showLoadingIndicator() {
