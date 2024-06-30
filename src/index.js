@@ -132,6 +132,18 @@ const generatePage = (title, content) => `
         .menu-item p {
             color: #ccc;
         }
+        .menu-item button {
+            background-color: #ffda79;
+            color: #121212;
+            border: none;
+            padding: 10px 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .menu-item button:hover {
+            background-color: #ffcd00;
+        }
         form {
             display: flex;
             flex-direction: column;
@@ -261,6 +273,7 @@ const generatePage = (title, content) => `
         <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
         <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
         <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
+        <a href="/cart" onclick="event.preventDefault(); loadPage('/cart');">Cart</a>
     </div>
     <div class="content fade-in" id="content">
         ${content}

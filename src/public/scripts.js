@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     applyPageEffects();
     adjustContentHeight();
+    initializeCart();
 });
 
 function showLoadingIndicator() {
@@ -159,3 +160,64 @@ function adjustContentHeight() {
 
 document.addEventListener('DOMContentLoaded', adjustContentHeight);
 window.addEventListener('resize', adjustContentHeight);
+
+// Cart functionality
+function initializeCart() {
+    document.querySelectorAll('.menu-item button').forEach(button => {
+        button.addEventListener('click', addToCart);
+    });
+    updateCartDisplay();
+}
+
+function addToCart(event) {
+    const button = event.target;
+    const menuItem = button.closest('.menu-item');
+    const item = {
+        name: menuItem.querySelector('h3').innerText,
+        price: parseFloat(menuItem.querySelector('p').innerText.replace('Price: $', '')),
+        quantity: 1
+    };
+
+    const cart = getCart();
+    const existingItem = cart.find(cartItem => cartItem.name === item.name);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push(item);
+    }
+
+    saveCart(cart);
+    updateCartDisplay();
+}
+
+function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+}
+
+function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function updateCartDisplay() {
+    const cart = getCart();
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalElement = document.getElementById('cart-total');
+    if (!cartItemsContainer || !cartTotalElement) return;
+
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.innerText = `${item.name} - $${item.price.toFixed(2)} x ${item.quantity}`;
+        cartItemsContainer.appendChild(itemElement);
+        total += item.price * item.quantity;
+    });
+
+    cartTotalElement.innerText = total.toFixed(2);
+}
+
+function checkout() {
+    alert('Thank you for your purchase!');
+    localStorage.removeItem('cart');
+    updateCartDisplay();
+}
