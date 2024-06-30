@@ -240,6 +240,16 @@ const generatePage = (title, content) => `
                 opacity: 0;
             }
         }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 5px;
+            background-color: #ffda79;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>

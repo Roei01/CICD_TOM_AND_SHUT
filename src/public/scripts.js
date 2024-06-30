@@ -13,6 +13,7 @@ function loadPage(url) {
 
     console.log(`Loading page: ${url}`);
     showLoadingIndicator();
+    showProgressBar();
     fetch(url)
         .then(response => response.text())
         .then(html => {
@@ -25,7 +26,10 @@ function loadPage(url) {
             console.error('Error loading page:', error);
             showErrorNotification('Failed to load page.');
         })
-        .finally(() => hideLoadingIndicator());
+        .finally(() => {
+            hideLoadingIndicator();
+            hideProgressBar();
+        });
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -71,6 +75,36 @@ function hideLoadingIndicator() {
     const loadingIndicator = document.getElementById('loading-indicator');
     if (loadingIndicator) {
         loadingIndicator.style.display = 'none';
+    }
+}
+
+function showProgressBar() {
+    let progressBar = document.getElementById('progress-bar');
+    if (!progressBar) {
+        progressBar = document.createElement('div');
+        progressBar.id = 'progress-bar';
+        progressBar.style.position = 'fixed';
+        progressBar.style.top = '0';
+        progressBar.style.left = '0';
+        progressBar.style.width = '0';
+        progressBar.style.height = '5px';
+        progressBar.style.backgroundColor = '#ffda79';
+        progressBar.style.zIndex = '1000';
+        document.body.appendChild(progressBar);
+    }
+    progressBar.style.display = 'block';
+    progressBar.style.width = '0';
+    setTimeout(() => {
+        progressBar.style.transition = 'width 2s';
+        progressBar.style.width = '100%';
+    }, 100);
+}
+
+function hideProgressBar() {
+    const progressBar = document.getElementById('progress-bar');
+    if (progressBar) {
+        progressBar.style.transition = 'none';
+        progressBar.style.display = 'none';
     }
 }
 
