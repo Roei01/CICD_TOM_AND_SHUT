@@ -269,9 +269,15 @@ const generatePage = (title, content) => `
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
     <script src="/scripts.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            applyPageEffects();
+        });
+    </script>
 </body>
 </html>
 `;
+
 
 
 

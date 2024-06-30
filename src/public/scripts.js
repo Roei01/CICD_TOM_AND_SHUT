@@ -127,4 +127,13 @@ function applyPageEffects() {
             element.style.opacity = 1;
         }, 100);
     });
+
+    // הוספת אפקטים נוספים לאחר טעינת העמוד
+    document.querySelectorAll('.menu-item').forEach(item => {
+        item.style.transform = 'scale(0)';
+        setTimeout(() => {
+            item.style.transition = 'transform 0.5s';
+            item.style.transform = 'scale(1)';
+        }, 100);
+    });
 }
