@@ -98,14 +98,21 @@ const generatePage = (title, content) => `
             width: 100%;
             bottom: 0;
         }
+        .menu-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
         .menu-item {
             background-color: #333;
             border: 1px solid #444;
             border-radius: 8px;
             padding: 20px;
-            margin: 10px;
-            width: 100%;
-            box-sizing: border-box;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
         }
@@ -124,11 +131,6 @@ const generatePage = (title, content) => `
         }
         .menu-item p {
             color: #ccc;
-        }
-        .menu-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
         }
         form {
             display: flex;
@@ -179,8 +181,8 @@ const generatePage = (title, content) => `
         }
         .contact-container {
             display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
@@ -188,8 +190,8 @@ const generatePage = (title, content) => `
             box-sizing: border-box;
         }
         .contact-form, .map {
-            width: 48%;
-            padding: 20px;
+            width: 100%;
+            padding: 10px;
             box-sizing: border-box;
         }
         .map iframe {
@@ -198,26 +200,14 @@ const generatePage = (title, content) => `
             border: none;
             border-radius: 8px;
         }
-        @media (max-width: 768px) {
-            .menu-item {
-                width: calc(50% - 20px);
-            }
+        @media (min-width: 800px) {
             .contact-container {
-                flex-direction: column;
+                flex-direction: row;
+                justify-content: space-between;
             }
             .contact-form, .map {
-                width: 70%;
-                padding: 10px;
-                box-sizing: border-box;
-            }
-            .map iframe {
-                width: 90%;
-                height: 300px;
-            }
-        }
-        @media (max-width: 480px) {
-            .menu-item {
-                width: calc(100% - 20px);
+                width: 48%;
+                padding: 20px;
             }
         }
     </style>
@@ -229,7 +219,7 @@ const generatePage = (title, content) => `
     <div class="navbar">
         <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
         <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
-        <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
+        <a href="/menu" onclick="event.preventPreventDefault(); loadPage('/menu');">Menu</a>
         <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
     </div>
     <div class="content fade-in" id="content">
@@ -242,6 +232,7 @@ const generatePage = (title, content) => `
 </body>
 </html>
 `;
+
 
 // Home page
 app.get('/', (req, res) => {
@@ -267,7 +258,7 @@ app.get('/hours', (req, res) => {
     res.send(generatePage('Sushi Store - Opening Hours', content));
 });
 
-// Menu page
+
 app.get('/menu', (req, res) => {
     const content = `
     <h2>Our Menu</h2>
