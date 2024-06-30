@@ -136,4 +136,25 @@ function applyPageEffects() {
             item.style.transform = 'scale(1)';
         }, 100);
     });
+
+    adjustContentHeight();
 }
+
+function adjustContentHeight() {
+    const content = document.querySelector('.content');
+    const footer = document.querySelector('.footer');
+    if (content && footer) {
+        const contentHeight = content.offsetHeight;
+        const windowHeight = window.innerHeight;
+        const footerHeight = footer.offsetHeight;
+
+        if (contentHeight + footerHeight < windowHeight) {
+            content.style.minHeight = `${windowHeight - footerHeight}px`;
+        } else {
+            content.style.minHeight = 'auto';
+        }
+    }
+}
+
+document.addEventListener('DOMContentLoaded', adjustContentHeight);
+window.addEventListener('resize', adjustContentHeight);
