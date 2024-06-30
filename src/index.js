@@ -104,8 +104,7 @@ const generatePage = (title, content) => `
             border-radius: 8px;
             padding: 20px;
             margin: 10px;
-            display: inline-block;
-            width: calc(25% - 40px);
+            width: 100%;
             box-sizing: border-box;
             text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
@@ -125,6 +124,11 @@ const generatePage = (title, content) => `
         }
         .menu-item p {
             color: #ccc;
+        }
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         form {
             display: flex;
@@ -196,7 +200,7 @@ const generatePage = (title, content) => `
         }
         @media (max-width: 768px) {
             .menu-item {
-                width: calc(50% - 40px);
+                width: calc(50% - 20px);
             }
             .contact-container {
                 flex-direction: column;
@@ -213,7 +217,7 @@ const generatePage = (title, content) => `
         }
         @media (max-width: 480px) {
             .menu-item {
-                width: calc(100% - 40px);
+                width: calc(100% - 20px);
             }
         }
     </style>
@@ -228,10 +232,10 @@ const generatePage = (title, content) => `
         <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
         <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
     </div>
-    <div class="content" id="content">
+    <div class="content fade-in" id="content">
         ${content}
     </div>
-    <div class="footer">
+    <div class="footer fade-in">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
     <script src="/scripts.js"></script>
@@ -244,7 +248,7 @@ app.get('/', (req, res) => {
     const content = `
     <h2>Welcome to Sushi Store</h2>
     <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image" src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi">
+    <img class="home-image" src="/images/sushi.jpg" alt="Sushi">
     `;
     res.send(generatePage('Sushi Store - Home', content));
 });
@@ -267,29 +271,31 @@ app.get('/hours', (req, res) => {
 app.get('/menu', (req, res) => {
     const content = `
     <h2>Our Menu</h2>
-    <div class="menu-item">
-        <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi 1">
-        <h3>Sushi Set 1</h3>
-        <p>Delicious sushi set with fresh ingredients.</p>
-        <p>Price: $12.99</p>
-    </div>
-    <div class="menu-item">
-        <img src="/images/pexels-rajesh-tp-749235-2098085.jpg" alt="Sushi 2">
-        <h3>Sushi Set 2</h3>
-        <p>Try our special sushi set with exclusive flavors.</p>
-        <p>Price: $14.99</p>
-    </div>
-    <div class="menu-item">
-        <img src="/images/pexels-valeriya-1028426.jpg" alt="Sushi 3">
-        <h3>Sushi Set 3</h3>
-        <p>A perfect combination of taste and freshness.</p>
-        <p>Price: $16.99</p>
-    </div>
-    <div class="menu-item">
-        <img src="/images/pexels-valeriya-1148087.jpg" alt="Sushi 4">
-        <h3>Sushi Set 4</h3>
-        <p>Experience the authentic taste of our sushi.</p>
-        <p>Price: $18.99</p>
+    <div class="menu-container">
+        <div class="menu-item">
+            <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi 1">
+            <h3>Sushi Set 1</h3>
+            <p>Delicious sushi set with fresh ingredients.</p>
+            <p>Price: $12.99</p>
+        </div>
+        <div class="menu-item">
+            <img src="/images/pexels-rajesh-tp-749235-2098085.jpg" alt="Sushi 2">
+            <h3>Sushi Set 2</h3>
+            <p>Try our special sushi set with exclusive flavors.</p>
+            <p>Price: $14.99</p>
+        </div>
+        <div class="menu-item">
+            <img src="/images/pexels-valeriya-1028426.jpg" alt="Sushi 3">
+            <h3>Sushi Set 3</h3>
+            <p>A perfect combination of taste and freshness.</p>
+            <p>Price: $16.99</p>
+        </div>
+        <div class="menu-item">
+            <img src="/images/pexels-valeriya-1148087.jpg" alt="Sushi 4">
+            <h3>Sushi Set 4</h3>
+            <p>Experience the authentic taste of our sushi.</p>
+            <p>Price: $18.99</p>
+        </div>
     </div>
     `;
     res.send(generatePage('Sushi Store - Menu', content));

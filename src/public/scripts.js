@@ -27,4 +27,13 @@ document.addEventListener('DOMContentLoaded', () => {
             loadPage(event.state.path);
         }
     });
+
+    // Add animations
+    document.querySelectorAll('.fade-in').forEach(element => {
+        element.style.opacity = 0;
+        setTimeout(() => {
+            element.style.transition = 'opacity 1s';
+            element.style.opacity = 1;
+        }, 100);
+    });
 });
