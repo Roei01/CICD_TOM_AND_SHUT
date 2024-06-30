@@ -206,12 +206,12 @@ const generatePage = (title, content) => `
                 flex-direction: column;
             }
             .contact-form, .map {
-                width: 100%;
+                width: 70%;
                 padding: 10px;
                 box-sizing: border-box;
             }
             .map iframe {
-                width: 100%;
+                width: 90%;
                 height: 300px;
             }
         }
