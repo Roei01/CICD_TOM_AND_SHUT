@@ -130,7 +130,6 @@ function applyPageEffects() {
         }, 100);
     });
 
-    // הוספת אפקטים נוספים לאחר טעינת העמוד
     document.querySelectorAll('.menu-item').forEach(item => {
         item.style.transform = 'scale(0)';
         setTimeout(() => {
@@ -140,6 +139,7 @@ function applyPageEffects() {
     });
 
     adjustContentHeight();
+    initializeCart();
 }
 
 function adjustContentHeight() {
@@ -163,18 +163,13 @@ window.addEventListener('resize', adjustContentHeight);
 
 // Cart functionality
 function initializeCart() {
-    document.querySelectorAll('.menu-item button').forEach(button => {
-        button.addEventListener('click', addToCart);
-    });
     updateCartDisplay();
 }
 
-function addToCart(event) {
-    const button = event.target;
-    const menuItem = button.closest('.menu-item');
+function addToCart(name, price) {
     const item = {
-        name: menuItem.querySelector('h3').innerText,
-        price: parseFloat(menuItem.querySelector('p').innerText.replace('Price: $', '')),
+        name: name,
+        price: price,
         quantity: 1
     };
 

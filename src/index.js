@@ -310,7 +310,6 @@ const generatePage = (title, content) => `
         <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
         <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
         <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
-        <a href="/cart" onclick="event.preventDefault(); loadPage('/cart');">Cart</a>
     </div>
     <div class="cart-dropdown" id="cart-dropdown">
         <div id="cart-items"></div>
@@ -328,13 +327,13 @@ const generatePage = (title, content) => `
         document.addEventListener('DOMContentLoaded', () => {
             applyPageEffects();
             adjustContentHeight();
+            initializeCart();
         });
         window.addEventListener('resize', adjustContentHeight);
     </script>
 </body>
 </html>
 `;
-
 
 // Home page
 app.get('/', (req, res) => {
@@ -431,7 +430,7 @@ app.get('/cart', (req, res) => {
     const content = `
     <h2>Your Cart</h2>
     <div id="cart-items"></div>
-    <p>Total: $<span id="cart-total">0.00</span></p>
+    <p>Total: $<span id="cart-total-price">0.00</span></p>
     <button onclick="checkout()">Checkout</button>
     `;
     res.send(generatePage('Sushi Store - Cart', content));
