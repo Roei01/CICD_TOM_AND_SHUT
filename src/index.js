@@ -272,11 +272,13 @@ const generatePage = (title, content) => `
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             applyPageEffects();
+            adjustContentHeight();
         });
     </script>
 </body>
 </html>
 `;
+
 
 
 
