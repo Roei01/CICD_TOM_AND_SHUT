@@ -58,7 +58,38 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCartFromCookie();
     window.addEventListener('beforeunload', saveCartToCookie);
     updateCartDisplay(); // עדכון תצוגת הסל בטעינת הדף הראשונה
+    initializeReservationForm(); // אתחול טופס ההזמנה
 });
+
+function initializeReservationForm() {
+    const timeInput = document.getElementById('time');
+    const dateInput = document.getElementById('date');
+    
+    // הגדרת רווחי זמן של רבע שעה
+    timeInput.addEventListener('focus', function() {
+        const now = new Date();
+        const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+        const end = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 45, 0);
+
+        let options = '';
+        for (let time = start; time <= end; time.setMinutes(time.getMinutes() + 15)) {
+            const hour = String(time.getHours()).padStart(2, '0');
+            const minute = String(time.getMinutes()).padStart(2, '0');
+            options += `<option value="${hour}:${minute}">${hour}:${minute}</option>`;
+        }
+
+        timeInput.innerHTML = options;
+    });
+
+    // הגבלת תאריכים לבאים בלבד ולא יותר משבועיים מראש
+    const today = new Date().toISOString().split('T')[0];
+    const maxDate = new Date();
+    maxDate.setDate(maxDate.getDate() + 14);
+    const maxDateString = maxDate.toISOString().split('T')[0];
+
+    dateInput.setAttribute('min', today);
+    dateInput.setAttribute('max', maxDateString);
+}
 
 function showLoadingIndicator() {
     let loadingIndicator = document.getElementById('loading-indicator');
@@ -226,7 +257,6 @@ function updateCartDisplay() {
     cartTotalPriceElement.innerText = total.toFixed(2);
 }
 
-
 function removeFromCart(name) {
     let cart = getCart();
     const itemIndex = cart.findIndex(cartItem => cartItem.name === name);
@@ -284,29 +314,6 @@ function loadCartFromCookie() {
         }
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded and parsed');
-
-    document.querySelectorAll('.navbar a').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            loadPage(this.getAttribute('href'));
-        });
-    });
-
-    window.addEventListener('popstate', function(event) {
-        if (event.state && event.state.path) {
-            loadPage(event.state.path);
-        }
-    });
-
-    applyPageEffects();
-    adjustContentHeight();
-    initializeCart();
-    loadCartFromCookie();
-    window.addEventListener('beforeunload', saveCartToCookie);
-});
 
 // Reservation functionality
 function openReservation() {

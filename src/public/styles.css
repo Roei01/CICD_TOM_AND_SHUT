@@ -238,9 +238,8 @@ footer {
 }
 
 .reservation-form .form-content input[type="number"],
-.reservation-form .form-content input[type="time"],
-.reservation-form .form-content input[type="date"],
-.reservation-form .form-content select {
+.reservation-form .form-content select,
+.reservation-form .form-content input[type="date"] {
     width: 100%;
     padding: 10px;
     margin-top: 5px;
