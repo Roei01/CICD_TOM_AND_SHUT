@@ -1,4 +1,3 @@
-
 // scripts.js
 
 console.log('script.js loaded');
@@ -11,6 +10,7 @@ function loadPage(url) {
         document.querySelector('.content').innerHTML = cache[url];
         window.history.pushState({ path: url }, '', url);
         applyPageEffects();
+        updateCartDisplay(); // עדכון תצוגת הסל לאחר טעינת עמוד מהמטמון
         return;
     }
 
@@ -24,7 +24,7 @@ function loadPage(url) {
             document.querySelector('.content').innerHTML = html;
             window.history.pushState({ path: url }, '', url);
             applyPageEffects();
-            updateCartDisplay(); // עדכון תצוגת הסל בכל טעינת עמוד
+            updateCartDisplay(); // עדכון תצוגת הסל לאחר טעינת עמוד חדש
         })
         .catch(error => {
             console.error('Error loading page:', error);
