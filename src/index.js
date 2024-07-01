@@ -1,10 +1,10 @@
-// index.js
-
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-import cookieParser from 'cookie-parser';
+import nodemailer from 'nodemailer';
+import bodyParser from 'body-parser';
+import mysql from 'mysql2';
 
 const app = express();
 const port = 3000;
@@ -15,8 +15,29 @@ const __dirname = dirname(__filename);
 
 // Middleware to serve static files and parse request body
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// Nodemailer setup
+const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+        user: 'your-email@gmail.com',
+        pass: 'your-email-password'
+    }
+});
+
+// MySQL setup
+const db = mysql.createConnection({
+    host: 'localhost',
+    user: 'root',
+    password: 'yourpassword',
+    database: 'restaurant'
+});
+
+db.connect((err) => {
+    if (err) throw err;
+    console.log('Connected to MySQL Database.');
+});
 
 const generatePage = (title, content) => `
 <!DOCTYPE html>
@@ -29,7 +50,7 @@ const generatePage = (title, content) => `
 </head>
 <body>
     <div class="header">
-        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
+        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- Logo -->
         <h1>${title}</h1>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="/images/cart.png" alt="Cart">
@@ -48,29 +69,34 @@ const generatePage = (title, content) => `
         <a href="/cart" onclick="event.preventDefault(); loadPage('/cart');">View Cart</a>
         <button onclick="checkout()">Checkout</button>
     </div>
+    <div class="reservation-icon" onclick="openReservation()">
+        <img src="/images/reservation.png" alt="Reservation">
+    </div>
+    <div id="reservation-form" class="reservation-form">
+        <div class="form-content">
+            <span class="close" onclick="closeReservation()">&times;</span>
+            <form action="/reserve" method="post">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+                <label for="phone">Phone:</label>
+                <input type="text" id="phone" name="phone" required>
+                <label for="guests">Number of Guests:</label>
+                <input type="number" id="guests" name="guests" required>
+                <label for="date">Date:</label>
+                <input type="date" id="date" name="date" required>
+                <label for="time">Time:</label>
+                <input type="time" id="time" name="time" required>
+                <input type="submit" value="Reserve">
+            </form>
+        </div>
+    </div>
     <div class="content fade-in" id="content">
         ${content}
     </div>
     <div class="footer fade-in">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
-    </div>
-    <div class="reservation-icon" onclick="openReservation()">
-        <img src="/images/reservation.png" alt="Reservation">
-    </div>
-    <div class="reservation-form" id="reservation-form">
-        <div class="form-content">
-            <span class="close" onclick="closeReservation()">&times;</span>
-            <h2>הזמנת מקום</h2>
-            <form action="/reserve" method="post">
-                <label for="guests">אורחים:</label>
-                <input type="number" id="guests" name="guests" min="1" max="10" required>
-                <label for="time">שעה:</label>
-                <input type="time" id="time" name="time" required>
-                <label for="date">תאריך:</label>
-                <input type="date" id="date" name="date" required>
-                <input type="submit" value="הזמנת מקום">
-            </form>
-        </div>
     </div>
     <script src="/scripts.js"></script>
 </body>
@@ -181,10 +207,19 @@ app.get('/cart', (req, res) => {
 });
 
 // Reservation form submission handler
-app.post('/reserve', (req, res) => {
+app.post('/reserve', async (req, res) => {
     const { guests, time, date } = req.body;
-    console.log(`Reservation: ${guests} guests at ${time} on ${date}`);
-    res.send(generatePage('Sushi Store - Reservation', '<h2>Thank you for your reservation!</h2><p>We look forward to serving you.</p>'));
+
+    // נניח שיש לך מערכת משתמשים וכבר יש לך מזהה משתמש פעיל
+    const userId = 1; // זה צריך להיות מזהה המשתמש של המשתמש הנוכחי
+
+    try {
+        const reservation = await Reservation.create({ user_id: userId, guests, time, date });
+        res.send(generatePage('Sushi Store - Reservation', '<h2>Thank you for your reservation!</h2><p>We look forward to serving you.</p>'));
+    } catch (error) {
+        console.error('Error creating reservation:', error);
+        res.status(500).send('An error occurred while creating the reservation.');
+    }
 });
 
 app.listen(port, () => {

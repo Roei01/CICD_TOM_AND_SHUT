@@ -16,7 +16,9 @@
     "body-parser": "^1.20.2",
     "cookie-parser": "^1.4.6",
     "express": "^4.19.2",
-    "nodemailer": "^6.9.14"
+    "mysql2": "^3.10.2",
+    "nodemailer": "^6.9.14",
+    "sequelize": "^6.37.3"
   },
   "devDependencies": {
     "@types/chai": "^4.3.16",
