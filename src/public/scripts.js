@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyPageEffects();
     adjustContentHeight();
     initializeCart();
+    loadCartFromCookie();
 });
 
 function showLoadingIndicator() {
@@ -245,6 +246,7 @@ function toggleCart() {
         cartDropdown.style.display = 'none';
     } else {
         cartDropdown.style.display = 'block';
+        cartDropdown.style.zIndex = '1001'; // Ensure cart is on top
     }
 }
 
@@ -255,3 +257,46 @@ function showCartDropdown() {
         cartDropdown.style.display = 'none';
     }, 3000);
 }
+
+// שמירת עגלת הקניות בעוגייה
+function saveCartToCookie() {
+    const cart = getCart();
+    document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
+}
+
+// טעינת עגלת הקניות מעוגייה
+function loadCartFromCookie() {
+    const cookies = document.cookie.split(';');
+    for (const cookie of cookies) {
+        const [name, value] = cookie.split('=');
+        if (name.trim() === 'cart') {
+            localStorage.setItem('cart', value);
+            updateCartDisplay();
+            break;
+        }
+    }
+}
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM fully loaded and parsed');
+
+    document.querySelectorAll('.navbar a').forEach(link => {
+        link.addEventListener('click', function(event) {
+            event.preventDefault();
+            loadPage(this.getAttribute('href'));
+        });
+    });
+
+    window.addEventListener('popstate', function(event) {
+        if (event.state && event.state.path) {
+            loadPage(event.state.path);
+        }
+    });
+
+    applyPageEffects();
+    adjustContentHeight();
+    initializeCart();
+    loadCartFromCookie();
+    window.addEventListener('beforeunload', saveCartToCookie);
+});

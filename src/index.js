@@ -323,6 +323,19 @@ const generatePage = (title, content) => `
         .cart-item button:hover {
             background-color: #ff0000;
         }
+            
+        .cart-dropdown {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            display: none;
+            z-index: 1001; /* Ensure cart is on top */
+        }   
     </style>
 </head>
 <body>
@@ -454,7 +467,7 @@ app.get('/contact', (req, res) => {
     res.send(generatePage('Sushi Store - Contact', content));
 });
 
-// Cart page
+// עדכון עמוד cart
 app.get('/cart', (req, res) => {
     const content = `
     <h2>Your Cart</h2>
@@ -465,6 +478,12 @@ app.get('/cart', (req, res) => {
     </div>
     `;
     res.send(generatePage('Sushi Store - Cart', content));
+});
+
+// שמירת עגלת הקניות בעוגייה
+app.get('/cart-data', (req, res) => {
+    const cart = req.cookies.cart || [];
+    res.json(cart);
 });
 
 // Handle form submission
