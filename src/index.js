@@ -55,7 +55,7 @@ const generatePage = (title, content) => `
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
     <div class="reservation-icon" onclick="openReservation()">
-        <img src="/images/reservation.png" alt="Reservation">
+        <img src="/images/pexels-valeriya-1028426.jpg" alt="Reservation">
     </div>
     <div class="reservation-form" id="reservation-form">
         <div class="form-content">
@@ -82,7 +82,7 @@ app.get('/', (req, res) => {
     const content = `
     <h2>Welcome to Sushi Store</h2>
     <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image" src="/images/sushi.jpg" alt="Sushi">
+    <img class="home-image" src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi">
     <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');" class="btn">Explore Menu</a>
     `;
     res.send(generatePage('Sushi Store - Home', content));
