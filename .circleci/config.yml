@@ -9,22 +9,31 @@ workflows:
 
 jobs:
   build-test-lint:
-    executor: node/default
+    docker:
+      - image: circleci/node:14
+      - image: circleci/mysql:5.7
+        environment:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: restaurant
     steps:
       - checkout
       - run:
-          name: install dependencies
-          command: npm install
-      - run:
-          name: Install MySQL Client
-          command: sudo apt-get install -y mysql-client
+          name: Wait for MySQL to be ready
+          command: |
+            for i in `seq 1 10`; do
+              nc -z localhost 3306 && echo Success && exit 0
+              echo -n .
+              sleep 1
+            done
+            echo Failed waiting for MySQL && exit 1
       - run:
           name: Set up MySQL
           command: |
-            docker run --name mysql -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql:5.7
-            sleep 20
-            mysql -u root -proot -h 127.0.0.1 -e "CREATE DATABASE IF NOT EXISTS restaurant;"
-            mysql -u root -proot -h 127.0.0.1 restaurant < setup.sql
+            docker run --network host --rm -i -e MYSQL_ROOT_PASSWORD=root mysql:5.7 mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS restaurant;"
+            docker run --network host --rm -i -e MYSQL_ROOT_PASSWORD=root mysql:5.7 mysql -u root -proot restaurant < setup.sql
+      - run:
+          name: install dependencies
+          command: npm install
       - run:
           name: run test
           command: npm run test
