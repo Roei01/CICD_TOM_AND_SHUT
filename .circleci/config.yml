@@ -1,38 +1,17 @@
 version: 2.1
-
 orbs:
   node: circleci/node@5
 
-executors:
-  node-mysql-executor:
-    docker:
-      - image: circleci/node:14
-      - image: circleci/mysql:5.7
-        environment:
-          MYSQL_ROOT_PASSWORD: root
+workflows:
+  build-test-lint:
+    jobs:
+      - build-test-lint
 
 jobs:
   build-test-lint:
-    executor: node-mysql-executor
+    executor: node/default
     steps:
       - checkout
-      - run:
-          name: Wait for MySQL to be ready
-          command: |
-            for i in `seq 1 10`;
-            do
-              nc -zv 127.0.0.1 3306 && break;
-              echo "Waiting for MySQL to be ready... ($i/10)";
-              sleep 5;
-            done
-      - run:
-          name: Create Database
-          command: |
-            mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS restaurant;"
-      - run:
-          name: Run setup.sql
-          command: |
-            mysql -u root -proot restaurant < setup.sql
       - run:
           name: install dependencies
           command: npm install
