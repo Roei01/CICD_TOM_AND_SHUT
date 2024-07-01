@@ -1,11 +1,7 @@
 version: 2.1
+
 orbs:
   node: circleci/node@5
-
-workflows:
-  build-test-lint:
-    jobs:
-      - build-test-lint
 
 jobs:
   build-test-lint:
@@ -15,6 +11,7 @@ jobs:
         environment:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: restaurant
+
     steps:
       - checkout
       - run:
@@ -29,8 +26,8 @@ jobs:
       - run:
           name: Set up MySQL
           command: |
-            docker run --network host --rm -i -e MYSQL_ROOT_PASSWORD=root mysql:5.7 mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS restaurant;"
-            docker run --network host --rm -i -e MYSQL_ROOT_PASSWORD=root mysql:5.7 mysql -u root -proot restaurant < setup.sql
+            mysql -u root -proot -e "CREATE DATABASE IF NOT EXISTS restaurant;"
+            mysql -u root -proot restaurant < setup.sql
       - run:
           name: install dependencies
           command: npm install
@@ -43,3 +40,8 @@ jobs:
       - run:
           name: deploy app
           command: curl https://api.render.com/deploy/srv-cpuudclds78s739gspt0?key=XhZumxstBUk
+
+workflows:
+  build-test-lint:
+    jobs:
+      - build-test-lint
