@@ -1,0 +1,144 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+    color: #333;
+    direction: rtl;
+}
+
+.header {
+    background-color: #d8d8d8;
+    padding: 20px;
+    text-align: center;
+}
+
+.header img {
+    width: 150px;
+}
+
+.navbar {
+    background-color: #b22222;
+    overflow: hidden;
+    text-align: center;
+}
+
+.navbar a {
+    float: right;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.navbar a:hover {
+    background-color: #ff6347;
+    color: black;
+}
+
+.menu-section {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-section h2 {
+    text-align: center;
+    font-size: 3em;
+    margin-bottom: 20px;
+    color: #b22222;
+}
+
+.menu-category {
+    margin-bottom: 40px;
+}
+
+.menu-category h3 {
+    font-size: 2em;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #b22222;
+    padding-bottom: 5px;
+    color: #333;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.menu-item h4 {
+    margin: 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.menu-item p {
+    margin: 5px 0 0;
+    color: #666;
+}
+
+.menu-item span {
+    font-weight: bold;
+    color: #b22222;
+}
+
+.footer {
+    background-color: #b22222;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+}
+
+.home-image, .about-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contact-form, .map {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.map iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 8px;
+}
+
+@media (min-width: 769px) {
+    .contact-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .contact-form, .map {
+        width: 48%;
+        padding: 20px;
+    }
+}
