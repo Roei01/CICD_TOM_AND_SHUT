@@ -298,5 +298,5 @@ document.addEventListener('DOMContentLoaded', () => {
     adjustContentHeight();
     initializeCart();
     loadCartFromCookie();
-    window.addEventListener('beforeunload', saveCartToCookie);
+    window.addEventListener('beforeunload/', saveCartToCookie);
 });
