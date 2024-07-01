@@ -22,8 +22,8 @@ app.use(cookieParser());
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'royinagar2@gmail.com', // Replace with your email
-        pass: 'pryk uqde apyp kuwl' // Replace with your app password
+        user: 'your-email@gmail.com', // Replace with your email
+        pass: 'your-app-password' // Replace with your app password
     }
 });
 
@@ -134,18 +134,6 @@ const generatePage = (title, content) => `
         .menu-item p {
             color: #ccc;
         }
-        .menu-item button {
-            background-color: #ffda79;
-            color: #121212;
-            border: none;
-            padding: 10px 20px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .menu-item button:hover {
-            background-color: #ffcd00;
-        }
         form {
             display: flex;
             flex-direction: column;
@@ -159,7 +147,7 @@ const generatePage = (title, content) => `
         form label {
             margin-top: 10px;
         }
-        form input, form textarea {
+        form input, form textarea, form select {
             padding: 10px;
             margin-top: 5px;
             border: 1px solid #444;
@@ -264,114 +252,30 @@ const generatePage = (title, content) => `
             background-color: #ffda79;
             z-index: 1000;
         }
-        .cart-icon {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-        .cart-icon img {
-            width: 40px;
-            height: 40px;
-        }
-        .cart-total {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #ff4444;
-            color: #fff;
-            border-radius: 50%;
-            padding: 5px 10px;
-            font-size: 12px;
-        }
-        .cart-dropdown {
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            background-color: #333;
-            color: #fff;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 20px;
-            display: none;
-            z-index: 1000;
-        }
-        .cart-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 600px;
-            padding: 10px 0;
-            border-bottom: 1px solid #444;
-        }
-        .cart-item button {
-            background-color: #ff4444;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .cart-item button:hover {
-            background-color: #ff0000;
-        }
-            
-        .cart-dropdown {
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            background-color: #333;
-            color: #fff;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 20px;
-            display: none;
-            z-index: 1001; /* Ensure cart is on top */
-        }   
     </style>
 </head>
 <body>
     <div class="header">
         <h1>${title}</h1>
-        <div class="cart-icon" onclick="toggleCart()">
-            <img src="/images/cart.png" alt="Cart">
-            <div class="cart-total" id="cart-total">0</div>
-        </div>
     </div>
     <div class="navbar">
         <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
         <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
         <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
         <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
-    </div>
-    <div class="cart-dropdown" id="cart-dropdown">
-        <div id="cart-items"></div>
-        <p>Total: $<span id="cart-total-price">0.00</span></p>
-        <a href="/cart" onclick="event.preventDefault(); loadPage('/cart');">View Cart</a>
-        <button onclick="checkout()">Checkout</button>
+        <a href="/reservations" onclick="event.preventDefault(); loadPage('/reservations');">Reservations</a>
     </div>
     <div class="content fade-in" id="content">
         ${content}
     </div>
     <div class="footer fade-in">
-        <p>&copy; 2024 Sushi Store. All rights reserved.</p>
+        <p>&copy; 2024 Chef's Restaurant. All rights reserved.</p>
     </div>
     <script src="/scripts.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             applyPageEffects();
             adjustContentHeight();
-            initializeCart();
         });
         window.addEventListener('resize', adjustContentHeight);
     </script>
@@ -382,26 +286,26 @@ const generatePage = (title, content) => `
 // Home page
 app.get('/', (req, res) => {
     const content = `
-    <h2>Welcome to Sushi Store</h2>
-    <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image" src="/images/pexels-isabella-mendes-107313-858501.jpg" alt="Sushi">
+    <h2>Welcome to Chef's Restaurant</h2>
+    <p class="home-text">Enjoy a fine dining experience with exquisite dishes crafted by our renowned chef.</p>
+    <img class="home-image" src="/images/restaurant.jpg" alt="Restaurant">
     <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');" class="btn">Explore Menu</a>
     `;
-    res.send(generatePage('Sushi Store - Home', content));
+    res.send(generatePage('Chef\'s Restaurant - Home', content));
 });
 
 // Opening Hours page
 app.get('/hours', (req, res) => {
     const content = `
     <h2>Opening Hours</h2>
-    <p>We are open every day of the week to serve you the best sushi.</p>
+    <p>We are open every day of the week to serve you the best dishes.</p>
     <ul>
-        <li>Monday - Friday: 11:00 AM - 10:00 PM</li>
+        <li>Monday - Friday: 12:00 PM - 11:00 PM</li>
         <li>Saturday: 12:00 PM - 11:00 PM</li>
-        <li>Sunday: 12:00 PM - 9:00 PM</li>
+        <li>Sunday: 12:00 PM - 11:00 PM</li>
     </ul>
     `;
-    res.send(generatePage('Sushi Store - Opening Hours', content));
+    res.send(generatePage('Chef\'s Restaurant - Opening Hours', content));
 });
 
 // Menu page
@@ -410,36 +314,28 @@ app.get('/menu', (req, res) => {
     <h2>Our Menu</h2>
     <div class="menu-container">
         <div class="menu-item">
-            <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi 1">
-            <h3>Sushi Set 1</h3>
-            <p>Delicious sushi set with fresh ingredients.</p>
-            <p>Price: $12.99</p>
-            <button onclick="addToCart('Sushi Set 1', 12.99)">Add to Cart</button>
+            <img src="/images/dish1.jpg" alt="Dish 1">
+            <h3>Dish 1</h3>
+            <p>Delicious dish with fresh ingredients.</p>
         </div>
         <div class="menu-item">
-            <img src="/images/pexels-rajesh-tp-749235-2098085.jpg" alt="Sushi 2">
-            <h3>Sushi Set 2</h3>
-            <p>Try our special sushi set with exclusive flavors.</p>
-            <p>Price: $14.99</p>
-            <button onclick="addToCart('Sushi Set 2', 14.99)">Add to Cart</button>
+            <img src="/images/dish2.jpg" alt="Dish 2">
+            <h3>Dish 2</h3>
+            <p>Try our special dish with exclusive flavors.</p>
         </div>
         <div class="menu-item">
-            <img src="/images/pexels-valeriya-1028426.jpg" alt="Sushi 3">
-            <h3>Sushi Set 3</h3>
+            <img src="/images/dish3.jpg" alt="Dish 3">
+            <h3>Dish 3</h3>
             <p>A perfect combination of taste and freshness.</p>
-            <p>Price: $16.99</p>
-            <button onclick="addToCart('Sushi Set 3', 16.99)">Add to Cart</button>
         </div>
         <div class="menu-item">
-            <img src="/images/pexels-valeriya-1148087.jpg" alt="Sushi 4">
-            <h3>Sushi Set 4</h3>
-            <p>Experience the authentic taste of our sushi.</p>
-            <p>Price: $18.99</p>
-            <button onclick="addToCart('Sushi Set 4', 18.99)">Add to Cart</button>
+            <img src="/images/dish4.jpg" alt="Dish 4">
+            <h3>Dish 4</h3>
+            <p>Experience the authentic taste of our dishes.</p>
         </div>
     </div>
     `;
-    res.send(generatePage('Sushi Store - Menu', content));
+    res.send(generatePage('Chef\'s Restaurant - Menu', content));
 });
 
 // Contact page
@@ -458,40 +354,67 @@ app.get('/contact', (req, res) => {
                 <textarea id="message" name="message" rows="4" cols="50" required></textarea>
                 <input type="submit" value="Submit">
             </form>
-            <p>Email: contact@sushistore.com</p>
+            <p>Email: contact@chefsrestaurant.com</p>
             <p>Phone: 123-456-7890</p>
         </div>
         <div class="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.768280268636!2d34.7925014758049!3d32.08485072526314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4cdd4a67d3b7%3A0x6f6e88c8f16d8402!2zMCDXqNee15XXldeuLCDXqNeQ15jXldeo15kgMTI1NCDXqdeR15XXqiBcdTAwMDQg2LPZhNmF2LHZitivINmE2YXYsdmG2Lkg15HXmdec15ogNCAxNyDYp9mE2KzZhdmF2IwgMTY1NzEg0L_RgNC10L_QvtGA0L7QtNGB0YLQsNGC!5e0!3m2!1sen!2sil!4v1688146201798!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            <iframe src="https://www.google.com/maps/embed?pb=YOUR_GOOGLE_MAPS_EMBED_LINK" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
     `;
-    res.send(generatePage('Sushi Store - Contact', content));
+    res.send(generatePage('Chef\'s Restaurant - Contact', content));
 });
 
-// עדכון עמוד cart
-app.get('/cart', (req, res) => {
+// Reservations page
+app.get('/reservations', (req, res) => {
     const content = `
-    <h2>Your Cart</h2>
-    <div class="cart-page">
-        <div id="cart-items"></div>
-        <p>Total: $<span id="cart-total-price">0.00</span></p>
-        <button onclick="checkout()">Checkout</button>
-    </div>
+    <h2>Book a Table</h2>
+    <form action="/book-reservation" method="post">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="date">Date:</label>
+        <input type="date" id="date" name="date" required>
+        <label for="time">Time:</label>
+        <input type="time" id="time" name="time" min="12:00" max="23:00" step="900" required>
+        <label for="guests">Number of Guests:</label>
+        <select id="guests" name="guests" required>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+        </select>
+        <input type="submit" value="Book">
+    </form>
     `;
-    res.send(generatePage('Sushi Store - Cart', content));
+    res.send(generatePage('Chef\'s Restaurant - Reservations', content));
 });
 
-// שמירת עגלת הקניות בעוגייה
-app.get('/cart-data', (req, res) => {
-    const cart = req.cookies.cart || [];
-    res.json(cart);
+// Handle form submission for reservations
+app.post('/book-reservation', (req, res) => {
+    const { name, email, date, time, guests } = req.body;
+
+    const mailOptions = {
+        from: 'royinagar2@gmail.com', // Replace with your email
+        to: 'royinagar2@gmail.com', // Replace with your email
+        subject: `New reservation from ${name}`,
+        text: `Reservation details:\n\nName: ${name}\nEmail: ${email}\nDate: ${date}\nTime: ${time}\nNumber of Guests: ${guests}`
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+            console.error(error); // Print detailed error to console
+            return res.status(500).send(`Error booking reservation: ${error.message}`);
+        }
+        res.send(generatePage('Chef\'s Restaurant - Reservations', '<h2>Thank you for your reservation!</h2><p>We look forward to serving you.</p>'));
+    });
 });
 
-// Handle form submission
+// Handle form submission for contact messages
 app.post('/send-message', (req, res) => {
     const { name, email, message } = req.body;
-
     const mailOptions = {
         from: 'royinagar2@gmail.com', // Replace with your email
         to: 'royinagar2@gmail.com', // Replace with your email
@@ -504,7 +427,7 @@ app.post('/send-message', (req, res) => {
             console.error(error); // Print detailed error to console
             return res.status(500).send(`Error sending message: ${error.message}`);
         }
-        res.send(generatePage('Sushi Store - Contact', '<h2>Thank you for your message!</h2><p>We will get back to you soon.</p>'));
+        res.send(generatePage('Chef\'s Restaurant - Contact', '<h2>Thank you for your message!</h2><p>We will get back to you soon.</p>'));
     });
 });
 
