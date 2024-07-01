@@ -24,324 +24,12 @@ const generatePage = (title, content) => `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${title}</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #121212;
-            color: #fff;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .header {
-            background-color: #222;
-            color: #fff;
-            padding: 0; /* צמצום הרווחים הפנימיים */
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            justify-content: space-between; /* ריווח בין הלוגו לכותרת */
-        }
-        .header .logo {
-            width: 50px; /* גודל הלוגו */
-            height: auto;
-            margin-left: 20px; /* מרווח מצד שמאל */
-        }
-        .header h1 {
-            flex: 1; /* תופס את יתרת המרחב */
-            margin: 0;
-            font-size: 2em;
-        }
-        .navbar {
-            background-color: #333;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 0; /* צמצום הרווחים הפנימיים */
-            text-align: center;
-            position: fixed;
-            width: 100%;
-            top: 60px; /* התאם לפי הגובה האמיתי של ה-header */
-            z-index: 1000;
-        }
-        .navbar a {
-            color: #ffda79;
-            text-align: center;
-            padding: 14px 20px;
-            text-decoration: none;
-            display: inline-block;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .navbar a:hover {
-            background-color: #ffda79;
-            color: #121212;
-        }
-        .content {
-            flex: 1;
-            padding: 80px 20px 20px; /* התאם את הגובה של התפריט */
-            margin-top: 0; /* צמצום הרווחים החיצוניים */
-        }
-        .footer {
-            background-color: #222;
-            color: #fff;
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            width: 100%;
-            bottom: 0;
-        }
-        .menu-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .menu-item {
-            background-color: #333;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .menu-item:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        }
-        .menu-item img {
-            width: 100%;
-            border-radius: 8px;
-            object-fit: cover;
-            height: 200px;
-        }
-        .menu-item h3 {
-            margin: 10px 0;
-        }
-        .menu-item p {
-            color: #ccc;
-        }
-        .menu-item button {
-            background-color: #ffda79;
-            color: #121212;
-            border: none;
-            padding: 10px 20px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        .menu-item button:hover {
-            background-color: #ffcd00;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            max-width: 600px;
-            margin: 0 auto;
-            background: #333;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        form label {
-            margin-top: 10px;
-        }
-        form input, form textarea {
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #444;
-            border-radius: 4px;
-            background: #222;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-        }
-        form input[type="submit"] {
-            background-color: #ffda79;
-            color: #121212;
-            border: none;
-            cursor: pointer;
-            margin-top: 20px;
-            padding: 15px;
-            transition: background-color 0.3s;
-        }
-        form input[type="submit"]:hover {
-            background-color: #ffcd00;
-        }
-        .home-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-top: 20px;
-            max-height: 500px;
-            object-fit: cover;
-        }
-        .home-text {
-            font-size: 1.2em;
-            margin: 20px 0;
-            color: #ffda79;
-        }
-        .contact-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .contact-form, .map {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-        }
-        .map iframe {
-            width: 100%;
-            height: 300px;
-            border: none;
-            border-radius: 8px;
-        }
-        @media (min-width: 769px) {
-            .contact-container {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-            .contact-form, .map {
-                width: 48%;
-                padding: 20px;
-            }
-        }
-        .error-notification {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #ff4444;
-            color: #fff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            animation: fadeIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
-        }
-
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-            }
-            to {
-                opacity: 0;
-            }
-        }
-
-        #progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 0;
-            height: 5px;
-            background-color: #ffda79;
-            z-index: 1000;
-        }
-        .cart-icon {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            cursor: pointer;
-            z-index: 1001;
-        }
-        .cart-icon img {
-            width: 40px;
-            height: 40px;
-        }
-        .cart-total {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background-color: #ff4444;
-            color: #fff;
-            border-radius: 50%;
-            padding: 5px 10px;
-            font-size: 12px;
-        }
-        .cart-dropdown {
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            background-color: #333;
-            color: #fff;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 20px;
-            display: none;
-            z-index: 1000;
-        }
-        .cart-page {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            max-width: 600px;
-            padding: 10px 0;
-            border-bottom: 1px solid #444;
-        }
-        .cart-item button {
-            background-color: #ff4444;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            cursor: pointer;
-        }
-        .cart-item button:hover {
-            background-color: #ff0000;
-        }
-            
-        .cart-dropdown {
-            position: fixed;
-            top: 70px;
-            right: 20px;
-            background-color: #333;
-            color: #fff;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 20px;
-            display: none;
-            z-index: 1001; /* Ensure cart is on top */
-        }   
-    </style>
+    <title>Sushi Store</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="header">
-        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
-        <h1>${title}</h1>
+        <h1>Sushi Store</h1>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="/images/cart.png" alt="Cart">
             <div class="cart-total" id="cart-total">0</div>
@@ -360,22 +48,33 @@ const generatePage = (title, content) => `
         <button onclick="checkout()">Checkout</button>
     </div>
     <div class="content fade-in" id="content">
-        ${content}
+        <!-- Main content will be loaded here -->
     </div>
     <div class="footer fade-in">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
-    <script src="/scripts.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            applyPageEffects();
-            adjustContentHeight();
-            initializeCart();
-        });
-        window.addEventListener('resize', adjustContentHeight);
-    </script>
+    <div class="reservation-icon" onclick="openReservation()">
+        <img src="/images/pexels-cottonbro-3297801.jpg" alt="Reservation">
+    </div>
+    <div class="reservation-form" id="reservation-form">
+        <div class="form-content">
+            <span class="close" onclick="closeReservation()">&times;</span>
+            <h2>הזמנת מקום</h2>
+            <form>
+                <label for="guests">אורחים:</label>
+                <input type="number" id="guests" name="guests" min="1" max="10" required>
+                <label for="time">שעה:</label>
+                <input type="time" id="time" name="time" required>
+                <label for="date">תאריך:</label>
+                <input type="date" id="date" name="date" required>
+                <input type="submit" value="הזמנת מקום">
+            </form>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
 </body>
 </html>
+
 `;
 
 // Home page
@@ -383,7 +82,7 @@ app.get('/', (req, res) => {
     const content = `
     <h2>Welcome to Sushi Store</h2>
     <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image" src="/images/sushi.jpg" alt="Sushi">
+    <img class="home-image" src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi">
     <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');" class="btn">Explore Menu</a>
     `;
     res.send(generatePage('Sushi Store - Home', content));

@@ -1,3 +1,5 @@
+// scripts.js
+
 console.log('script.js loaded');
 
 const cache = {};
@@ -20,7 +22,7 @@ function loadPage(url) {
             cache[url] = html;
             document.querySelector('.content').innerHTML = html;
             window.history.pushState({ path: url }, '', url);
-            applyPageEffects(); 
+            applyPageEffects();
         })
         .catch(error => {
             console.error('Error loading page:', error);
@@ -51,7 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
     applyPageEffects();
     adjustContentHeight();
     initializeCart();
-    loadCartFromCookie();
 });
 
 function showLoadingIndicator() {
@@ -193,7 +194,6 @@ function getCart() {
 
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
-    document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
 }
 
 function updateCartDisplay() {
@@ -300,3 +300,14 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCartFromCookie();
     window.addEventListener('beforeunload', saveCartToCookie);
 });
+
+// Reservation form functionality
+function openReservation() {
+    const reservationForm = document.getElementById('reservation-form');
+    reservationForm.style.display = 'flex';
+}
+
+function closeReservation() {
+    const reservationForm = document.getElementById('reservation-form');
+    reservationForm.style.display = 'none';
+}
