@@ -29,7 +29,7 @@ const generatePage = (title, content) => `
 </head>
 <body>
     <div class="header">
-        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
+        <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Logo" class="logo"> <!-- לוגו -->
         <h1>${title}</h1>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="/images/cart.png" alt="Cart">
