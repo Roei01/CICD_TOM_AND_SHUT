@@ -20,8 +20,7 @@ function loadPage(url) {
             cache[url] = html;
             document.querySelector('.content').innerHTML = html;
             window.history.pushState({ path: url }, '', url);
-            applyPageEffects();
-            initializeCart(); // Ensure cart functionality is applied after loading new content
+            applyPageEffects(); 
         })
         .catch(error => {
             console.error('Error loading page:', error);

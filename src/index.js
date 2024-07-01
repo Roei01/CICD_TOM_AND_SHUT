@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser';
+import cookieParser from 'cookie-parser'; // הוספת חבילה
 
 const app = express();
 const port = 3000;
@@ -16,7 +16,7 @@ const __dirname = dirname(__filename);
 // Middleware to serve static files and parse request body
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser());
+app.use(cookieParser()); // שימוש בחבילה
 
 // Nodemailer setup
 const transporter = nodemailer.createTransport({
@@ -27,7 +27,7 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const generatePage = (title, content) => `
+const generatePage = (title, content, additionalScripts = '') => `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,6 +57,9 @@ const generatePage = (title, content) => `
             top: 0;
             z-index: 1000;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         .header h1 {
             margin: 0;
@@ -71,6 +74,9 @@ const generatePage = (title, content) => `
             width: 100%;
             top: 60px;
             z-index: 1000;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
         }
         .navbar a {
             color: #ffda79;
@@ -187,11 +193,17 @@ const generatePage = (title, content) => `
             margin-top: 20px;
             max-height: 500px;
             object-fit: cover;
+            filter: brightness(70%);
         }
         .home-text {
-            font-size: 1.2em;
+            font-size: 2em;
             margin: 20px 0;
             color: #ffda79;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
         }
         .contact-container {
             display: flex;
@@ -265,25 +277,25 @@ const generatePage = (title, content) => `
             z-index: 1000;
         }
         .cart-icon {
-            position: fixed;
+            position: relative;
             top: 20px;
             right: 20px;
             cursor: pointer;
             z-index: 1001;
+            display: flex;
+            align-items: center;
         }
         .cart-icon img {
             width: 40px;
             height: 40px;
         }
         .cart-total {
-            position: absolute;
-            top: 5px;
-            right: 5px;
             background-color: #ff4444;
             color: #fff;
             border-radius: 50%;
             padding: 5px 10px;
             font-size: 12px;
+            margin-left: 5px;
         }
         .cart-dropdown {
             position: fixed;
@@ -295,7 +307,7 @@ const generatePage = (title, content) => `
             border-radius: 8px;
             padding: 20px;
             display: none;
-            z-index: 1000;
+            z-index: 1001;
         }
         .cart-page {
             display: flex;
@@ -325,24 +337,26 @@ const generatePage = (title, content) => `
         .cart-item button:hover {
             background-color: #ff0000;
         }
-            
-        .cart-dropdown {
-            position: fixed;
-            top: 70px;
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            position: absolute;
             right: 20px;
-            background-color: #333;
-            color: #fff;
-            border: 1px solid #444;
-            border-radius: 8px;
-            padding: 20px;
-            display: none;
-            z-index: 1001; /* Ensure cart is on top */
-        }   
+            top: 20px;
+        }
+        .social-icons img {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="header">
-        <h1>${title}</h1>
+        <div>
+            <img src="/images/logo.png" alt="Logo" style="width: 50px;">
+            <span>03-630-8484 | מהוליבר 8, יפו</span>
+        </div>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="/images/cart.png" alt="Cart">
             <div class="cart-total" id="cart-total">0</div>
@@ -366,7 +380,12 @@ const generatePage = (title, content) => `
     <div class="footer fade-in">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
+    <div class="social-icons">
+        <img src="/images/instagram.png" alt="Instagram" onclick="window.open('https://www.instagram.com', '_blank')">
+        <img src="/images/facebook.png" alt="Facebook" onclick="window.open('https://www.facebook.com', '_blank')">
+    </div>
     <script src="/scripts.js"></script>
+    ${additionalScripts}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             applyPageEffects();
@@ -382,9 +401,10 @@ const generatePage = (title, content) => `
 // Home page
 app.get('/', (req, res) => {
     const content = `
-    <h2>Welcome to Sushi Store</h2>
-    <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image" src="/images/sushi.jpg" alt="Sushi">
+    <div class="home-text">
+        <h2>NAOMI ASIAN KITCHEN</h2>
+    </div>
+    <img class="home-image" src="/images/pexels-cottonbro-3297801.jpg" alt="Sushi">
     <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');" class="btn">Explore Menu</a>
     `;
     res.send(generatePage('Sushi Store - Home', content));
@@ -469,7 +489,7 @@ app.get('/contact', (req, res) => {
     res.send(generatePage('Sushi Store - Contact', content));
 });
 
-// עדכון עמוד cart
+// Cart page
 app.get('/cart', (req, res) => {
     const content = `
     <h2>Your Cart</h2>
@@ -479,13 +499,11 @@ app.get('/cart', (req, res) => {
         <button onclick="checkout()">Checkout</button>
     </div>
     `;
-    res.send(generatePage('Sushi Store - Cart', content));
-});
-
-// שמירת עגלת הקניות בעוגייה
-app.get('/cart-data', (req, res) => {
-    const cart = req.cookies.cart || [];
-    res.json(cart);
+    res.send(generatePage('Sushi Store - Cart', content, `
+    <script>
+        document.addEventListener('DOMContentLoaded', loadCartFromCookie);
+    </script>
+    `));
 });
 
 // Handle form submission
