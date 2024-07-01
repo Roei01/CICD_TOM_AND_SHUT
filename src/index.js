@@ -41,37 +41,36 @@ const generatePage = (title, content) => `
         .header {
             background-color: #222;
             color: #fff;
-            padding: 20px;
+            padding: 0; /* צמצום הרווחים הפנימיים */
             text-align: center;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
+            justify-content: space-between; /* ריווח בין הלוגו לכותרת */
         }
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
+        .header .logo {
+            width: 50px; /* גודל הלוגו */
+            height: auto;
+            margin-left: 20px; /* מרווח מצד שמאל */
+        }
+        .header h1 {
+            flex: 1; /* תופס את יתרת המרחב */
+            margin: 0;
+            font-size: 2em;
         }
         .navbar {
             background-color: #333;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 10px 0;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 0; /* צמצום הרווחים הפנימיים */
             text-align: center;
             position: fixed;
             width: 100%;
-            top: 60px;
+            top: 60px; /* התאם לפי הגובה האמיתי של ה-header */
             z-index: 1000;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
         }
         .navbar a {
             color: #ffda79;
@@ -80,7 +79,6 @@ const generatePage = (title, content) => `
             text-decoration: none;
             display: inline-block;
             transition: background-color 0.3s, color 0.3s;
-            border-radius: 5px;
         }
         .navbar a:hover {
             background-color: #ffda79;
@@ -88,10 +86,8 @@ const generatePage = (title, content) => `
         }
         .content {
             flex: 1;
-            padding: 120px 20px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            padding: 80px 20px 20px; /* התאם את הגובה של התפריט */
+            margin-top: 0; /* צמצום הרווחים החיצוניים */
         }
         .footer {
             background-color: #222;
@@ -144,7 +140,6 @@ const generatePage = (title, content) => `
             margin-top: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
-            border-radius: 5px;
         }
         .menu-item button:hover {
             background-color: #ffcd00;
@@ -179,7 +174,6 @@ const generatePage = (title, content) => `
             margin-top: 20px;
             padding: 15px;
             transition: background-color 0.3s;
-            border-radius: 5px;
         }
         form input[type="submit"]:hover {
             background-color: #ffcd00;
@@ -274,20 +268,20 @@ const generatePage = (title, content) => `
             right: 20px;
             cursor: pointer;
             z-index: 1001;
-            display: flex;
-            align-items: center;
         }
         .cart-icon img {
             width: 40px;
             height: 40px;
         }
         .cart-total {
+            position: absolute;
+            top: 5px;
+            right: 5px;
             background-color: #ff4444;
             color: #fff;
             border-radius: 50%;
             padding: 5px 10px;
             font-size: 12px;
-            margin-left: 10px;
         }
         .cart-dropdown {
             position: fixed;
@@ -299,7 +293,7 @@ const generatePage = (title, content) => `
             border-radius: 8px;
             padding: 20px;
             display: none;
-            z-index: 1001; /* Ensure cart is on top */
+            z-index: 1000;
         }
         .cart-page {
             display: flex;
@@ -325,50 +319,29 @@ const generatePage = (title, content) => `
             border: none;
             padding: 5px 10px;
             cursor: pointer;
-            border-radius: 5px;
         }
         .cart-item button:hover {
             background-color: #ff0000;
         }
-        .btn {
-            background-color: #ff4444;
+            
+        .cart-dropdown {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background-color: #333;
             color: #fff;
-            border: none;
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            text-decoration: none;
-        }
-        .btn:hover {
-            background-color: #ff0000;
-        }
-        .social-icons {
-            display: flex;
-            gap: 10px;
-        }
-        .social-icons a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 24px;
-        }
-        .social-icons a:hover {
-            color: #ffda79;
-        }
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+            display: none;
+            z-index: 1001; /* Ensure cart is on top */
+        }   
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="logo">
-            <img src="/images/logo.png" alt="Logo">
-            <div>
-                <p>Phone: 03-630-8484</p>
-                <p>Address: Some Street, City, Country</p>
-            </div>
-        </div>
-        <div class="social-icons">
-            <a href="https://www.facebook.com" target="_blank">F</a>
-            <a href="https://www.instagram.com" target="_blank">I</a>
-        </div>
+        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
+        <h1>${title}</h1>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="/images/cart.png" alt="Cart">
             <div class="cart-total" id="cart-total">0</div>
