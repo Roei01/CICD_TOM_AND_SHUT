@@ -1,10 +1,10 @@
+// index.js
+
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cookieParser from 'cookie-parser';
-import nodemailer from 'nodemailer';
-import bodyParser from 'body-parser';
 
 const app = express();
 const port = 3000;
@@ -15,8 +15,8 @@ const __dirname = dirname(__filename);
 
 // Middleware to serve static files and parse request body
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 const generatePage = (title, content) => `
 <!DOCTYPE html>
@@ -24,12 +24,13 @@ const generatePage = (title, content) => `
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sushi Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>${title}</title>
+    <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
     <div class="header">
-        <h1>Sushi Store</h1>
+        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
+        <h1>${title}</h1>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="/images/cart.png" alt="Cart">
             <div class="cart-total" id="cart-total">0</div>
@@ -48,19 +49,19 @@ const generatePage = (title, content) => `
         <button onclick="checkout()">Checkout</button>
     </div>
     <div class="content fade-in" id="content">
-        <!-- Main content will be loaded here -->
+        ${content}
     </div>
     <div class="footer fade-in">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
     <div class="reservation-icon" onclick="openReservation()">
-        <img src="/images/pexels-cottonbro-3297801.jpg" alt="Reservation">
+        <img src="/images/reservation.png" alt="Reservation">
     </div>
     <div class="reservation-form" id="reservation-form">
         <div class="form-content">
             <span class="close" onclick="closeReservation()">&times;</span>
             <h2>הזמנת מקום</h2>
-            <form>
+            <form action="/reserve" method="post">
                 <label for="guests">אורחים:</label>
                 <input type="number" id="guests" name="guests" min="1" max="10" required>
                 <label for="time">שעה:</label>
@@ -71,10 +72,9 @@ const generatePage = (title, content) => `
             </form>
         </div>
     </div>
-    <script src="scripts.js"></script>
+    <script src="/scripts.js"></script>
 </body>
 </html>
-
 `;
 
 // Home page
@@ -82,7 +82,7 @@ app.get('/', (req, res) => {
     const content = `
     <h2>Welcome to Sushi Store</h2>
     <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
-    <img class="home-image" src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi">
+    <img class="home-image" src="/images/sushi.jpg" alt="Sushi">
     <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');" class="btn">Explore Menu</a>
     `;
     res.send(generatePage('Sushi Store - Home', content));
@@ -180,24 +180,11 @@ app.get('/cart', (req, res) => {
     res.send(generatePage('Sushi Store - Cart', content));
 });
 
-// Handle form submission
-app.post('/send-message', (req, res) => {
-    const { name, email, message } = req.body;
-
-    const mailOptions = {
-        from: 'royinagar2@gmail.com', // Replace with your email
-        to: 'royinagar2@gmail.com', // Replace with your email
-        subject: `New contact form submission from ${name}`,
-        text: `You have received a new message from ${name} (${email}):\n\n${message}`
-    };
-
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-            console.error(error); // Print detailed error to console
-            return res.status(500).send(`Error sending message: ${error.message}`);
-        }
-        res.send(generatePage('Sushi Store - Contact', '<h2>Thank you for your message!</h2><p>We will get back to you soon.</p>'));
-    });
+// Reservation form submission handler
+app.post('/reserve', (req, res) => {
+    const { guests, time, date } = req.body;
+    console.log(`Reservation: ${guests} guests at ${time} on ${date}`);
+    res.send(generatePage('Sushi Store - Reservation', '<h2>Thank you for your reservation!</h2><p>We look forward to serving you.</p>'));
 });
 
 app.listen(port, () => {

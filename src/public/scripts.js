@@ -53,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyPageEffects();
     adjustContentHeight();
     initializeCart();
+    loadCartFromCookie();
 });
 
 function showLoadingIndicator() {
@@ -194,6 +195,7 @@ function getCart() {
 
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
+    document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
 }
 
 function updateCartDisplay() {
@@ -301,13 +303,21 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('beforeunload', saveCartToCookie);
 });
 
-// Reservation form functionality
+// Reservation functionality
 function openReservation() {
     const reservationForm = document.getElementById('reservation-form');
-    reservationForm.style.display = 'flex';
+    reservationForm.style.display = 'block';
+    setTimeout(() => {
+        reservationForm.style.transform = 'translate(-50%, -50%) scale(1)';
+        reservationForm.style.opacity = '1';
+    }, 10);
 }
 
 function closeReservation() {
     const reservationForm = document.getElementById('reservation-form');
-    reservationForm.style.display = 'none';
+    reservationForm.style.transform = 'translate(-50%, -50%) scale(0.8)';
+    reservationForm.style.opacity = '0';
+    setTimeout(() => {
+        reservationForm.style.display = 'none';
+    }, 300);
 }
