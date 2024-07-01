@@ -55,20 +55,39 @@ const generatePage = (title, content) => `
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
     <div class="reservation-icon" onclick="openReservation()">
-        <img src="/images/pexels-valeriya-1028426.jpg" alt="Reservation">
+        <img src="/images/reservation.png" alt="Reservation">
     </div>
     <div class="reservation-form" id="reservation-form">
         <div class="form-content">
             <span class="close" onclick="closeReservation()">&times;</span>
             <h2>הזמנת מקום</h2>
             <form action="/reserve" method="post">
-                <label for="guests">אורחים:</label>
-                <input type="number" id="guests" name="guests" min="1" max="10" required>
-                <label for="time">שעה:</label>
-                <input type="time" id="time" name="time" required>
-                <label for="date">תאריך:</label>
-                <input type="date" id="date" name="date" required>
-                <input type="submit" value="הזמנת מקום">
+                <div class="form-group">
+                    <label for="guests">אורחים:</label>
+                    <select id="guests" name="guests" required>
+                        <option value="1">1 אורח</option>
+                        <option value="2">2 אורחים</option>
+                        <option value="3">3 אורחים</option>
+                        <option value="4">4 אורחים</option>
+                        <option value="5">5 אורחים</option>
+                        <option value="6">6 אורחים</option>
+                        <option value="7">7 אורחים</option>
+                        <option value="8">8 אורחים</option>
+                        <option value="9">9 אורחים</option>
+                        <option value="10">10 אורחים</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="time">שעה:</label>
+                    <input type="time" id="time" name="time" required>
+                </div>
+                <div class="form-group">
+                    <label for="date">תאריך:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="הזמנת מקום">
+                </div>
             </form>
         </div>
     </div>
@@ -76,6 +95,7 @@ const generatePage = (title, content) => `
 </body>
 </html>
 `;
+
 
 // Home page
 app.get('/', (req, res) => {
