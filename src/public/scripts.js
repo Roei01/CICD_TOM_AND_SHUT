@@ -8,7 +8,7 @@ function loadPage(url) {
         document.querySelector('.content').innerHTML = cache[url];
         window.history.pushState({ path: url }, '', url);
         applyPageEffects();
-        updateCartDisplay(); // עדכון תצוגת הסל לאחר טעינת עמוד מהמטמון
+        updateCartDisplay(); // Update cart display after loading page from cache
         return;
     }
 
@@ -22,7 +22,7 @@ function loadPage(url) {
             document.querySelector('.content').innerHTML = html;
             window.history.pushState({ path: url }, '', url);
             applyPageEffects();
-            updateCartDisplay(); // עדכון תצוגת הסל לאחר טעינת עמוד חדש
+            updateCartDisplay(); // Update cart display after loading new page
         })
         .catch(error => {
             console.error('Error loading page:', error);
@@ -55,15 +55,15 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCart();
     loadCartFromCookie();
     window.addEventListener('beforeunload', saveCartToCookie);
-    updateCartDisplay(); // עדכון תצוגת הסל בטעינת הדף הראשונה
-    initializeReservationForm(); // אתחול טופס ההזמנה
+    updateCartDisplay(); // Update cart display on initial page load
+    initializeReservationForm(); // Initialize reservation form
 });
 
 function initializeReservationForm() {
     const timeInput = document.getElementById('time');
     const dateInput = document.getElementById('date');
-    
-    // הגדרת רווחי זמן של רבע שעה
+
+    // Set quarter-hour intervals
     timeInput.addEventListener('focus', function() {
         const now = new Date();
         const start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
@@ -79,7 +79,7 @@ function initializeReservationForm() {
         timeInput.innerHTML = options;
     });
 
-    // הגבלת תאריכים לבאים בלבד ולא יותר משבועיים מראש
+    // Limit dates to future dates only and not more than two weeks ahead
     const today = new Date().toISOString().split('T')[0];
     const maxDate = new Date();
     maxDate.setDate(maxDate.getDate() + 14);
@@ -278,29 +278,37 @@ function checkout() {
 
 function toggleCart() {
     const cartDropdown = document.getElementById('cart-dropdown');
-    if (cartDropdown.style.display === 'block') {
-        cartDropdown.style.display = 'none';
+    if (cartDropdown) {
+        if (cartDropdown.style.display === 'block') {
+            cartDropdown.style.display = 'none';
+        } else {
+            cartDropdown.style.display = 'block';
+            cartDropdown.style.zIndex = '1001';
+        }
     } else {
-        cartDropdown.style.display = 'block';
-        cartDropdown.style.zIndex = '1001';
+        console.error('Cart dropdown element not found.');
     }
 }
 
 function showCartDropdown() {
     const cartDropdown = document.getElementById('cart-dropdown');
-    cartDropdown.style.display = 'block';
-    setTimeout(() => {
-        cartDropdown.style.display = 'none';
-    }, 3000);
+    if (cartDropdown) {
+        cartDropdown.style.display = 'block';
+        setTimeout(() => {
+            cartDropdown.style.display = 'none';
+        }, 3000);
+    } else {
+        console.error('Cart dropdown element not found.');
+    }
 }
 
-// שמירת עגלת הקניות בעוגייה
+// Save cart to cookie
 function saveCartToCookie() {
     const cart = getCart();
     document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
 }
 
-// טעינת עגלת הקניות מעוגייה
+// Load cart from cookie
 function loadCartFromCookie() {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {
@@ -316,18 +324,26 @@ function loadCartFromCookie() {
 // Reservation functionality
 function openReservation() {
     const reservationForm = document.getElementById('reservation-form');
-    reservationForm.style.display = 'block';
-    setTimeout(() => {
-        reservationForm.style.transform = 'translate(-50%, -50%) scale(1)';
-        reservationForm.style.opacity = '1';
-    }, 10);
+    if (reservationForm) {
+        reservationForm.style.display = 'block';
+        setTimeout(() => {
+            reservationForm.style.transform = 'translate(-50%, -50%) scale(1)';
+            reservationForm.style.opacity = '1';
+        }, 10);
+    } else {
+        console.error('Reservation form element not found.');
+    }
 }
 
 function closeReservation() {
     const reservationForm = document.getElementById('reservation-form');
-    reservationForm.style.transform = 'translate(-50%, -50%) scale(0.8)';
-    reservationForm.style.opacity = '0';
-    setTimeout(() => {
-        reservationForm.style.display = 'none';
-    }, 300);
+    if (reservationForm) {
+        reservationForm.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        reservationForm.style.opacity = '0';
+        setTimeout(() => {
+            reservationForm.style.display = 'none';
+        }, 300);
+    } else {
+        console.error('Reservation form element not found.');
+    }
 }
