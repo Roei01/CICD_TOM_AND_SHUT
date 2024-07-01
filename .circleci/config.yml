@@ -16,6 +16,16 @@ jobs:
           name: install dependencies
           command: npm install
       - run:
+          name: Install MySQL Client
+          command: sudo apt-get install -y mysql-client
+      - run:
+          name: Set up MySQL
+          command: |
+            docker run --name mysql -e MYSQL_ROOT_PASSWORD=root -d -p 3306:3306 mysql:5.7
+            sleep 20
+            mysql -u root -proot -h 127.0.0.1 -e "CREATE DATABASE IF NOT EXISTS restaurant;"
+            mysql -u root -proot -h 127.0.0.1 restaurant < setup.sql
+      - run:
           name: run test
           command: npm run test
       - run:
