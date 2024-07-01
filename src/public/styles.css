@@ -124,7 +124,27 @@ footer {
     z-index: 1000;
 }
 
-/* עיצוב סמל הסל */
+/* Social Icons */
+.social-icons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.social-icons a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.social-icons img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Cart Styles */
 .cart-icon {
     position: relative;
     cursor: pointer;
@@ -190,13 +210,149 @@ footer {
     border: none;
     padding: 5px 10px;
     cursor: pointer;
+    transition: background-color 0.3s;
 }
 
 .cart-item button:hover {
     background-color: #ff0000;
 }
 
-/* עיצוב טופס ההזמנה */
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    margin: 0 auto;
+    background: #333;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+form label {
+    margin-top: 10px;
+}
+
+form input, form textarea, form select {
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #444;
+    border-radius: 4px;
+    background: #222;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+}
+
+form input[type="submit"] {
+    background-color: #ffda79;
+    color: #121212;
+    border: none;
+    cursor: pointer;
+    margin-top: 20px;
+    padding: 15px;
+    transition: background-color 0.3s;
+}
+
+form input[type="submit"]:hover {
+    background-color: #ffcd00;
+}
+
+/* Home Page Styles */
+.home-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-top: 20px;
+    max-height: 500px;
+    object-fit: cover;
+}
+
+.home-text {
+    font-size: 1.2em;
+    margin: 20px 0;
+    color: #ffda79;
+}
+
+/* Contact Page Styles */
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.contact-form, .map {
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.map iframe {
+    width: 100%;
+    height: 300px;
+    border: none;
+    border-radius: 8px;
+}
+
+@media (min-width: 769px) {
+    .contact-container {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .contact-form, .map {
+        width: 48%;
+        padding: 20px;
+    }
+}
+
+/* Error Notification Styles */
+.error-notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #ff4444;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    animation: fadeIn 0.5s forwards, fadeOut 0.5s 2.5s forwards;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* Progress Bar Styles */
+#progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 5px;
+    background-color: #ffda79;
+    z-index: 1000;
+}
+
+/* Reservation Form Styles */
 .reservation-form {
     display: none;
     position: fixed;
@@ -281,4 +437,126 @@ footer {
     width: 50px;
     height: 50px;
     cursor: pointer;
+}
+
+/* Additional Styles */
+.header-content .nav-links {
+    display: flex;
+    gap: 15px;
+}
+
+.header-content .nav-links a {
+    color: #333;
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.header-content .nav-links a:hover {
+    background-color: #ffda79;
+    color: #fff;
+}
+
+.main-content {
+    padding: 20px;
+    flex: 1;
+    margin-top: 140px; /* להתאמה למרווח מתחת ל-header */
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 80px;
+    left: 0;
+    height: 100%;
+    overflow-y: auto;
+    z-index: 900;
+}
+
+.sidebar a {
+    display: block;
+    padding: 10px;
+    color: #333;
+    text-decoration: none;
+    transition: background 0.3s, color 0.3s;
+}
+
+.sidebar a:hover {
+    background-color: #ffda79;
+    color: #fff;
+}
+
+.sidebar .close-sidebar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.menu-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.menu-item {
+    background-color: #333;
+    border: 1px solid #444;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.menu-item:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.menu-item img {
+    width: 100%;
+    border-radius: 8px;
+    object-fit: cover;
+    height: 200px;
+}
+
+.menu-item h3 {
+    margin: 10px 0;
+}
+
+.menu-item p {
+    color: #ccc;
+}
+
+.menu-item button {
+    background-color: #ffda79;
+    color: #121212;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.menu-item button:hover {
+    background-color: #ffcd00;
+}
+
+.fade-in {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+.fade-in.show {
+    opacity: 1;
 }
