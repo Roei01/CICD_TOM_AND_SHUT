@@ -263,12 +263,16 @@ form input[type="submit"]:hover {
     z-index: 1000;
 }
 
+
 .cart-icon {
     position: fixed;
     top: 20px;
     right: 20px;
     cursor: pointer;
     z-index: 1001;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cart-icon img {
@@ -278,13 +282,18 @@ form input[type="submit"]:hover {
 
 .cart-total {
     position: absolute;
-    top: 5px;
-    right: 5px;
+    top: -10px;
+    right: -10px;
     background-color: #ff4444;
     color: #fff;
     border-radius: 50%;
     padding: 5px 10px;
     font-size: 12px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1002;
 }
 
 .cart-dropdown {
@@ -297,7 +306,7 @@ form input[type="submit"]:hover {
     border-radius: 8px;
     padding: 20px;
     display: none;
-    z-index: 1000;
+    z-index: 1001; /* Ensure cart is on top */
 }
 
 .cart-page {
