@@ -21,8 +21,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
-        user: 'your-email@gmail.com',
-        pass: 'your-email-password'
+        user: 'royinagar1@gmail.com',
+        pass: 'Razliani1'
     }
 });
 
@@ -30,7 +30,7 @@ const transporter = nodemailer.createTransport({
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: 'yourpassword',
+    password: 'Razliani1@',
     database: 'restaurant'
 });
 
@@ -59,7 +59,7 @@ const generatePage = (title, content) => `
     </div>
     <div class="navbar">
         <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
-        <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
+        <a href="/hours" onclick="event.preventDefault(); loadPage('/hourss');">Opening Hours</a>
         <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
         <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
     </div>
