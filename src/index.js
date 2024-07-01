@@ -4,6 +4,7 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 
 const app = express();
 const port = 3000;
@@ -15,6 +16,7 @@ const __dirname = dirname(__filename);
 // Middleware to serve static files and parse request body
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 // Nodemailer setup
 const transporter = nodemailer.createTransport({

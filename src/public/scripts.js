@@ -20,7 +20,8 @@ function loadPage(url) {
             cache[url] = html;
             document.querySelector('.content').innerHTML = html;
             window.history.pushState({ path: url }, '', url);
-            applyPageEffects(); 
+            applyPageEffects();
+            initializeCart(); // Ensure cart functionality is applied after loading new content
         })
         .catch(error => {
             console.error('Error loading page:', error);
@@ -276,7 +277,6 @@ function loadCartFromCookie() {
         }
     }
 }
-
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
