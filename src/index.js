@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 
 const generatePage = (title, content) => `
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,35 +28,36 @@ const generatePage = (title, content) => `
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <div class="header">
-        <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Logo" class="logo"> <!-- לוגו -->
-        <h1>${title}</h1>
-        <div class="cart-icon" onclick="toggleCart()">
-            <img src="/images/cart.png" alt="Cart">
-            <div class="cart-total" id="cart-total">0</div>
+    <header>
+        <div class="header-content">
+            <img src="/images/logo.png" alt="Logo" class="logo"> <!-- הוסף תמונת לוגו -->
+            <nav class="navbar">
+                <div class="navbar-container">
+                    <a href="/" onclick="event.preventDefault(); loadPage('/');">בית</a>
+                    <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">שעות פתיחה</a>
+                    <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">תפריט</a>
+                    <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">צור קשר</a>
+                </div>
+            </nav>
+            <div class="cart-icon" onclick="toggleCart()">
+                <img src="/images/cart.png" alt="Cart">
+                <div class="cart-total" id="cart-total">0</div>
+            </div>
         </div>
-    </div>
-    <div class="navbar">
-        <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
-        <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
-        <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
-        <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
-    </div>
-    <div class="cart-dropdown" id="cart-dropdown">
-        <div id="cart-items"></div>
-        <p>Total: $<span id="cart-total-price">0.00</span></p>
-        <a href="/cart" onclick="event.preventDefault(); loadPage('/cart');">View Cart</a>
-        <button onclick="checkout()">Checkout</button>
+    </header>
+    <div class="hero">
+        <div class="hero-text">
+            <h1>סיפור של בוקר טוב</h1>
+            <p>ארוחת הבוקר היא הדרך הקלה ביותר להתחיל את היום עם חיוך.</p>
+            <button onclick="openReservation()" class="btn-reservation">הזמן עכשיו</button>
+        </div>
     </div>
     <div class="content fade-in" id="content">
         ${content}
     </div>
-    <div class="footer fade-in">
+    <footer>
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
-    </div>
-    <div class="reservation-icon" onclick="openReservation()">
-        <img src="/images/reservation.png" alt="Reservation">
-    </div>
+    </footer>
     <div class="reservation-form" id="reservation-form">
         <div class="form-content">
             <span class="close" onclick="closeReservation()">&times;</span>
@@ -95,6 +96,7 @@ const generatePage = (title, content) => `
 </body>
 </html>
 `;
+
 
 
 // Home page

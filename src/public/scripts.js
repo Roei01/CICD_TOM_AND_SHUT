@@ -1,3 +1,4 @@
+
 // scripts.js
 
 console.log('script.js loaded');
@@ -23,6 +24,7 @@ function loadPage(url) {
             document.querySelector('.content').innerHTML = html;
             window.history.pushState({ path: url }, '', url);
             applyPageEffects();
+            updateCartDisplay(); // עדכון תצוגת הסל בכל טעינת עמוד
         })
         .catch(error => {
             console.error('Error loading page:', error);
@@ -54,6 +56,8 @@ document.addEventListener('DOMContentLoaded', () => {
     adjustContentHeight();
     initializeCart();
     loadCartFromCookie();
+    window.addEventListener('beforeunload', saveCartToCookie);
+    updateCartDisplay(); // עדכון תצוגת הסל בטעינת הדף הראשונה
 });
 
 function showLoadingIndicator() {
@@ -147,7 +151,7 @@ function applyPageEffects() {
 
 function adjustContentHeight() {
     const content = document.querySelector('.content');
-    const footer = document.querySelector('.footer');
+    const footer = document.querySelector('footer');
     if (content && footer) {
         const contentHeight = content.offsetHeight;
         const windowHeight = window.innerHeight;
@@ -221,6 +225,7 @@ function updateCartDisplay() {
     cartTotalElement.innerText = total.toFixed(2);
     cartTotalPriceElement.innerText = total.toFixed(2);
 }
+
 
 function removeFromCart(name) {
     let cart = getCart();
