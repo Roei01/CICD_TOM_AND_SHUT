@@ -1,3 +1,5 @@
+// scripts.js
+
 console.log('script.js loaded');
 
 const cache = {};
@@ -20,7 +22,7 @@ function loadPage(url) {
             cache[url] = html;
             document.querySelector('.content').innerHTML = html;
             window.history.pushState({ path: url }, '', url);
-            applyPageEffects(); 
+            applyPageEffects();
         })
         .catch(error => {
             console.error('Error loading page:', error);
@@ -193,6 +195,7 @@ function getCart() {
 
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
+    document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
 }
 
 function updateCartDisplay() {
@@ -300,11 +303,21 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('beforeunload', saveCartToCookie);
 });
 
-// הוספת פונקציונליות להזמנת מקום
+// Reservation functionality
 function openReservation() {
-    document.getElementById('reservation-form').style.display = 'block';
+    const reservationForm = document.getElementById('reservation-form');
+    reservationForm.style.display = 'block';
+    setTimeout(() => {
+        reservationForm.style.transform = 'translate(-50%, -50%) scale(1)';
+        reservationForm.style.opacity = '1';
+    }, 10);
 }
 
 function closeReservation() {
-    document.getElementById('reservation-form').style.display = 'none';
+    const reservationForm = document.getElementById('reservation-form');
+    reservationForm.style.transform = 'translate(-50%, -50%) scale(0.8)';
+    reservationForm.style.opacity = '0';
+    setTimeout(() => {
+        reservationForm.style.display = 'none';
+    }, 300);
 }
