@@ -1,5 +1,3 @@
-// scripts.js
-
 console.log('script.js loaded');
 
 const cache = {};
@@ -284,7 +282,7 @@ function toggleCart() {
         cartDropdown.style.display = 'none';
     } else {
         cartDropdown.style.display = 'block';
-        cartDropdown.style.zIndex = '1001'; // Ensure cart is on top
+        cartDropdown.style.zIndex = '1001';
     }
 }
 

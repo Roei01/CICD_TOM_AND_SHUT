@@ -41,6 +41,10 @@ const generatePage = (title, content) => `
                 <img src="/images/cart.png" alt="Cart">
                 <div class="cart-total" id="cart-total">0</div>
             </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/YOUR_BUSINESS_PAGE" target="_blank"><img src="/images/facebook.png" alt="Facebook"></a>
+                <a href="https://www.instagram.com/YOUR_BUSINESS_PAGE" target="_blank"><img src="/images/instagram.png" alt="Instagram"></a>
+            </div>
         </div>
     </header>
     <div class="hero">
@@ -106,7 +110,7 @@ app.get('/', (req, res) => {
     res.send(generatePage('Sushi Store - Home', content));
 });
 
-// Opening Hours page
+// Other routes...
 app.get('/hours', (req, res) => {
     const content = `
     <h2>Opening Hours</h2>
@@ -120,7 +124,6 @@ app.get('/hours', (req, res) => {
     res.send(generatePage('Sushi Store - Opening Hours', content));
 });
 
-// Menu page
 app.get('/menu', (req, res) => {
     const content = `
     <h2>Our Menu</h2>
@@ -158,7 +161,6 @@ app.get('/menu', (req, res) => {
     res.send(generatePage('Sushi Store - Menu', content));
 });
 
-// Contact page
 app.get('/contact', (req, res) => {
     const content = `
     <div class="contact-container">
@@ -185,7 +187,6 @@ app.get('/contact', (req, res) => {
     res.send(generatePage('Sushi Store - Contact', content));
 });
 
-// Cart page
 app.get('/cart', (req, res) => {
     const content = `
     <h2>Your Cart</h2>
@@ -198,7 +199,6 @@ app.get('/cart', (req, res) => {
     res.send(generatePage('Sushi Store - Cart', content));
 });
 
-// Reservation form submission handler
 app.post('/reserve', (req, res) => {
     const { guests, time, date } = req.body;
     console.log(`Reservation: ${guests} guests at ${time} on ${date}`);
