@@ -17,12 +17,10 @@ function loadPage(url) {
     fetch(url)
         .then(response => response.text())
         .then(html => {
-            document.querySelectorAll('.navbar a').forEach(link => {
-                link.addEventListener('click', function(event) {
-                    event.preventDefault();
-                    loadPage(this.getAttribute('href'));
-                });
-            });
+            cache[url] = html;
+            document.querySelector('.content').innerHTML = html;
+            window.history.pushState({ path: url }, '', url);
+            applyPageEffects(); 
         })
         .catch(error => {
             console.error('Error loading page:', error);
@@ -207,13 +205,32 @@ function updateCartDisplay() {
     let total = 0;
     cart.forEach(item => {
         const itemElement = document.createElement('div');
-        itemElement.innerText = `${item.name} - $${item.price.toFixed(2)} x ${item.quantity}`;
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+            <span>${item.name} - $${item.price.toFixed(2)} x ${item.quantity}</span>
+            <button onclick="removeFromCart('${item.name}')">Remove</button>
+        `;
         cartItemsContainer.appendChild(itemElement);
         total += item.price * item.quantity;
     });
 
     cartTotalElement.innerText = total.toFixed(2);
     cartTotalPriceElement.innerText = total.toFixed(2);
+}
+
+function removeFromCart(name) {
+    let cart = getCart();
+    const itemIndex = cart.findIndex(cartItem => cartItem.name === name);
+    if (itemIndex > -1) {
+        cart[itemIndex].quantity -= 1;
+        if (cart[itemIndex].quantity === 0) {
+            cart = cart.filter(cartItem => cartItem.name !== name);
+        }
+    }
+
+    saveCart(cart);
+    updateCartDisplay();
+    showCartDropdown();
 }
 
 function checkout() {

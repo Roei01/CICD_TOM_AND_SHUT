@@ -295,6 +295,34 @@ const generatePage = (title, content) => `
             display: none;
             z-index: 1000;
         }
+        .cart-page {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 600px;
+            padding: 10px 0;
+            border-bottom: 1px solid #444;
+        }
+        .cart-item button {
+            background-color: #ff4444;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .cart-item button:hover {
+            background-color: #ff0000;
+        }
     </style>
 </head>
 <body>
@@ -314,6 +342,7 @@ const generatePage = (title, content) => `
     <div class="cart-dropdown" id="cart-dropdown">
         <div id="cart-items"></div>
         <p>Total: $<span id="cart-total-price">0.00</span></p>
+        <a href="/cart" onclick="event.preventDefault(); loadPage('/cart');">View Cart</a>
         <button onclick="checkout()">Checkout</button>
     </div>
     <div class="content fade-in" id="content">
@@ -429,9 +458,11 @@ app.get('/contact', (req, res) => {
 app.get('/cart', (req, res) => {
     const content = `
     <h2>Your Cart</h2>
-    <div id="cart-items"></div>
-    <p>Total: $<span id="cart-total-price">0.00</span></p>
-    <button onclick="checkout()">Checkout</button>
+    <div class="cart-page">
+        <div id="cart-items"></div>
+        <p>Total: $<span id="cart-total-price">0.00</span></p>
+        <button onclick="checkout()">Checkout</button>
+    </div>
     `;
     res.send(generatePage('Sushi Store - Cart', content));
 });
