@@ -416,7 +416,7 @@ form input[type="submit"]:hover {
     color: #000;
 }
 
-.reservation-form input[type="submit"] {
+.reservation-form input[type="submit:"] {
     background-color: #ffda79;
     color: #121212;
     border: none;
