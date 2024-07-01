@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import mysql from "mysql2/promise";
-import { dbConfig } from "./config.js"; // לוודא שהנתיב נכון
+import { dbConfig } from "./config.js";
+import updateReservation from "./updateReservation.js"; // לוודא שהנתיב נכון
 
 describe("Stam test suit", () => {
     let connection;
@@ -13,33 +14,15 @@ describe("Stam test suit", () => {
         await connection.end();
     });
 
-    describe("test Array get sorted", () => {
-        it("should return sorted array", () => {
-            const names = ['adiel', 'yosi', 'ron']
-            expect(names.sort()).to.be.eql(['adiel', 'ron', 'yosi'])
-        });
-    });
+    // בדיקות קיימות...
 
-    describe("test add user to database", () => {
-        it("should add a user to the database", async () => {
-            const [result] = await connection.execute(
-                "INSERT INTO users (name, email, phone) VALUES (?, ?, ?)",
-                ["Test User", "test@example.com", "1234567890"]
-            );
-            expect(result.affectedRows).to.equal(1);
-        });
-    });
+    describe("test update reservation", () => {
+        it("should update a reservation in the database", async () => {
+            const [reservations] = await connection.execute("SELECT id FROM reservations LIMIT 1");
+            const reservationId = reservations[0].id;
 
-    describe("test add reservation to database", () => {
-        it("should add a reservation to the database", async () => {
-            const [users] = await connection.execute("SELECT id FROM users WHERE email = ?", ["test@example.com"]);
-            const userId = users[0].id;
-
-            const [result] = await connection.execute(
-                "INSERT INTO reservations (user_id, guests, date, time) VALUES (?, ?, ?, ?)",
-                [userId, 2, "2024-01-01", "19:00:00"]
-            );
-            expect(result.affectedRows).to.equal(1);
+            const result = await updateReservation(reservationId, "2024-01-02", "20:00:00", 3);
+            expect(result).to.be.true;
         });
     });
 });
