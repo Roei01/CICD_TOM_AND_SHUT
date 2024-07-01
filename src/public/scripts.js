@@ -17,10 +17,12 @@ function loadPage(url) {
     fetch(url)
         .then(response => response.text())
         .then(html => {
-            cache[url] = html;
-            document.querySelector('.content').innerHTML = html;
-            window.history.pushState({ path: url }, '', url);
-            applyPageEffects();
+            document.querySelectorAll('.navbar a').forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    loadPage(this.getAttribute('href'));
+                });
+            });
         })
         .catch(error => {
             console.error('Error loading page:', error);
