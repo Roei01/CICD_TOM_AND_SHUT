@@ -2,9 +2,9 @@ import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import cookieParser from 'cookie-parser';
 import nodemailer from 'nodemailer';
 import bodyParser from 'body-parser';
-import cookieParser from 'cookie-parser'; // הוספת חבילה
 
 const app = express();
 const port = 3000;
@@ -16,18 +16,9 @@ const __dirname = dirname(__filename);
 // Middleware to serve static files and parse request body
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser()); // שימוש בחבילה
+app.use(cookieParser());
 
-// Nodemailer setup
-const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: 'royinagar2@gmail.com', // Replace with your email
-        pass: 'pryk uqde apyp kuwl' // Replace with your app password
-    }
-});
-
-const generatePage = (title, content, additionalScripts = '') => `
+const generatePage = (title, content) => `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -61,9 +52,13 @@ const generatePage = (title, content, additionalScripts = '') => `
             justify-content: space-between;
             align-items: center;
         }
-        .header h1 {
-            margin: 0;
-            font-size: 2em;
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
         }
         .navbar {
             background-color: #333;
@@ -85,6 +80,7 @@ const generatePage = (title, content, additionalScripts = '') => `
             text-decoration: none;
             display: inline-block;
             transition: background-color 0.3s, color 0.3s;
+            border-radius: 5px;
         }
         .navbar a:hover {
             background-color: #ffda79;
@@ -148,6 +144,7 @@ const generatePage = (title, content, additionalScripts = '') => `
             margin-top: 10px;
             cursor: pointer;
             transition: background-color 0.3s;
+            border-radius: 5px;
         }
         .menu-item button:hover {
             background-color: #ffcd00;
@@ -182,6 +179,7 @@ const generatePage = (title, content, additionalScripts = '') => `
             margin-top: 20px;
             padding: 15px;
             transition: background-color 0.3s;
+            border-radius: 5px;
         }
         form input[type="submit"]:hover {
             background-color: #ffcd00;
@@ -193,17 +191,11 @@ const generatePage = (title, content, additionalScripts = '') => `
             margin-top: 20px;
             max-height: 500px;
             object-fit: cover;
-            filter: brightness(70%);
         }
         .home-text {
-            font-size: 2em;
+            font-size: 1.2em;
             margin: 20px 0;
             color: #ffda79;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
         }
         .contact-container {
             display: flex;
@@ -277,7 +269,7 @@ const generatePage = (title, content, additionalScripts = '') => `
             z-index: 1000;
         }
         .cart-icon {
-            position: relative;
+            position: fixed;
             top: 20px;
             right: 20px;
             cursor: pointer;
@@ -295,7 +287,7 @@ const generatePage = (title, content, additionalScripts = '') => `
             border-radius: 50%;
             padding: 5px 10px;
             font-size: 12px;
-            margin-left: 5px;
+            margin-left: 10px;
         }
         .cart-dropdown {
             position: fixed;
@@ -307,7 +299,7 @@ const generatePage = (title, content, additionalScripts = '') => `
             border-radius: 8px;
             padding: 20px;
             display: none;
-            z-index: 1001;
+            z-index: 1001; /* Ensure cart is on top */
         }
         .cart-page {
             display: flex;
@@ -333,29 +325,49 @@ const generatePage = (title, content, additionalScripts = '') => `
             border: none;
             padding: 5px 10px;
             cursor: pointer;
+            border-radius: 5px;
         }
         .cart-item button:hover {
+            background-color: #ff0000;
+        }
+        .btn {
+            background-color: #ff4444;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn:hover {
             background-color: #ff0000;
         }
         .social-icons {
             display: flex;
             gap: 10px;
-            position: absolute;
-            right: 20px;
-            top: 20px;
         }
-        .social-icons img {
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
+        .social-icons a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 24px;
+        }
+        .social-icons a:hover {
+            color: #ffda79;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div>
-            <img src="/images/logo.png" alt="Logo" style="width: 50px;">
-            <span>03-630-8484 | מהוליבר 8, יפו</span>
+        <div class="logo">
+            <img src="/images/logo.png" alt="Logo">
+            <div>
+                <p>Phone: 03-630-8484</p>
+                <p>Address: Some Street, City, Country</p>
+            </div>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com" target="_blank">F</a>
+            <a href="https://www.instagram.com" target="_blank">I</a>
         </div>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="/images/cart.png" alt="Cart">
@@ -380,12 +392,7 @@ const generatePage = (title, content, additionalScripts = '') => `
     <div class="footer fade-in">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
     </div>
-    <div class="social-icons">
-        <img src="/images/instagram.png" alt="Instagram" onclick="window.open('https://www.instagram.com', '_blank')">
-        <img src="/images/facebook.png" alt="Facebook" onclick="window.open('https://www.facebook.com', '_blank')">
-    </div>
     <script src="/scripts.js"></script>
-    ${additionalScripts}
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             applyPageEffects();
@@ -401,10 +408,9 @@ const generatePage = (title, content, additionalScripts = '') => `
 // Home page
 app.get('/', (req, res) => {
     const content = `
-    <div class="home-text">
-        <h2>NAOMI ASIAN KITCHEN</h2>
-    </div>
-    <img class="home-image" src="/images/pexels-cottonbro-3297801.jpg" alt="Sushi">
+    <h2>Welcome to Sushi Store</h2>
+    <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
+    <img class="home-image" src="/images/sushi.jpg" alt="Sushi">
     <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');" class="btn">Explore Menu</a>
     `;
     res.send(generatePage('Sushi Store - Home', content));
@@ -499,11 +505,7 @@ app.get('/cart', (req, res) => {
         <button onclick="checkout()">Checkout</button>
     </div>
     `;
-    res.send(generatePage('Sushi Store - Cart', content, `
-    <script>
-        document.addEventListener('DOMContentLoaded', loadCartFromCookie);
-    </script>
-    `));
+    res.send(generatePage('Sushi Store - Cart', content));
 });
 
 // Handle form submission

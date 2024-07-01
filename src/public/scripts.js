@@ -193,6 +193,7 @@ function getCart() {
 
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
+    document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
 }
 
 function updateCartDisplay() {
