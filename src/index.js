@@ -184,7 +184,7 @@ app.get('/cart', (req, res) => {
     });
 
     const content = `
-        <h2>Your Cart</h2>
+        <h2>My Cart</h2>
         <div class="cart-page">
             <div id="cart-items">${itemsHtml}</div>
             <p>Total: $<span id="cart-total-price">${cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</span></p>
