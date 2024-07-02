@@ -38,10 +38,9 @@ body {
 
 .cart-icon {
     position: fixed;
-    top: 0px;
+    top: -20px;
     right: 20px;
     cursor: pointer;
-    z-index: 1001;
     display: flex;
     align-items: center;
 }
@@ -407,7 +406,7 @@ form input[type="submit"]:hover {
     right: 20px;
     cursor: pointer;
     z-index: 1001;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .reservation-icon:active {
@@ -417,7 +416,19 @@ form input[type="submit"]:hover {
 .reservation-icon img {
     width: 170px;
     height: 100px;
+    transition: filter 0.3s ease;
 }
+
+.reservation-icon:hover img {
+    filter: brightness(0.5);
+}
+
+.reservation-icon:hover {
+    transform: scale(1.2);
+    background-color: white;
+    border-radius: 50%;
+}
+
 
 .reservation-form {
     display: none;
