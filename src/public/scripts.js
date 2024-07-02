@@ -223,6 +223,7 @@ function updateCartDisplay() {
     cartTotalPriceElement.innerText = total.toFixed(2);
 }
 
+
 function removeFromCart(name) {
     let cart = getCart();
     const itemIndex = cart.findIndex(cartItem => cartItem.name === name);
@@ -232,11 +233,13 @@ function removeFromCart(name) {
             cart = cart.filter(cartItem => cartItem.name !== name);
         }
     }
-    saveCartToCookie()
+
     saveCart(cart);
     updateCartDisplay();
-    loadPage('/cart'); // רענון הדף לאחר עדכון הסל
-    showCartDropdown();
+
+    if (window.location.pathname === '/cart') {
+        loadPage('/cart');
+    }
 }
 
 function isCartEmpty() {
