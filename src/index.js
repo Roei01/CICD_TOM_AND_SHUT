@@ -40,8 +40,8 @@ const generatePage = (title, content) => `
     </div>
     <div class="navbar">
         <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
-        <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
         <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
+        <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
         <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
     </div>
     <div class="cart-dropdown" id="cart-dropdown">
