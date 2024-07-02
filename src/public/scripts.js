@@ -44,6 +44,32 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    document.getElementById('contact-form').addEventListener('submit', async function(event) {
+        event.preventDefault();
+        const formData = new FormData(this);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+            const response = await fetch('/send-message', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+            const result = await response.json();
+            if (result.success) {
+                document.querySelector('.contact-container').style.display = 'none';
+                document.getElementById('thank-you-message').style.display = 'block';
+            } else {
+                showErrorNotification('Failed to send message. Please try again later.');
+            }
+        } catch (error) {
+            console.error('Error sending message:', error);
+            showErrorNotification('Failed to send message. Please try again later.');
+        }
+    });
+
     window.addEventListener('popstate', function(event) {
         if (event.state && event.state.path) {
             loadPage(event.state.path, true); // Force refresh on popstate
@@ -54,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
     adjustContentHeight();
     initializeCart();
     loadCartFromCookie();
+    window.addEventListener('beforeunload', saveCartToCookie);
 });
 
 function showLoadingIndicator() {
