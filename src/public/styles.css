@@ -235,6 +235,22 @@ form input[type="submit"]:hover {
     border-radius: 8px;
 }
 
+@media (max-width: 768px) {
+    .navbar {
+        position: static;
+        width: 100%;
+        transform: none;
+        border-radius: 0;
+        padding: 10px 0;
+    }
+
+    .navbar a {
+        display: block;
+        padding: 10px;
+        border-bottom: 1px solid #444;
+    }
+}
+
 @media (min-width: 769px) {
     .contact-container {
         flex-direction: row;
