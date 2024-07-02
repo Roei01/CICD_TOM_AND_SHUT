@@ -219,7 +219,7 @@ function updateCartDisplay() {
         total += item.price * item.quantity;
     });
 
-    cartTotalElement.innerText = total.toFixed(2);
+    cartTotalElement.innerText = cart.length; // Update the cart total items count
     cartTotalPriceElement.innerText = total.toFixed(2);
 
     // Update cart icon count
