@@ -39,7 +39,7 @@ body {
 .social-icons {
     display: flex;
     align-items: center;
-    margin-right: 50px; 
+    margin-right: 70px; 
 }
 
 .social-icons a:first-child {
@@ -52,7 +52,7 @@ body {
 }
 
 .social-icons a:nth-child(2) {
-    margin-left: 50px; 
+    margin-left: 10px; 
 }
 
 .social-icons img {
