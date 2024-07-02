@@ -238,7 +238,16 @@ function removeFromCart(name) {
     showCartDropdown();
 }
 
+function isCartEmpty() {
+    const cart = getCart();
+    return cart.length === 0;
+}
+
 function checkout() {
+    if (isCartEmpty()) {
+        alert('Your cart is empty!');
+        return;
+    }
     alert('Thank you for your purchase!');
     localStorage.removeItem('cart');
     updateCartDisplay();
