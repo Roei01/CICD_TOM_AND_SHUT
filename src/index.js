@@ -27,7 +27,7 @@ const generatePage = (title, content) => `
 </head>
 <body>
     <div class="header">
-        <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Logo" class="logo"> <!-- לוגו -->
+        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
         <h1>${title}</h1>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="/images/cart.png" alt="Cart">
@@ -171,16 +171,29 @@ app.get('/contact', (req, res) => {
 
 // Cart page
 app.get('/cart', (req, res) => {
+    const cart = req.cookies.cart ? JSON.parse(req.cookies.cart) : [];
+    let itemsHtml = '';
+
+    cart.forEach(item => {
+        itemsHtml += `
+            <div class="cart-item">
+                <span>${item.name} - $${item.price.toFixed(2)} x ${item.quantity}</span>
+                <button onclick="removeFromCart('${item.name}')">Remove</button>
+            </div>
+        `;
+    });
+
     const content = `
-    <h2>Your Cart</h2>
-    <div class="cart-page">
-        <div id="cart-items"></div>
-        <p>Total: $<span id="cart-total-price">0.00</span></p>
-        <button onclick="checkout()">Checkout</button>
-    </div>
+        <h2>Your Cart</h2>
+        <div class="cart-page">
+            <div id="cart-items">${itemsHtml}</div>
+            <p>Total: $<span id="cart-total-price">${cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</span></p>
+            <button onclick="checkout()">Checkout</button>
+        </div>
     `;
     res.send(generatePage('Sushi Store - Cart', content));
 });
+
 
 // Reservation form submission handler
 app.post('/reserve', (req, res) => {

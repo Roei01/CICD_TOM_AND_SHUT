@@ -345,6 +345,7 @@ form input[type="submit"]:hover {
     background-color: #ff0000;
 }
 
+
 .cart-dropdown {
     position: fixed;
     top: 70px;

@@ -9,6 +9,7 @@ async function loadPage(url) {
             document.querySelector('.content').innerHTML = cache[url];
             window.history.pushState({ path: url }, '', url);
             applyPageEffects();
+            updateCartDisplay();
             return;
         }
 
@@ -23,6 +24,7 @@ async function loadPage(url) {
         document.querySelector('.content').innerHTML = html;
         window.history.pushState({ path: url }, '', url);
         applyPageEffects();
+        updateCartDisplay();
     } catch (error) {
         console.error('Error loading page:', error);
         showErrorNotification('Failed to load page.');
@@ -31,6 +33,7 @@ async function loadPage(url) {
         hideProgressBar();
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
