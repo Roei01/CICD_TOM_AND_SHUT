@@ -34,20 +34,19 @@ async function loadPage(url, forceRefresh = false) {
     }
 }
 
-
 document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM fully loaded and parsed');
 
     document.querySelectorAll('.navbar a').forEach(link => {
         link.addEventListener('click', function(event) {
             event.preventDefault();
-            loadPage(this.getAttribute('href'));
+            loadPage(this.getAttribute('href'), true); // Force refresh on navbar links
         });
     });
 
     window.addEventListener('popstate', function(event) {
         if (event.state && event.state.path) {
-            loadPage(event.state.path);
+            loadPage(event.state.path, true); // Force refresh on popstate
         }
     });
 
@@ -229,8 +228,6 @@ function updateCartDisplay() {
     }
 }
 
-
-
 function removeFromCart(name) {
     let cart = getCart();
     const itemIndex = cart.findIndex(cartItem => cartItem.name === name);
@@ -264,7 +261,6 @@ function checkout() {
     updateCartDisplay();
     loadPage('/cart', true);
 }
-
 
 function toggleCart() {
     const cartDropdown = document.getElementById('cart-dropdown');
@@ -303,7 +299,7 @@ function loadCartFromCookie() {
             localStorage.setItem('cart', value);
             updateCartDisplay();
             saveCartToCookie();
-            loadPage('/cart'); // רענון הדף לאחר טעינת הסל מהעוגיה
+            loadPage('/cart', true); // רענון הדף לאחר טעינת הסל מהעוגיה
             break;
         }
     }
@@ -315,13 +311,13 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.navbar a').forEach(link => {
         link.addEventListener('click', function(event) {
             event.preventDefault();
-            loadPage(this.getAttribute('href'));
+            loadPage(this.getAttribute('href'), true); // Force refresh on navbar links
         });
     });
 
     window.addEventListener('popstate', function(event) {
         if (event.state && event.state.path) {
-            loadPage(event.state.path);
+            loadPage(event.state.path, true); // Force refresh on popstate
         }
     });
 

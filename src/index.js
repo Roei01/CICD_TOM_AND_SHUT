@@ -47,7 +47,7 @@ const generatePage = (title, content) => `
     <div class="cart-dropdown" id="cart-dropdown">
         <div id="cart-items"></div>
         <p>Total: $<span id="cart-total-price">0.00</span></p>
-        <a href="/cart" onclick="event.preventDefault(); loadPage('/cart');">View Cart</a>
+        <a href="/cart" onclick="event.preventDefault(); loadPage('/cart', true);">View Cart</a>
         <button onclick="checkout()">Checkout</button>
     </div>
     <div class="content fade-in" id="content">
