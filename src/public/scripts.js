@@ -235,6 +235,7 @@ function removeFromCart(name) {
 
     saveCart(cart);
     updateCartDisplay();
+    loadPage('/cart'); // רענון הדף לאחר עדכון הסל
     showCartDropdown();
 }
 
@@ -251,6 +252,7 @@ function checkout() {
     alert('Thank you for your purchase!');
     localStorage.removeItem('cart');
     updateCartDisplay();
+    loadPage('/cart'); // רענון הדף לאחר ה-checkout
 }
 
 function toggleCart() {
@@ -289,6 +291,7 @@ function loadCartFromCookie() {
         if (name.trim() === 'cart') {
             localStorage.setItem('cart', value);
             updateCartDisplay();
+            loadPage('/cart'); // רענון הדף לאחר טעינת הסל מהעוגיה
             break;
         }
     }
