@@ -39,7 +39,7 @@ body {
 .social-icons {
     display: flex;
     align-items: center;
-    margin-right: 30px; 
+    margin-right: 50px; 
 }
 
 .social-icons a {
