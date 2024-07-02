@@ -27,15 +27,15 @@ const generatePage = (title, content) => `
 </head>
 <body>
     <div class="header">
-        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
-        <h1>${title}</h1>
-        <div class="cart-icon" onclick="toggleCart()">
-            <img src="/images/cart.png" alt="Cart">
-            <div class="cart-total" id="cart-total">0</div>
-        </div>
+        <img src="/images/logo.png" alt="Logo" class="logo">
+        <h1>Sushi Store</h1>
         <div class="social-icons">
             <a href="https://www.facebook.com/YOUR_BUSINESS_PAGE" target="_blank"><img src="/images/facebook.png" alt="Facebook"></a>
             <a href="https://www.instagram.com/YOUR_BUSINESS_PAGE" target="_blank"><img src="/images/instagram.png" alt="Instagram"></a>
+        </div>
+        <div class="cart-icon" onclick="toggleCart()">
+            <img src="/images/cart.png" alt="Cart">
+            <div class="cart-total" id="cart-total">0</div>
         </div>
     </div>
     <div class="navbar">
