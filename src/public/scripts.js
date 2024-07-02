@@ -59,10 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const result = await response.json();
             if (result.success) {
-                document.querySelector('.contact-container').innerHTML = `
-                    <h2>Thank you for contacting us!</h2>
-                    <p>We will get back to you shortly.</p>
-                `;
+                document.querySelector('.contact-container').style.display = 'none';
+                document.getElementById('thank-you-message').style.display = 'block';
             } else {
                 showErrorNotification('Failed to send message. Please try again later.');
             }
@@ -84,7 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCartFromCookie();
     window.addEventListener('beforeunload', saveCartToCookie);
 });
-
 
 function showLoadingIndicator() {
     let loadingIndicator = document.getElementById('loading-indicator');
