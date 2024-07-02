@@ -2,9 +2,9 @@ console.log('script.js loaded');
 
 const cache = {};
 
-async function loadPage(url) {
+async function loadPage(url, forceRefresh = false) {
     try {
-        if (cache[url]) {
+        if (!forceRefresh && cache[url]) {
             console.log(`Loading page from cache: ${url}`);
             document.querySelector('.content').innerHTML = cache[url];
             window.history.pushState({ path: url }, '', url);
@@ -221,7 +221,14 @@ function updateCartDisplay() {
 
     cartTotalElement.innerText = total.toFixed(2);
     cartTotalPriceElement.innerText = total.toFixed(2);
+
+    // Update cart icon count
+    const cartIconCount = document.getElementById('cart-total');
+    if (cartIconCount) {
+        cartIconCount.innerText = cart.length;
+    }
 }
+
 
 
 function removeFromCart(name) {
@@ -254,10 +261,11 @@ function checkout() {
     }
     alert('Thank you for your purchase!');
     localStorage.removeItem('cart');
+    document.cookie = "cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     updateCartDisplay();
-    saveCartToCookie();
-    loadPage('/cart'); // רענון הדף לאחר ה-checkout
+    loadPage('/cart', true);
 }
+
 
 function toggleCart() {
     const cartDropdown = document.getElementById('cart-dropdown');
