@@ -12,7 +12,7 @@ body {
 .header {
     background-color: #222;
     color: #fff;
-    padding: 0;
+    padding: 0; 
     text-align: center;
     position: fixed;
     width: 100%;
@@ -21,49 +21,29 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; 
 }
 
 .header .logo {
-    width: 50px;
+    width: 50px; 
     height: auto;
-    margin-left: 20px;
+    margin-left: 20px; 
 }
 
 .header h1 {
-    flex: 1;
+    flex: 1; 
     margin: 0;
     font-size: 2em;
 }
 
-.header .cart-icon {
-    margin-right: 20px; /* שמירה על מרחק מצד ימין */
+.cart-icon {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+    z-index: 1001;
     display: flex;
     align-items: center;
-}
-
-.social-icons {
-    display: flex;
-    align-items: center;
-    margin-right: 20px; /* שמירה על מרחק מצד ימין */
-}
-
-.social-icons a:first-child {
-    margin-left: 10px; /* ריווח בין האייקונים */
-    transition: transform 0.3s ease;
-}
-
-.social-icons a:hover {
-    transform: scale(1.2);
-}
-
-.social-icons a:nth-child(2) {
-    margin-left: 10px; /* ריווח בין האייקונים */
-}
-
-.social-icons img {
-    width: 30px;
-    height: 30px;
 }
 
 .cart-icon img {
@@ -71,15 +51,28 @@ body {
     height: 40px;
 }
 
-.cart-total {
-    position: absolute;
-    top: 5px;
-    right: 5px;
-    background-color: #ff4444;
-    color: #fff;
-    border-radius: 50%;
-    padding: 5px 10px;
-    font-size: 12px;
+.social-icons {
+    display: flex;
+    align-items: center;
+    margin-right: 90px; 
+}
+
+.social-icons a:first-child {
+    margin-left: 40px;
+    transition: transform 0.3s ease; 
+}
+
+.social-icons a:hover {
+    transform: scale(1.2);
+}
+
+.social-icons a:nth-child(2) {
+    margin-left: 10px; 
+}
+
+.social-icons img {
+    width: 30px;
+    height: 30px;
 }
 
 .navbar {
