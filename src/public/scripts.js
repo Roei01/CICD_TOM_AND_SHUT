@@ -244,9 +244,8 @@ function removeFromCart(name) {
     saveCart(cart);
     updateCartDisplay();
 
-    if (window.location.pathname === '/cart') {
-        loadPage('/cart');
-    }
+    // רענון מלא של הדף
+    window.location.reload();
 }
 
 function isCartEmpty() {
