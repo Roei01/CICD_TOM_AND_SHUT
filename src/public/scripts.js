@@ -2,34 +2,34 @@ console.log('script.js loaded');
 
 const cache = {};
 
-function loadPage(url) {
-    if (cache[url]) {
-        console.log(`Loading page from cache: ${url}`);
-        document.querySelector('.content').innerHTML = cache[url];
-        window.history.pushState({ path: url }, '', url);
-        applyPageEffects();
-        return;
-    }
-
-    console.log(`Loading page: ${url}`);
-    showLoadingIndicator();
-    showProgressBar();
-    fetch(url)
-        .then(response => response.text())
-        .then(html => {
-            cache[url] = html;
-            document.querySelector('.content').innerHTML = html;
+async function loadPage(url) {
+    try {
+        if (cache[url]) {
+            console.log(`Loading page from cache: ${url}`);
+            document.querySelector('.content').innerHTML = cache[url];
             window.history.pushState({ path: url }, '', url);
             applyPageEffects();
-        })
-        .catch(error => {
-            console.error('Error loading page:', error);
-            showErrorNotification('Failed to load page.');
-        })
-        .finally(() => {
-            hideLoadingIndicator();
-            hideProgressBar();
-        });
+            return;
+        }
+
+        console.log(`Loading page: ${url}`);
+        showLoadingIndicator();
+        showProgressBar();
+
+        const response = await fetch(url);
+        const html = await response.text();
+
+        cache[url] = html;
+        document.querySelector('.content').innerHTML = html;
+        window.history.pushState({ path: url }, '', url);
+        applyPageEffects();
+    } catch (error) {
+        console.error('Error loading page:', error);
+        showErrorNotification('Failed to load page.');
+    } finally {
+        hideLoadingIndicator();
+        hideProgressBar();
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {

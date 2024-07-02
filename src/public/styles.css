@@ -12,7 +12,7 @@ body {
 .header {
     background-color: #222;
     color: #fff;
-    padding: 0; /* צמצום הרווחים הפנימיים */
+    padding: 0; 
     text-align: center;
     position: fixed;
     width: 100%;
@@ -21,17 +21,17 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     display: flex;
     align-items: center;
-    justify-content: space-between; /* ריווח בין הלוגו לכותרת */
+    justify-content: space-between; 
 }
 
 .header .logo {
-    width: 50px; /* גודל הלוגו */
+    width: 50px; 
     height: auto;
-    margin-left: 20px; /* מרווח מצד שמאל */
+    margin-left: 20px; 
 }
 
 .header h1 {
-    flex: 1; /* תופס את יתרת המרחב */
+    flex: 1; 
     margin: 0;
     font-size: 2em;
 }
@@ -39,11 +39,11 @@ body {
 .social-icons {
     display: flex;
     align-items: center;
-    margin-right: 20px; /* מרווח מצד ימין */
+    margin-right: 30px; 
 }
 
 .social-icons a {
-    margin-left: 10px;
+    margin-left: 40px;
 }
 
 .social-icons img {
@@ -54,11 +54,11 @@ body {
 .navbar {
     background-color: #333;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    padding: 0; /* צמצום הרווחים הפנימיים */
+    padding: 0; 
     text-align: center;
     position: fixed;
     width: 100%;
-    top: 60px; /* התאם לפי הגובה האמיתי של ה-header */
+    top: 60px; 
     z-index: 1000;
 }
 
@@ -78,8 +78,8 @@ body {
 
 .content {
     flex: 1;
-    padding: 80px 20px 20px; /* התאם את הגובה של התפריט */
-    margin-top: 0; /* צמצום הרווחים החיצוניים */
+    padding: 80px 20px 20px; 
+    margin-top: 0;
 }
 
 .footer {
@@ -355,7 +355,7 @@ form input[type="submit"]:hover {
     border-radius: 8px;
     padding: 20px;
     display: none;
-    z-index: 1001; /* Ensure cart is on top */
+    z-index: 1001;
 }
 
 .reservation-icon {
