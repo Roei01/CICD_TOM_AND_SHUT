@@ -59,8 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             const result = await response.json();
             if (result.success) {
-                document.querySelector('.contact-container').style.display = 'none';
-                document.getElementById('thank-you-message').style.display = 'block';
+                document.querySelector('.contact-container').innerHTML = `
+                    <h2>Thank you for contacting us!</h2>
+                    <p>We will get back to you shortly.</p>
+                `;
             } else {
                 showErrorNotification('Failed to send message. Please try again later.');
             }
@@ -82,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCartFromCookie();
     window.addEventListener('beforeunload', saveCartToCookie);
 });
+
 
 function showLoadingIndicator() {
     let loadingIndicator = document.getElementById('loading-indicator');
@@ -370,7 +373,7 @@ function openReservation() {
 function closeReservation() {
     const reservationForm = document.getElementById('reservation-form');
     if (reservationForm) {
-        reservationForm.style.transform = 'translate(-50%, -50%) scale(0.8)';
+        reservationForm.style.transform = 'translate(-50%, -50%) scale(0.9)';
         reservationForm.style.opacity = '0';
         setTimeout(() => {
             reservationForm.style.display = 'none';
