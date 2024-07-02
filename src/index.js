@@ -16,6 +16,7 @@ const __dirname = dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 const generatePage = (title, content) => `
 <!DOCTYPE html>
@@ -198,10 +199,11 @@ app.get('/cart', (req, res) => {
 
 
 // Reservation form submission handler
-app.post('/reserve', (req, res) => {
-    const { guests, time, date } = req.body;
-    console.log(`Reservation: ${guests} guests at ${time} on ${date}`);
-    res.send(generatePage('Sushi Store - Reservation', '<h2>Thank you for your reservation!</h2><p>We look forward to serving you.</p>'));
+app.post('/send-message', (req, res) => {
+    const { name, email, message } = req.body;
+    console.log(`Message received from ${name} (${email}): ${message}`);
+    // כאן אפשר להוסיף קוד לשליחת המייל או עיבוד אחר של ההודעה
+    res.send('Message received successfully');
 });
 
 app.listen(port, () => {
