@@ -36,6 +36,10 @@ body {
     font-size: 2em;
 }
 
+.header .cart-icon {
+    margin-right: 20px; /* שמירה על מרחק מצד ימין */
+}
+
 .social-icons {
     display: flex;
     align-items: center;
