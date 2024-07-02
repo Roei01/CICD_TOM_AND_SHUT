@@ -1,9 +1,11 @@
 //index.js
+
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cookieParser from 'cookie-parser';
+import nodemailer from 'nodemailer'; // ייבוא nodemailer
 
 const app = express();
 const port = 3000;
@@ -16,6 +18,41 @@ const __dirname = dirname(__filename);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// פונקציה לשליחת מייל
+async function sendEmail(name, email, message) {
+    let transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'royinagar2@gmail.com',
+            pass: 'pryk uqde apyp kuwl' 
+        }
+    });
+
+    let mailOptions = {
+        from: 'royinagar2@gmail.com',
+        to: 'royinagar2@gmail.com',
+        subject: `New Contact Form Submission from ${name}`,
+        text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
+    };
+
+    await transporter.sendMail(mailOptions);
+}
+
+// הוספת נתיב לטיפול בטפסי יצירת קשר
+app.post('/send-message', async (req, res) => {
+    const { name, email, message } = req.body;
+    console.log(`Message received from ${name} (${email}): ${message}`);
+
+    try {
+        await sendEmail(name, email, message);
+        res.json({ success: true });
+    } catch (error) {
+        console.error('Error sending email:', error);
+        res.json({ success: false });
+    }
+});
 
 const generatePage = (title, content) => `
 <!DOCTYPE html>
@@ -150,7 +187,7 @@ app.get('/contact', (req, res) => {
         <div class="contact-form">
             <h2>Contact Us</h2>
             <p>Get in touch with us for any inquiries or feedback.</p>
-            <form action="/send-message" method="post">
+            <form id="contact-form">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name" required>
                 <label for="email">Email:</label>
@@ -165,6 +202,10 @@ app.get('/contact', (req, res) => {
         <div class="map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.768280268636!2d34.7925014758049!3d32.08485072526314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4cdd4a67d3b7%3A0x6f6e88c8f16d8402!2zMCDXqNee15XXldeuLCDXqNeQ15jXldeo15kgMTI1NCDXqdeR15XXqiBcdTAwMDQg2LPZhNmF2LHZitivINmE2YXYsdmG2Lkg15HXmdec15ogNCAxNyDYp9mE2KzZhdmF2IwgMTY1NzEg0L_RgNC10L_QvtGA0L7QtNGB0YLQsNGC!5e0!3m2!1sen!2sil!4v1688146201798!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
+    </div>
+    <div id="thank-you-message" style="display: none;">
+        <h2>Thank you for contacting us!</h2>
+        <p>We will get back to you shortly.</p>
     </div>
     `;
     res.send(generatePage('Sushi Store - Contact', content));
@@ -194,8 +235,6 @@ app.get('/cart', (req, res) => {
     `;
     res.send(generatePage('Sushi Store - Cart', content));
 });
-
-
 
 // Reservation form submission handler
 app.post('/reserve', (req, res) => {
