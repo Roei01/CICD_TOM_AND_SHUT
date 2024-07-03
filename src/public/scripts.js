@@ -44,33 +44,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    document.getElementById('contact-form').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData.entries());
+    const contactForm = document.getElementById('contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
 
-        try {
-            const response = await fetch('/send-message', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            });
-            const result = await response.json();
-            if (result.success) {
-                document.querySelector('.contact-container').innerHTML = `
-                    <h2>Thank you for contacting us!</h2>
-                    <p>We will get back to you shortly.</p>
-                `;
-            } else {
+            try {
+                const response = await fetch('/send-message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (result.success) {
+                    document.querySelector('.contact-container').innerHTML = `
+                        <h2>Thank you for contacting us!</h2>
+                        <p>We will get back to you shortly.</p>
+                    `;
+                } else {
+                    showErrorNotification('Failed to send message. Please try again later.');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
                 showErrorNotification('Failed to send message. Please try again later.');
             }
-        } catch (error) {
-            console.error('Error sending message:', error);
-            showErrorNotification('Failed to send message. Please try again later.');
-        }
-    });
+        });
+    }
 
     window.addEventListener('popstate', function(event) {
         if (event.state && event.state.path) {
@@ -84,7 +87,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCartFromCookie();
     window.addEventListener('beforeunload', saveCartToCookie);
 });
-
 
 function showLoadingIndicator() {
     let loadingIndicator = document.getElementById('loading-indicator');

@@ -432,12 +432,12 @@ form input[type="submit"]:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    color: #686262;
+    color: #da7a7a;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgb(184, 233, 106);
     z-index: 1002;
-    width: 350px;
+    width: 150px;
     text-align: center;
     animation: fadeIn 0.3s ease-in-out;
 }
