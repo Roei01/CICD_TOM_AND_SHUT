@@ -410,8 +410,8 @@ form input[type="submit"]:hover {
 }
 
 .reservation-icon img {
-    width: 170px;
-    height: 100px;
+    width: 85px;
+    height: 50px;
     transition: filter 0.3s ease;
 }
 
@@ -432,12 +432,12 @@ form input[type="submit"]:hover {
     left: 50%;
     transform: translate(-50%, -50%);
     background-color: #fff;
-    color: #000;
+    color: #686262;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     z-index: 1002;
-    width: 300px;
+    width: 350px;
     text-align: center;
     animation: fadeIn 0.3s ease-in-out;
 }
