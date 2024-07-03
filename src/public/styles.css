@@ -472,6 +472,15 @@ form input[type="submit"]:hover {
     text-align: left;
 }
 
+.reservation-form .form-content input[type="number"]:focus,
+.reservation-form .form-content input[type="time"]:focus,
+.reservation-form .form-content input[type="date"]:focus {
+    outline: none;
+    border-color: #ffda79;
+    box-shadow: 0 0 5px rgba(255, 218, 121, 0.5);
+}
+
+
 .reservation-form .form-content input[type="number"],
 .reservation-form .form-content input[type="time"],
 .reservation-form .form-content input[type="date"] {
@@ -486,13 +495,6 @@ form input[type="submit"]:hover {
     cursor: pointer;
 }
 
-.reservation-form .form-content input[type="number"]:focus,
-.reservation-form .form-content input[type="time"]:focus,
-.reservation-form .form-content input[type="date"]:focus {
-    outline: none;
-    border-color: #ffda79;
-    box-shadow: 0 0 5px rgba(255, 218, 121, 0.5);
-}
 
 .reservation-form .form-content input[type="submit"] {
     background-color: #bbbbbb;
@@ -507,7 +509,7 @@ form input[type="submit"]:hover {
 }
 
 .reservation-form .form-content input[type="submit"]:hover {
-    background-color: #00897b;
+    background-color: #890000;
 }
 
 .reservation-form .close {
