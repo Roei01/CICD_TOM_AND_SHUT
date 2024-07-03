@@ -475,8 +475,8 @@ form input[type="submit"]:hover {
 .reservation-form .form-content input[type="number"],
 .reservation-form .form-content input[type="time"],
 .reservation-form .form-content input[type="date"] {
-    width: 100%;
-    padding: 10px;
+    width: 50%;
+    padding: 5px;
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -487,8 +487,8 @@ form input[type="submit"]:hover {
 }
 
 .reservation-form .form-content input[type="submit"] {
-    background-color: #00a69c;
-    color: #fff;
+    background-color: #bbbbbb;
+    color: #000000;
     border: none;
     cursor: pointer;
     margin-top: 20px;
