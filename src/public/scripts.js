@@ -87,11 +87,19 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCartFromCookie();
     window.addEventListener('beforeunload', saveCartToCookie);
 
-
-    const reservationInputs = document.querySelectorAll('.reservation-form input[type="number"], .reservation-form input[type="time"], .reservation-form input[type="date"]');
+    // הוספת קוד עבור פתיחת האפשרויות בטופס ההזמנה
+    const reservationInputs = document.querySelectorAll('.reservation-form select, .reservation-form input[type="date"]');
     reservationInputs.forEach(input => {
         input.addEventListener('focus', () => {
-            input.click();
+            input.size = input.options ? input.options.length : 1;
+        });
+
+        input.addEventListener('blur', () => {
+            input.size = 1;
+        });
+
+        input.addEventListener('change', () => {
+            input.size = 1;
         });
     });
 });
