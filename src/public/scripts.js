@@ -86,7 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCart();
     loadCartFromCookie();
     window.addEventListener('beforeunload', saveCartToCookie);
+
+
+    const reservationInputs = document.querySelectorAll('.reservation-form input[type="number"], .reservation-form input[type="time"], .reservation-form input[type="date"]');
+    reservationInputs.forEach(input => {
+        input.addEventListener('focus', () => {
+            input.click();
+        });
+    });
 });
+
 
 function showLoadingIndicator() {
     let loadingIndicator = document.getElementById('loading-indicator');
