@@ -273,8 +273,6 @@ form input[type="submit"]:hover {
     }
 }
 
-
-
 .error-notification {
     position: fixed;
     top: 20px;
@@ -385,7 +383,6 @@ form input[type="submit"]:hover {
     background-color: #ff0000;
 }
 
-
 .cart-dropdown {
     position: fixed;
     top: 70px;
@@ -427,7 +424,6 @@ form input[type="submit"]:hover {
     background-color: rgb(255, 200, 98);
     border-radius: 50%;
 }
-
 
 .reservation-form {
     display: none;
