@@ -100,15 +100,15 @@ const generatePage = (title, content) => `
     <div class="reservation-form" id="reservation-form">
         <div class="form-content">
             <span class="close" onclick="closeReservation()">&times;</span>
-            <h2>הזמנת מקום</h2>
+            <h2>reservation</h2>
             <form action="/reserve" method="post">
-                <label for="guests">אורחים:</label>
+                <label for="Num guests">guests:</label>
                 <input type="number" id="guests" name="guests" min="1" max="10" required>
-                <label for="time">שעה:</label>
-                <input type="time" id="time" name="time" required>
-                <label for="date">תאריך:</label>
+                <label for="date">date:</label>
                 <input type="date" id="date" name="date" required>
-                <input type="submit" value="הזמנת מקום">
+                <label for="time">hour:</label>
+                <input type="time" id="time" name="time" required>
+                <input type="submit" value="reserve">
             </form>
         </div>
     </div>
