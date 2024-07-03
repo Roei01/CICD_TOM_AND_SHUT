@@ -101,14 +101,44 @@ const generatePage = (title, content) => `
         <div class="form-content">
             <span class="close" onclick="closeReservation()">&times;</span>
             <h2>reservation</h2>
-            <form action="/reserve" method="post">
-                <label for="Num guests">guests:</label>
-                <input type="number" id="guests" name="guests" min="1" max="10" required>
-                <label for="date">date:</label>
-                <input type="date" id="date" name="date" required>
-                <label for="time">hour:</label>
-                <input type="time" id="time" name="time" required>
-                <input type="submit" value="reserve">
+            <form id="reservation-form">
+                <div class="form-group">
+                    <label for="guests">guests:</label>
+                    <select id="guests" name="guests" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="time">שעה:</label>
+                    <select id="time" name="time" required>
+                        <!-- תוסיף אופציות נוספות להפרשים של רבע שעה -->
+                        <option value="16:00">16:00</option>
+                        <option value="16:15">16:15</option>
+                        <option value="16:30">16:30</option>
+                        <option value="16:45">16:45</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:15">17:15</option>
+                        <!-- ועוד... -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">תאריך:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="seating">אפשרות הושבה:</label>
+                    <select id="seating" name="seating" required>
+                        <option value="inside">inside</option>
+                        <option value="outside">outside</option>
+                        <option value="bar">bar</option>
+                    </select>
+                </div>
+                <input type="submit" value="reservation">
             </form>
         </div>
     </div>
