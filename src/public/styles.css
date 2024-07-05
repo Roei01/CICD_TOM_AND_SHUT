@@ -237,7 +237,6 @@ form input[type="submit"]:hover {
 }
 
 .contact-form, .map {
-    display: flex;
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
