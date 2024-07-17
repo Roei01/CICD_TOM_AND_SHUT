@@ -1,46 +1,13 @@
-console.log('script.js loaded');
-
-const cache = {};
-
-async function loadPage(url, forceRefresh = false) {
-    try {
-        if (!forceRefresh && cache[url]) {
-            console.log(`Loading page from cache: ${url}`);
-            document.querySelector('.content').innerHTML = cache[url];
-            window.history.pushState({ path: url }, '', url);
-            applyPageEffects();
-            updateCartDisplay();
-            return;
-        }
-
-        console.log(`Loading page: ${url}`);
-        showLoadingIndicator();
-        showProgressBar();
-
-        const response = await fetch(url);
-        const html = await response.text();
-
-        cache[url] = html;
-        document.querySelector('.content').innerHTML = html;
-        window.history.pushState({ path: url }, '', url);
-        applyPageEffects();
-        updateCartDisplay();
-    } catch (error) {
-        console.error('Error loading page:', error);
-        showErrorNotification('Failed to load page.');
-    } finally {
-        hideLoadingIndicator();
-        hideProgressBar();
-    }
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded and parsed');
+    document.querySelector('.menu-toggle').addEventListener('click', () => {
+        document.querySelector('.main-nav').classList.toggle('active');
+    });
 
-    document.querySelectorAll('.navbar a').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            loadPage(this.getAttribute('href'), true); // Force refresh on navbar links
+    document.querySelectorAll('.menu-item button').forEach(button => {
+        button.addEventListener('click', () => {
+            const itemName = button.getAttribute('data-name');
+            const itemPrice = parseFloat(button.getAttribute('data-price'));
+            addToCart(itemName, itemPrice);
         });
     });
 
@@ -62,8 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const result = await response.json();
                 if (result.success) {
                     document.querySelector('.contact-container').innerHTML = `
-                        <h2>Thank you for contacting us!</h2>
-                        <p>We will get back to you shortly.</p>
+                        <h2>תודה שפניתם אלינו!</h2>
+                        <p>נחזור אליכם בהקדם האפשרי.</p>
                     `;
                 } else {
                     showErrorNotification('Failed to send message. Please try again later.');
@@ -86,80 +53,97 @@ document.addEventListener('DOMContentLoaded', () => {
     initializeCart();
     loadCartFromCookie();
     window.addEventListener('beforeunload', saveCartToCookie);
-
-    // הוספת קוד עבור פתיחת האפשרויות בטופס ההזמנה
-    const reservationInputs = document.querySelectorAll('.reservation-form select, .reservation-form input[type="date"]');
-    reservationInputs.forEach(input => {
-        input.addEventListener('focus', () => {
-            input.size = input.options ? input.options.length : 1;
-        });
-
-        input.addEventListener('blur', () => {
-            input.size = 1;
-        });
-
-        input.addEventListener('change', () => {
-            input.size = 1;
-        });
-    });
 });
 
+function addToCart(name, price) {
+    const item = {
+        name: name,
+        price: price,
+        quantity: 1
+    };
 
-function showLoadingIndicator() {
-    let loadingIndicator = document.getElementById('loading-indicator');
-    if (!loadingIndicator) {
-        loadingIndicator = document.createElement('div');
-        loadingIndicator.id = 'loading-indicator';
-        loadingIndicator.innerText = 'Loading...';
-        loadingIndicator.style.position = 'fixed';
-        loadingIndicator.style.top = '50%';
-        loadingIndicator.style.left = '50%';
-        loadingIndicator.style.transform = 'translate(-50%, -50%)';
-        loadingIndicator.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-        loadingIndicator.style.color = '#fff';
-        loadingIndicator.style.padding = '20px';
-        loadingIndicator.style.borderRadius = '8px';
-        loadingIndicator.style.zIndex = '1000';
-        document.body.appendChild(loadingIndicator);
+    const cart = getCart();
+    const existingItem = cart.find(cartItem => cartItem.name === item.name);
+    if (existingItem) {
+        existingItem.quantity += 1;
+    } else {
+        cart.push(item);
     }
-    loadingIndicator.style.display = 'block';
+
+    saveCart(cart);
+    updateCartDisplay();
+    showCartDropdown();
 }
 
-function hideLoadingIndicator() {
-    const loadingIndicator = document.getElementById('loading-indicator');
-    if (loadingIndicator) {
-        loadingIndicator.style.display = 'none';
+function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
+}
+
+function saveCart(cart) {
+    localStorage.setItem('cart', JSON.stringify(cart));
+    document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
+}
+
+function updateCartDisplay() {
+    const cart = getCart();
+    const cartItemsContainer = document.getElementById('cart-items');
+    const cartTotalElement = document.getElementById('cart-total');
+    const cartTotalPriceElement = document.getElementById('cart-total-price');
+    if (!cartItemsContainer || !cartTotalElement || !cartTotalPriceElement) return;
+
+    cartItemsContainer.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+        const itemElement = document.createElement('div');
+        itemElement.className = 'cart-item';
+        itemElement.innerHTML = `
+            <span>${item.name} - $${item.price.toFixed(2)} x ${item.quantity}</span>
+            <button onclick="removeFromCart('${item.name}')">הסר</button>
+        `;
+        cartItemsContainer.appendChild(itemElement);
+        total += item.price * item.quantity;
+    });
+
+    cartTotalElement.innerText = cart.length; // Update the cart total items count
+    cartTotalPriceElement.innerText = total.toFixed(2);
+
+    const cartIconCount = document.getElementById('cart-total');
+    if (cartIconCount) {
+        cartIconCount.innerText = cart.length;
     }
 }
 
-function showProgressBar() {
-    let progressBar = document.getElementById('progress-bar');
-    if (!progressBar) {
-        progressBar = document.createElement('div');
-        progressBar.id = 'progress-bar';
-        progressBar.style.position = 'fixed';
-        progressBar.style.top = '0';
-        progressBar.style.left = '0';
-        progressBar.style.width = '0';
-        progressBar.style.height = '5px';
-        progressBar.style.backgroundColor = '#ffda79';
-        progressBar.style.zIndex = '1000';
-        document.body.appendChild(progressBar);
+function removeFromCart(name) {
+    let cart = getCart();
+    const itemIndex = cart.findIndex(cartItem => cartItem.name === name);
+    if (itemIndex > -1) {
+        cart[itemIndex].quantity -= 1;
+        if (cart[itemIndex].quantity === 0) {
+            cart = cart.filter(cartItem => cartItem.name !== name);
+        }
     }
-    progressBar.style.display = 'block';
-    progressBar.style.width = '0';
-    setTimeout(() => {
-        progressBar.style.transition = 'width 2s';
-        progressBar.style.width = '100%';
-    }, 100);
+
+    saveCart(cart);
+    updateCartDisplay();
+
+    window.location.reload();
 }
 
-function hideProgressBar() {
-    const progressBar = document.getElementById('progress-bar');
-    if (progressBar) {
-        progressBar.style.transition = 'none';
-        progressBar.style.display = 'none';
+function isCartEmpty() {
+    const cart = getCart();
+    return cart.length === 0;
+}
+
+function checkout() {
+    if (isCartEmpty()) {
+        alert('העגלה שלך ריקה!');
+        return;
     }
+    alert('תודה על הרכישה שלך!');
+    localStorage.removeItem('cart');
+    document.cookie = "cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    updateCartDisplay();
+    loadPage('/cart', true);
 }
 
 function showErrorNotification(message) {
@@ -213,133 +197,11 @@ function adjustContentHeight() {
 document.addEventListener('DOMContentLoaded', adjustContentHeight);
 window.addEventListener('resize', adjustContentHeight);
 
-// Cart functionality
-function initializeCart() {
-    updateCartDisplay();
-}
-
-function addToCart(name, price) {
-    const item = {
-        name: name,
-        price: price,
-        quantity: 1
-    };
-
-    const cart = getCart();
-    const existingItem = cart.find(cartItem => cartItem.name === item.name);
-    if (existingItem) {
-        existingItem.quantity += 1;
-    } else {
-        cart.push(item);
-    }
-
-    saveCart(cart);
-    updateCartDisplay();
-    showCartDropdown();
-}
-
-function getCart() {
-    return JSON.parse(localStorage.getItem('cart')) || [];
-}
-
-function saveCart(cart) {
-    localStorage.setItem('cart', JSON.stringify(cart));
-    document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
-}
-
-function updateCartDisplay() {
-    const cart = getCart();
-    const cartItemsContainer = document.getElementById('cart-items');
-    const cartTotalElement = document.getElementById('cart-total');
-    const cartTotalPriceElement = document.getElementById('cart-total-price');
-    if (!cartItemsContainer || !cartTotalElement || !cartTotalPriceElement) return;
-
-    cartItemsContainer.innerHTML = '';
-    let total = 0;
-    cart.forEach(item => {
-        const itemElement = document.createElement('div');
-        itemElement.className = 'cart-item';
-        itemElement.innerHTML = `
-            <span>${item.name} - $${item.price.toFixed(2)} x ${item.quantity}</span>
-            <button onclick="removeFromCart('${item.name}')">Remove</button>
-        `;
-        cartItemsContainer.appendChild(itemElement);
-        total += item.price * item.quantity;
-    });
-
-    cartTotalElement.innerText = cart.length; // Update the cart total items count
-    cartTotalPriceElement.innerText = total.toFixed(2);
-
-    // Update cart icon count
-    const cartIconCount = document.getElementById('cart-total');
-    if (cartIconCount) {
-        cartIconCount.innerText = cart.length;
-    }
-}
-
-function removeFromCart(name) {
-    let cart = getCart();
-    const itemIndex = cart.findIndex(cartItem => cartItem.name === name);
-    if (itemIndex > -1) {
-        cart[itemIndex].quantity -= 1;
-        if (cart[itemIndex].quantity === 0) {
-            cart = cart.filter(cartItem => cartItem.name !== name);
-        }
-    }
-
-    saveCart(cart);
-    updateCartDisplay();
-
-    // רענון מלא של הדף
-    window.location.reload();
-}
-
-function isCartEmpty() {
-    const cart = getCart();
-    return cart.length === 0;
-}
-
-function checkout() {
-    if (isCartEmpty()) {
-        alert('Your cart is empty!');
-        return;
-    }
-    alert('Thank you for your purchase!');
-    localStorage.removeItem('cart');
-    document.cookie = "cart=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    updateCartDisplay();
-    loadPage('/cart', true);
-}
-
-function toggleCart() {
-    const cartDropdown = document.getElementById('cart-dropdown');
-    if (cartDropdown) {
-        if (cartDropdown.style.display === 'block') {
-            cartDropdown.style.display = 'none';
-        } else {
-            cartDropdown.style.display = 'block';
-            cartDropdown.style.zIndex = '1001'; // Ensure cart is on top
-        }
-    }
-}
-
-function showCartDropdown() {
-    const cartDropdown = document.getElementById('cart-dropdown');
-    if (cartDropdown) {
-        cartDropdown.style.display = 'block';
-        setTimeout(() => {
-            cartDropdown.style.display = 'none';
-        }, 3000);
-    }
-}
-
-// שמירת עגלת הקניות בעוגייה
 function saveCartToCookie() {
     const cart = getCart();
     document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
 }
 
-// טעינת עגלת הקניות מעוגייה
 function loadCartFromCookie() {
     const cookies = document.cookie.split(';');
     for (const cookie of cookies) {
@@ -348,54 +210,8 @@ function loadCartFromCookie() {
             localStorage.setItem('cart', value);
             updateCartDisplay();
             saveCartToCookie();
-            loadPage('/cart', true); // רענון הדף לאחר טעינת הסל מהעוגיה
+            loadPage('/cart', true);
             break;
         }
-    }
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM fully loaded and parsed');
-
-    document.querySelectorAll('.navbar a').forEach(link => {
-        link.addEventListener('click', function(event) {
-            event.preventDefault();
-            loadPage(this.getAttribute('href'), true); // Force refresh on navbar links
-        });
-    });
-
-    window.addEventListener('popstate', function(event) {
-        if (event.state && event.state.path) {
-            loadPage(event.state.path, true); // Force refresh on popstate
-        }
-    });
-
-    applyPageEffects();
-    adjustContentHeight();
-    initializeCart();
-    loadCartFromCookie();
-    window.addEventListener('beforeunload', saveCartToCookie);
-});
-
-// Reservation functionality
-function openReservation() {
-    const reservationForm = document.getElementById('reservation-form');
-    if (reservationForm) {
-        reservationForm.style.display = 'block';
-        setTimeout(() => {
-            reservationForm.style.transform = 'translate(-50%, -50%) scale(1)';
-            reservationForm.style.opacity = '1';
-        }, 10);
-    }
-}
-
-function closeReservation() {
-    const reservationForm = document.getElementById('reservation-form');
-    if (reservationForm) {
-        reservationForm.style.transform = 'translate(-50%, -50%) scale(0.9)';
-        reservationForm.style.opacity = '0';
-        setTimeout(() => {
-            reservationForm.style.display = 'none';
-        }, 300);
     }
 }

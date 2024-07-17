@@ -1,11 +1,9 @@
-//index.js
-
 import express from 'express';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import cookieParser from 'cookie-parser';
-import nodemailer from 'nodemailer'; // ייבוא nodemailer
+import nodemailer from 'nodemailer';
 
 const app = express();
 const port = 3000;
@@ -25,14 +23,14 @@ async function sendEmail(name, email, message) {
     let transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'royinagar2@gmail.com',
-            pass: 'pryk uqde apyp kuwl' 
+            user: 'your-email@gmail.com',
+            pass: 'your-email-password' 
         }
     });
 
     let mailOptions = {
-        from: 'royinagar2@gmail.com',
-        to: 'royinagar2@gmail.com',
+        from: 'your-email@gmail.com',
+        to: 'your-email@gmail.com',
         subject: `New Contact Form Submission from ${name}`,
         text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`
     };
@@ -56,7 +54,7 @@ app.post('/send-message', async (req, res) => {
 
 const generatePage = (title, content) => `
 <!DOCTYPE html>
-<html lang="en">
+<html dir="rtl" lang="he-IL">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -64,83 +62,40 @@ const generatePage = (title, content) => `
     <link rel="stylesheet" href="/styles.css">
 </head>
 <body>
-    <div class="header">
-        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
-        <h1>${title}</h1>
-        <div class="cart-icon" onclick="toggleCart()">
-            <img src="/images/cart.png" alt="Cart">
-            <div class="cart-total" id="cart-total">0</div>
-        </div>
-        <div class="social-icons">
-            <a href="https://www.facebook.com/YOUR_BUSINESS_PAGE" target="_blank"><img src="/images/facebook.png" alt="Facebook"></a>
-            <a href="https://www.instagram.com/YOUR_BUSINESS_PAGE" target="_blank"><img src="/images/instagram.png" alt="Instagram"></a>
-        </div>
+    <div class="header-wrap">
+        <nav id="mobile-header" class="main-navigation mobile-header-navigation">
+            <div class="inside-navigation">
+                <div class="site-logo mobile-header-logo">
+                    <a href="/" title="רוסטיקו" rel="home">
+                        <img src="/images/logo.png" alt="Logo" class="is-logo-image">
+                    </a>
+                </div>
+                <div class="mobile-bar-items">
+                    <a href="https://www.facebook.com/YOUR_BUSINESS_PAGE" target="_blank"><i class="fa fa-facebook-square"></i></a>
+                    <a href="https://www.instagram.com/YOUR_BUSINESS_PAGE" target="_blank"><i class="fa fa-instagram"></i></a>
+                </div>
+                <button class="menu-toggle" aria-controls="mobile-menu" aria-expanded="false">
+                    <span class="hamburger-box">
+                        <span class="hamburger-inner"></span>
+                    </span>
+                    <span class="screen-reader-text">Menu</span>
+                </button>
+                <div id="mobile-menu" class="main-nav">
+                    <ul>
+                        <li><a href="/">דף הבית</a></li>
+                        <li><a href="/menu">תפריט</a></li>
+                        <li><a href="/hours">שעות פתיחה</a></li>
+                        <li><a href="/contact">צור קשר</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
     </div>
-    <div class="navbar">
-        <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
-        <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
-        <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
-        <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
-    </div>
-    <div class="cart-dropdown" id="cart-dropdown">
-        <div id="cart-items"></div>
-        <p>Total: $<span id="cart-total-price">0.00</span></p>
-        <a href="/cart" onclick="event.preventDefault(); loadPage('/cart', true);">View Cart</a>
-        <button onclick="checkout()">Checkout</button>
-    </div>
-    <div class="content fade-in" id="content">
+    <div class="content">
         ${content}
     </div>
-    <div class="footer fade-in">
-        <p>&copy; 2024 Sushi Store. All rights reserved.</p>
-    </div>
-    <div class="reservation-icon" onclick="openReservation()">
-        <img src="/images/reservation.png" alt="Reservation">
-    </div>
-    <div class="reservation-form" id="reservation-form">
-        <div class="form-content">
-            <span class="close" onclick="closeReservation()">&times;</span>
-            <h2>reservation</h2>
-            <form id="reservation-form">
-                <div class="form-group">
-                    <label for="guests">guests:</label>
-                    <select id="guests" name="guests" required>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="time">שעה:</label>
-                    <select id="time" name="time" required>
-                        <!-- תוסיף אופציות נוספות להפרשים של רבע שעה -->
-                        <option value="16:00">16:00</option>
-                        <option value="16:15">16:15</option>
-                        <option value="16:30">16:30</option>
-                        <option value="16:45">16:45</option>
-                        <option value="17:00">17:00</option>
-                        <option value="17:15">17:15</option>
-                        <!-- ועוד... -->
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="date">תאריך:</label>
-                    <input type="date" id="date" name="date" required>
-                </div>
-                <div class="form-group">
-                    <label for="seating">אפשרות הושבה:</label>
-                    <select id="seating" name="seating" required>
-                        <option value="inside">inside</option>
-                        <option value="outside">outside</option>
-                        <option value="bar">bar</option>
-                    </select>
-                </div>
-                <input type="submit" value="reservation">
-            </form>
-        </div>
+    <div class="footer">
+        <p>&copy; 2024 רוסטיקו. כל הזכויות שמורות.</p>
     </div>
     <script src="/scripts.js"></script>
 </body>
@@ -150,64 +105,64 @@ const generatePage = (title, content) => `
 // Home page
 app.get('/', (req, res) => {
     const content = `
-    <h2>Welcome to Sushi Store</h2>
-    <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
+    <h2>ברוכים הבאים לרוסטיקו</h2>
+    <p class="home-text">תהנו מהסושי הכי טוב בעיר. חקרו את התפריט שלנו ולמדו עוד עלינו.</p>
     <img class="home-image" src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi">
-    <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');" class="btn">Explore Menu</a>
+    <a href="/menu" class="btn">חקרו את התפריט</a>
     `;
-    res.send(generatePage('Sushi Store - Home', content));
+    res.send(generatePage('רוסטיקו - דף הבית', content));
 });
 
 // Opening Hours page
 app.get('/hours', (req, res) => {
     const content = `
-    <h2>Opening Hours</h2>
-    <p>We are open every day of the week to serve you the best sushi.</p>
+    <h2>שעות פתיחה</h2>
+    <p>אנחנו פתוחים כל יום בשבוע כדי לשרת אתכם את הסושי הכי טוב.</p>
     <ul>
-        <li>Monday - Friday: 11:00 AM - 10:00 PM</li>
-        <li>Saturday: 12:00 PM - 11:00 PM</li>
-        <li>Sunday: 12:00 PM - 9:00 PM</li>
+        <li>שני - שישי: 11:00 - 22:00</li>
+        <li>שבת: 12:00 - 23:00</li>
+        <li>ראשון: 12:00 - 21:00</li>
     </ul>
     `;
-    res.send(generatePage('Sushi Store - Opening Hours', content));
+    res.send(generatePage('רוסטיקו - שעות פתיחה', content));
 });
 
 // Menu page
 app.get('/menu', (req, res) => {
     const content = `
-    <h2>Our Menu</h2>
+    <h2>התפריט שלנו</h2>
     <div class="menu-container">
         <div class="menu-item">
             <img src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi 1">
-            <h3>Sushi Set 1</h3>
-            <p>Delicious sushi set with fresh ingredients.</p>
-            <p>Price: $12.99</p>
-            <button onclick="addToCart('Sushi Set 1', 12.99)">Add to Cart</button>
+            <h3>סט סושי 1</h3>
+            <p>סט סושי טעים עם מרכיבים טריים.</p>
+            <p>מחיר: $12.99</p>
+            <button onclick="addToCart('Sushi Set 1', 12.99)">הוסף לעגלה</button>
         </div>
         <div class="menu-item">
             <img src="/images/pexels-rajesh-tp-749235-2098085.jpg" alt="Sushi 2">
-            <h3>Sushi Set 2</h3>
-            <p>Try our special sushi set with exclusive flavors.</p>
-            <p>Price: $14.99</p>
-            <button onclick="addToCart('Sushi Set 2', 14.99)">Add to Cart</button>
+            <h3>סט סושי 2</h3>
+            <p>סט סושי מיוחד עם טעמים ייחודיים.</p>
+            <p>מחיר: $14.99</p>
+            <button onclick="addToCart('Sushi Set 2', 14.99)">הוסף לעגלה</button>
         </div>
         <div class="menu-item">
             <img src="/images/pexels-valeriya-1028426.jpg" alt="Sushi 3">
-            <h3>Sushi Set 3</h3>
-            <p>A perfect combination of taste and freshness.</p>
-            <p>Price: $16.99</p>
-            <button onclick="addToCart('Sushi Set 3', 16.99)">Add to Cart</button>
+            <h3>סט סושי 3</h3>
+            <p>שילוב מושלם של טעם וטריות.</p>
+            <p>מחיר: $16.99</p>
+            <button onclick="addToCart('Sushi Set 3', 16.99)">הוסף לעגלה</button>
         </div>
         <div class="menu-item">
             <img src="/images/pexels-valeriya-1148087.jpg" alt="Sushi 4">
-            <h3>Sushi Set 4</h3>
-            <p>Experience the authentic taste of our sushi.</p>
-            <p>Price: $18.99</p>
-            <button onclick="addToCart('Sushi Set 4', 18.99)">Add to Cart</button>
+            <h3>סט סושי 4</h3>
+            <p>חוו את הטעם האותנטי של הסושי שלנו.</p>
+            <p>מחיר: $18.99</p>
+            <button onclick="addToCart('Sushi Set 4', 18.99)">הוסף לעגלה</button>
         </div>
     </div>
     `;
-    res.send(generatePage('Sushi Store - Menu', content));
+    res.send(generatePage('רוסטיקו - תפריט', content));
 });
 
 // Contact page
@@ -215,30 +170,30 @@ app.get('/contact', (req, res) => {
     const content = `
     <div class="contact-container">
         <div class="contact-form">
-            <h2>Contact Us</h2>
-            <p>Get in touch with us for any inquiries or feedback.</p>
+            <h2>צור קשר</h2>
+            <p>צרו קשר איתנו לכל שאלה או משוב.</p>
             <form id="contact-form">
-                <label for="name">Name:</label>
+                <label for="name">שם:</label>
                 <input type="text" id="name" name="name" required>
-                <label for="email">Email:</label>
+                <label for="email">אימייל:</label>
                 <input type="email" id="email" name="email" required>
-                <label for="message">Message:</label>
+                <label for="message">הודעה:</label>
                 <textarea id="message" name="message" rows="4" cols="50" required></textarea>
-                <input type="submit" value="Submit">
+                <input type="submit" value="שלח">
             </form>
-            <p>Email: contact@sushistore.com</p>
-            <p>Phone: 123-456-7890</p>
+            <p>אימייל: contact@sushistore.com</p>
+            <p>טלפון: 123-456-7890</p>
         </div>
         <div class="map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3232.768280268636!2d34.7925014758049!3d32.08485072526314!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x151d4cdd4a67d3b7%3A0x6f6e88c8f16d8402!2zMCDXqNee15XXldeuLCDXqNeQ15jXldeo15kgMTI1NCDXqdeR15XXqiBcdTAwMDQg2LPZhNmF2LHZitivINmE2YXYsdmG2Lkg15HXmdec15ogNCAxNyDYp9mE2KzZhdmF2IwgMTY1NzEg0L_RgNC10L_QvtGA0L7QtNGB0YLQsNGC!5e0!3m2!1sen!2sil!4v1688146201798!5m2!1sen!2sil" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
         </div>
     </div>
     <div id="thank-you-message" style="display: none;">
-        <h2>Thank you for contacting us!</h2>
-        <p>We will get back to you shortly.</p>
+        <h2>תודה שפניתם אלינו!</h2>
+        <p>נחזור אליכם בהקדם האפשרי.</p>
     </div>
     `;
-    res.send(generatePage('Sushi Store - Contact', content));
+    res.send(generatePage('רוסטיקו - צור קשר', content));
 });
 
 // Cart page
@@ -250,27 +205,27 @@ app.get('/cart', (req, res) => {
         itemsHtml += `
             <div class="cart-item">
                 <span>${item.name} - $${item.price.toFixed(2)} x ${item.quantity}</span>
-                <button onclick="removeFromCart('${item.name}')">Remove</button>
+                <button onclick="removeFromCart('${item.name}')">הסר</button>
             </div>
         `;
     });
 
     const content = `
-        <h2>My Cart</h2>
+        <h2>העגלה שלי</h2>
         <div class="cart-page">
             <div id="cart-items">${itemsHtml}</div>
-            <p>Total: $<span id="cart-total-price">${cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</span></p>
-            <button onclick="checkout()">Checkout</button>
+            <p>סה"כ: $<span id="cart-total-price">${cart.reduce((total, item) => total + (item.price * item.quantity), 0).toFixed(2)}</span></p>
+            <button onclick="checkout()">לתשלום</button>
         </div>
     `;
-    res.send(generatePage('Sushi Store - Cart', content));
+    res.send(generatePage('רוסטיקו - עגלה', content));
 });
 
 // Reservation form submission handler
 app.post('/reserve', (req, res) => {
     const { guests, time, date } = req.body;
     console.log(`Reservation: ${guests} guests at ${time} on ${date}`);
-    res.send(generatePage('Sushi Store - Reservation', '<h2>Thank you for your reservation!</h2><p>We look forward to serving you.</p>'));
+    res.send(generatePage('רוסטיקו - הזמנה', '<h2>תודה על ההזמנה!</h2><p>מצפים לשרת אתכם בקרוב.</p>'));
 });
 
 app.listen(port, () => {
