@@ -253,7 +253,6 @@ function updateCartDisplay() {
 
     cartItemsContainer.innerHTML = '';
     let total = 0;
-    let itemCount = 0;
     cart.forEach(item => {
         const itemElement = document.createElement('div');
         itemElement.className = 'cart-item';
@@ -263,16 +262,15 @@ function updateCartDisplay() {
         `;
         cartItemsContainer.appendChild(itemElement);
         total += item.price * item.quantity;
-        itemCount += item.quantity; // סופרים את כל המוצרים
     });
 
-    cartTotalElement.innerText = itemCount; // Update the cart total items count
+    cartTotalElement.innerText = cart.length; // Update the cart total items count
     cartTotalPriceElement.innerText = total.toFixed(2);
 
     // Update cart icon count
     const cartIconCount = document.querySelector('.cart-icon .cart-total');
     if (cartIconCount) {
-        cartIconCount.innerText = itemCount;
+        cartIconCount.innerText = cart.length;
     }
 }
 
