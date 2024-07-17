@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sushi Store</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
+        <h1>Sushi Store</h1>
+        <div class="cart-icon" onclick="toggleCart()">
+            <img src="/images/cart.png" alt="Cart">
+            <div class="cart-total" id="cart-total">0</div>
+        </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/YOUR_BUSINESS_PAGE" target="_blank"><img src="/images/facebook.png" alt="Facebook"></a>
+            <a href="https://www.instagram.com/YOUR_BUSINESS_PAGE" target="_blank"><img src="/images/instagram.png" alt="Instagram"></a>
+        </div>
+    </div>
+    <div class="navbar">
+        <a href="/" onclick="event.preventDefault(); loadPage('/');">Home</a>
+        <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');">Menu</a>
+        <a href="/hours" onclick="event.preventDefault(); loadPage('/hours');">Opening Hours</a>
+        <a href="/contact" onclick="event.preventDefault(); loadPage('/contact');">Contact</a>
+    </div>
+    <div class="cart-dropdown" id="cart-dropdown">
+        <div id="cart-items"></div>
+        <p>Total: $<span id="cart-total-price">0.00</span></p>
+        <a href="/cart" onclick="event.preventDefault(); loadPage('/cart', true);">View Cart</a>
+        <button onclick="checkout()">Checkout</button>
+    </div>
+    <div class="content fade-in" id="content">
+        <!-- תוכן הדף יטען כאן -->
+    </div>
+    <div class="footer fade-in">
+        <p>&copy; 2024 Sushi Store. All rights reserved.</p>
+    </div>
+    <div class="reservation-icon" onclick="openReservation()">
+        <img src="/images/reservation.png" alt="Reservation">
+    </div>
+    <div class="reservation-form" id="reservation-form">
+        <div class="form-content">
+            <span class="close" onclick="closeReservation()">&times;</span>
+            <h2>reservation</h2>
+            <form id="reservation-form">
+                <div class="form-group">
+                    <label for="guests">guests:</label>
+                    <select id="guests" name="guests" required>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="time">שעה:</label>
+                    <select id="time" name="time" required>
+                        <option value="16:00">16:00</option>
+                        <option value="16:15">16:15</option>
+                        <option value="16:30">16:30</option>
+                        <option value="16:45">16:45</option>
+                        <option value="17:00">17:00</option>
+                        <option value="17:15">17:15</option>
+                        <!-- ועוד... -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">תאריך:</label>
+                    <input type="date" id="date" name="date" required>
+                </div>
+                <div class="form-group">
+                    <label for="seating">אפשרות הושבה:</label>
+                    <select id="seating" name="seating" required>
+                        <option value="inside">inside</option>
+                        <option value="outside">outside</option>
+                        <option value="bar">bar</option>
+                    </select>
+                </div>
+                <input type="submit" value="reservation">
+            </form>
+        </div>
+    </div>
+    <script src="scripts.js"></script>
+</body>
+</html>
