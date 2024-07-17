@@ -233,13 +233,10 @@ function addToCart(name, price) {
     }
 
     saveCart(cart);
-    updateCartDisplay();
+    updateCartDisplay(); // עדכון עגלת הקניות
     showCartDropdown();
 }
 
-function getCart() {
-    return JSON.parse(localStorage.getItem('cart')) || [];
-}
 
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -251,10 +248,12 @@ function updateCartDisplay() {
     const cartItemsContainer = document.getElementById('cart-items');
     const cartTotalElement = document.getElementById('cart-total');
     const cartTotalPriceElement = document.getElementById('cart-total-price');
+    
     if (!cartItemsContainer || !cartTotalElement || !cartTotalPriceElement) return;
 
     cartItemsContainer.innerHTML = '';
     let total = 0;
+    let itemCount = 0;
     cart.forEach(item => {
         const itemElement = document.createElement('div');
         itemElement.className = 'cart-item';
@@ -264,15 +263,16 @@ function updateCartDisplay() {
         `;
         cartItemsContainer.appendChild(itemElement);
         total += item.price * item.quantity;
+        itemCount += item.quantity; // סופרים את כל המוצרים
     });
 
-    cartTotalElement.innerText = cart.length; // Update the cart total items count
+    cartTotalElement.innerText = itemCount; // Update the cart total items count
     cartTotalPriceElement.innerText = total.toFixed(2);
 
     // Update cart icon count
-    const cartIconCount = document.getElementById('cart-total');
+    const cartIconCount = document.querySelector('.cart-icon .cart-total');
     if (cartIconCount) {
-        cartIconCount.innerText = cart.length;
+        cartIconCount.innerText = itemCount;
     }
 }
 
@@ -291,6 +291,9 @@ function removeFromCart(name) {
 
     // רענון מלא של הדף
     window.location.reload();
+}
+function getCart() {
+    return JSON.parse(localStorage.getItem('cart')) || [];
 }
 
 function isCartEmpty() {
