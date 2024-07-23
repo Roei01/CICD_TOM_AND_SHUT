@@ -237,7 +237,6 @@ function addToCart(name, price) {
     showCartDropdown();
 }
 
-
 function saveCart(cart) {
     localStorage.setItem('cart', JSON.stringify(cart));
     document.cookie = `cart=${JSON.stringify(cart)};path=/;`;
@@ -348,7 +347,9 @@ function loadCartFromCookie() {
             localStorage.setItem('cart', value);
             updateCartDisplay();
             saveCartToCookie();
-            loadPage('/cart', true); // רענון הדף לאחר טעינת הסל מהעוגיה
+            if (value !== '[]') { // בדיקה אם הסל לא ריק
+                loadPage('/cart', true); // רענון הדף לאחר טעינת הסל מהעוגיה
+            }
             break;
         }
     }

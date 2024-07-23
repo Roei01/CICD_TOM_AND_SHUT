@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sushi Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/styles/main.css">
 </head>
 <body>
     <div class="header">
-        <img src="/images/logo.png" alt="Logo" class="logo"> <!-- לוגו -->
+        <img src="/images/logo.png" alt="Logo" class="logo">
         <h1>Sushi Store</h1>
         <div class="cart-icon" onclick="toggleCart()">
             <img src="/images/cart.png" alt="Cart">
@@ -32,7 +32,10 @@
         <button onclick="checkout()">Checkout</button>
     </div>
     <div class="content fade-in" id="content">
-        <!-- תוכן הדף יטען כאן -->
+        <h2>Welcome to Sushi Store</h2>
+        <p class="home-text">Enjoy the best sushi in town. Explore our menu and learn more about us.</p>
+        <img class="home-image" src="/images/pexels-frans-van-heerden-201846-670705.jpg" alt="Sushi">
+        <a href="/menu" onclick="event.preventDefault(); loadPage('/menu');" class="btn">Explore Menu</a>
     </div>
     <div class="footer fade-in">
         <p>&copy; 2024 Sushi Store. All rights reserved.</p>
@@ -43,10 +46,10 @@
     <div class="reservation-form" id="reservation-form">
         <div class="form-content">
             <span class="close" onclick="closeReservation()">&times;</span>
-            <h2>reservation</h2>
+            <h2>Reservation</h2>
             <form id="reservation-form">
                 <div class="form-group">
-                    <label for="guests">guests:</label>
+                    <label for="guests">Guests:</label>
                     <select id="guests" name="guests" required>
                         <option value="1">1</option>
                         <option value="2">2</option>
@@ -57,7 +60,7 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="time">שעה:</label>
+                    <label for="time">Time:</label>
                     <select id="time" name="time" required>
                         <option value="16:00">16:00</option>
                         <option value="16:15">16:15</option>
@@ -65,25 +68,24 @@
                         <option value="16:45">16:45</option>
                         <option value="17:00">17:00</option>
                         <option value="17:15">17:15</option>
-                        <!-- ועוד... -->
                     </select>
                 </div>
                 <div class="form-group">
-                    <label for="date">תאריך:</label>
+                    <label for="date">Date:</label>
                     <input type="date" id="date" name="date" required>
                 </div>
                 <div class="form-group">
-                    <label for="seating">אפשרות הושבה:</label>
+                    <label for="seating">Seating:</label>
                     <select id="seating" name="seating" required>
-                        <option value="inside">inside</option>
-                        <option value="outside">outside</option>
-                        <option value="bar">bar</option>
+                        <option value="inside">Inside</option>
+                        <option value="outside">Outside</option>
+                        <option value="bar">Bar</option>
                     </select>
                 </div>
-                <input type="submit" value="reservation">
+                <input type="submit" value="Reserve">
             </form>
         </div>
     </div>
-    <script src="scripts.js"></script>
+    <script src="/scripts/main.js"></script>
 </body>
 </html>
